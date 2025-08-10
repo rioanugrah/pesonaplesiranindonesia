@@ -5,7 +5,7 @@
         </a>
     </li>
     <li>
-        <a href="#">Tentang Kami</a>
+        <a href="{{ route('frontend.tentang_kami') }}">Tentang Kami</a>
     </li>
     <li>
         <a href="#">
