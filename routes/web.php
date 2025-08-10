@@ -21,6 +21,10 @@ Route::get('tentang-kami', function () {
     return view('frontend.tentang_kami');
 })->name('frontend.tentang_kami');
 
+Route::get('kontak-kami', function () {
+    return view('frontend.kontak_kami');
+})->name('frontend.kontak_kami');
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

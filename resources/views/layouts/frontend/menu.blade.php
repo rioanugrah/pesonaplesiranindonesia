@@ -18,6 +18,6 @@
         </a>
     </li>
     <li>
-        <a href="#">Kontak Kami</a>
+        <a href="{{ route('frontend.kontak_kami') }}">Kontak Kami</a>
     </li>
 </ul>
