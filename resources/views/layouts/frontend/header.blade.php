@@ -101,7 +101,7 @@
                 <div class="header-main">
                     <div class="logo">
                         <a href="{{ route('frontend.index') }}" class="header-logo">
-                            <img src="{{ asset('frontend/') }}/assets/img/logo/logo_plesiran_black.webp">
+                            <img src="{{ asset('frontend/') }}/assets/img/logo/logo_plesiran_new_white.png" width="250">
                         </a>
                         <div class="logo-2">
                             <a href="{{ route('frontend.index') }}">

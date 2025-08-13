@@ -13,6 +13,11 @@
         </a>
     </li>
     <li>
+        <a href="{{ route('frontend.team') }}">
+            Team
+        </a>
+    </li>
+    <li>
         <a href="#">
             Blog
         </a>

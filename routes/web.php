@@ -26,6 +26,10 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
         return view('frontend.tentang_kami');
     })->name('frontend.tentang_kami');
 
+    Route::get('team', function () {
+        return view('frontend.team');
+    })->name('frontend.team');
+
     Route::get('kontak-kami', function () {
         return view('frontend.kontak_kami');
     })->name('frontend.kontak_kami');
@@ -44,6 +48,11 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
             ],
             [
                 'id' => 3,
+                'slug' => 'team',
+                'created_at' => '2025-08-10 08:00:00'
+            ],
+            [
+                'id' => 4,
                 'slug' => 'kontak-kami',
                 'created_at' => '2025-08-10 08:00:00'
             ],
