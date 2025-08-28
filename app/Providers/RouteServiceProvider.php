@@ -17,24 +17,70 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/home';
+    public const HOME = 'admin/home';
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
      */
     public function boot(): void
     {
-        RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
-        });
+        parent::boot();
 
-        $this->routes(function () {
-            Route::middleware('api')
+        // RateLimiter::for('api', function (Request $request) {
+        //     return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+        // });
+
+        // $this->routes(function () {
+        //     Route::middleware('api')
+        //         ->prefix('api')
+        //         ->group(base_path('routes/api.php'));
+
+        //     Route::middleware('web')
+        //         ->group(base_path('routes/web.php'));
+        // });
+    }
+
+    public function map()
+    {
+        $this->mapApiRoutes();
+        $this->mapWebRoutes();
+    }
+
+    protected function mapWebRoutes()
+    {
+        Route::middleware('web')
+            ->group(base_path('routes/web.php'));
+    }
+
+    protected function mapApiRoutes()
+    {
+        Route::middleware('api')
                 ->prefix('api')
                 ->group(base_path('routes/api.php'));
+    }
 
-            Route::middleware('web')
-                ->group(base_path('routes/web.php'));
+    protected function configureRateLimiting()
+    {
+        RateLimiter::for('api', function (Request $request) {
+            return Limit::perMinute(60);
+        });
+        RateLimiter::for('login', function (Request $request) {
+            return Limit::perMinute(5)->by($request->user()?->id ?: $request->ip());
+        });
+        // RateLimiter::for('login-apps', function (Request $request) {
+        //     return Limit::perMinute(3)->by(optional($request->user())->id ?: $request->ip())->response(function () {
+        //         return response(['messsage' => 'You have reached your access limit (Posts). Please try after 1 minute.'], 429);
+        //     });
+        // });
+        RateLimiter::for('login-apps', function(Request $request){
+            $key = 'login-apps.'.$request->ip();
+            $max = 3;
+            $decay = 60;
+            if (RateLimiter::tooManyAttempts($key,$max)) {
+                return redirect()->back()->with('message','Too Many Request.');
+            }else{
+                RateLimiter::hit($key,$decay);
+            }
         });
     }
 }

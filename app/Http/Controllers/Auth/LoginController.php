@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -26,6 +28,8 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = '/home';
+    protected $maxAttempts = 3;
+    protected $decayMinutes = 2;
 
     /**
      * Create a new controller instance.
@@ -36,5 +40,16 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        // return redirect('/dashboard');
+        // return redirect()->intended('');
+        if (\Auth::user()->hasRole('Administrator')) {
+            return redirect(route('admin.home'));
+        }else{
+            return redirect(route('user.home'));
+        }
     }
 }

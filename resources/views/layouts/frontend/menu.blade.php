@@ -8,18 +8,13 @@
         <a href="{{ route('frontend.tentang_kami') }}">Tentang Kami</a>
     </li>
     <li>
-        <a href="#">
+        <a href="{{ route('frontend.trip') }}">
             Trip Wisata
         </a>
     </li>
     <li>
         <a href="{{ route('frontend.team') }}">
             Team
-        </a>
-    </li>
-    <li>
-        <a href="#">
-            Blog
         </a>
     </li>
     <li>
