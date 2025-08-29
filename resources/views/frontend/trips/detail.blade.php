@@ -149,7 +149,7 @@
                                         IDR {{ number_format($trip_detail->trip_price,2,',','.') }}
                                     </li>
                                 </ul>
-                                <a href="https://wa.me/6285867224494" class="theme-btn">Book Now<i
+                                <a href="https://wa.me/6285867224494?text=Halo, Saya mau order nih : {{ $trip_detail->trip_name.' IDR '.number_format($trip_detail->trip_price,2,',','.')}}" class="theme-btn">Book Now<i
                                         class="fa-sharp fa-regular fa-arrow-right"></i></a>
                             </div>
                         </div>

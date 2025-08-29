@@ -22,10 +22,10 @@
         <div class="container custom-container">
             <div class="tour-destination-wrapper">
                 <div class="row g-4">
-                    <div class="col-xl-8">
+                    <div class="col-xl-12">
                         <div class="row g-4">
                             @forelse ($trips as $trip)
-                                <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp wow" data-wow-delay=".3s">
+                                <div class="col-xl-4 col-lg-4 col-md-6 wow fadeInUp wow" data-wow-delay=".3s">
                                     <div class="destination-card-items mt-0">
                                         <div class="destination-image">
                                             <img src="{{ Storage::disk('s3')->url('plesiranindonesia/trip/' . $trip->trip_code . '/' . $trip->trip_images) }}"
@@ -64,7 +64,7 @@
                                             </ul>
                                             <div class="price">
                                                 <h6>IDR {{ number_format($trip->trip_price,2,',','.') }}<span>/Per pax</span></h6>
-                                                <a href="tour-details.html" class="theme-btn style-2">Book Now<i
+                                                <a href="https://wa.me/6285867224494?text=Halo, Saya mau order nih : {{ $trip->trip_name.' IDR '.number_format($trip->trip_price,2,',','.')}}" class="theme-btn style-2">Book Now<i
                                                         class="fa-sharp fa-regular fa-arrow-right"></i></a>
                                             </div>
                                         </div>
@@ -74,7 +74,7 @@
                             @endforelse
                         </div>
                     </div>
-                    <div class="col-xl-4">
+                    {{-- <div class="col-xl-4">
                         <div class="main-sidebar mt-0">
                             <div class="single-sidebar-widget">
                                 <div class="wid-title">
@@ -96,7 +96,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
