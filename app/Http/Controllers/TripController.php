@@ -24,6 +24,12 @@ class TripController extends Controller
         TripExtra $tripExtra,
         Booking $booking
     ){
+        $this->middleware('permission:trip-list', ['only' => ['index','show']]);
+        $this->middleware('permission:trip-create', ['only' => ['create','simpan']]);
+        $this->middleware('permission:trip-edit', ['only' => ['edit']]);
+        $this->middleware('permission:trip-update', ['only' => ['update']]);
+        $this->middleware('permission:trip-delete', ['only' => ['destroy']]);
+
         $this->trip = $trip;
         $this->trip_extra = $tripExtra;
         $this->booking = $booking;

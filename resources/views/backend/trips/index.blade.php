@@ -61,12 +61,16 @@
                                             <td>
                                                 <div class="d-flex flex-wrap gap-2">
                                                     <a href="{{ route('admin.trip.show',['id' => $trip->id]) }}" class="btn btn-success"><i class="fas fa-eye"></i> View</a>
+                                                    @can('trip-edit')
                                                     <a href="{{ route('admin.trip.edit',['id' => $trip->id]) }}" class="btn btn-warning"><i class="fas fa-pencil-alt"></i> Edit</a>
+                                                    @endcan
+                                                    @can('trip-delete')
                                                     <form action="{{ route('admin.trip.destroy',['id' => $trip->id]) }}" method="post">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</button>
                                                     </form>
+                                                    @endcan
                                                 </div>
                                             </td>
                                         </tr>

@@ -57,10 +57,14 @@
                                             <td class="text-center">
                                                 <div class="flex-wrap gap-2">
                                                     <a href="{{ route('admin.roles.detail',['id' => $role->id]) }}" class="btn btn-success"><i class="fas fa-eye"></i> View</a>
+                                                    @can('role-edit')
                                                     <a href="{{ route('admin.roles.edit',['id' => $role->id]) }}" class="btn btn-warning"><i class="fas fa-pencil-alt"></i> Edit</a>
+                                                    @endcan
+                                                    @can('role-delete')
                                                     {!! Form::open(['method' => 'DELETE', 'route' => ['admin.roles.destroy', $role->id], 'style' => 'display:inline']) !!}
                                                     <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</button>
                                                     {!! Form::close() !!}
+                                                    @endcan
                                                 </div>
                                             </td>
                                         </tr>

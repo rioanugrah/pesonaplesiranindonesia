@@ -1,13 +1,13 @@
 <div class="startbar d-print-none">
 
     <div class="brand">
-        <a href="index.html" class="logo">
+        <a class="logo">
             <span>
-                <img src="assets/images/logo-sm.png" alt="logo-small" class="logo-sm">
+                <img src="{{ asset('backend') }}/assets/images/logo-sm.png" class="logo-sm">
             </span>
             <span class="">
-                <img src="assets/images/logo-light.png" alt="logo-large" class="logo-lg logo-light">
-                <img src="assets/images/logo-dark.png" alt="logo-large" class="logo-lg logo-dark">
+                <img src="{{ asset('backend') }}/assets/logo/logo_plesiran_new_white.png" class="logo-lg logo-light">
+                <img src="{{ asset('backend') }}/assets/logo/logo_plesiran_black.webp" class="logo-lg logo-dark">
             </span>
         </a>
     </div>
@@ -59,7 +59,7 @@
                         <span>User Management</span>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{ route('admin.users') }}">
                             <i class="iconoir-report-columns menu-icon"></i>
                             <span>Users</span>
                         </a>

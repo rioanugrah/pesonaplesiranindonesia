@@ -117,9 +117,7 @@
                                 </nav>
                             </div>
                         </div>
-                        <a href="#0" class="search-trigger search-icon"><i
-                                class="fa-regular fa-magnifying-glass"></i></a>
-                        <a href="contact.html" class="theme-btn"> Login / Register <i
+                        <a href="{{ route('login') }}" class="theme-btn"> Login / Register <i
                                 class="fa-sharp fa-regular fa-arrow-right"></i></a>
                         <div class="header__hamburger d-xl-none my-auto">
                             <div class="sidebar__toggle">

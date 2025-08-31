@@ -85,11 +85,11 @@
                             <div class="card-body p-0 bg-black auth-header-box rounded-top">
                                 <div class="text-center p-3">
                                     <a class="logo logo-admin">
-                                        <img src="{{ asset('backend') }}/assets/images/logo-sm.png" height="50" alt="logo"
+                                        <img src="{{ asset('backend') }}/assets/logo/logo_plesiran_new_white.png" height="50" alt="logo"
                                             class="auth-logo">
                                     </a>
-                                    <h4 class="mt-3 mb-1 fw-semibold text-white fs-18">Let's Get Started Approx</h4>
-                                    <p class="text-muted fw-medium mb-0">Sign in to continue to Approx.</p>
+                                    <h4 class="mt-3 mb-1 fw-semibold text-white fs-18">Selamat Datang di Pesona Plesiran Indonesia</h4>
+                                    <p class="text-muted fw-medium mb-0">Silahkan login untuk lebih lanjut.</p>
                                 </div>
                             </div>
                             <div class="card-body pt-0">
@@ -131,19 +131,11 @@
                                     </div> <!--end form-group-->
                                 </form><!--end form-->
                                 <div class="text-center  mb-2">
-                                    <p class="text-muted">Don't have an account ? <a href="auth-register.html"
-                                            class="text-primary ms-2">Free Resister</a></p>
-                                    <h6 class="px-3 d-inline-block">Or Login With</h6>
+                                    <p class="text-muted">Belum mempunyai akun ? <a href="auth-register.html"
+                                            class="text-primary ms-2">Daftar Sekarang</a></p>
+                                    <h6 class="px-3 d-inline-block">Atau login dengan</h6>
                                 </div>
                                 <div class="d-flex justify-content-center">
-                                    <a href=""
-                                        class="d-flex justify-content-center align-items-center thumb-md bg-blue-subtle text-blue rounded-circle me-2">
-                                        <i class="fab fa-facebook align-self-center"></i>
-                                    </a>
-                                    <a href=""
-                                        class="d-flex justify-content-center align-items-center thumb-md bg-info-subtle text-info rounded-circle me-2">
-                                        <i class="fab fa-twitter align-self-center"></i>
-                                    </a>
                                     <a href=""
                                         class="d-flex justify-content-center align-items-center thumb-md bg-danger-subtle text-danger rounded-circle">
                                         <i class="fab fa-google align-self-center"></i>
