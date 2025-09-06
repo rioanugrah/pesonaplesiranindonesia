@@ -108,7 +108,7 @@
                                     $adult_price = $booking->bookingDeparture->adult_price;
                                     $extra_price = $booking->bookingExtra->sum('booking_extra_price');
 
-                                    $total_booking = $people_price + $adult_price + $extra_price;
+                                    $total_booking = ($people_price*$booking->bookingDeparture->num_of_people) + ($adult_price*$booking->bookingDeparture->num_of_adult) + $extra_price;
                                 @endphp
                                 <tr>
                                     <td><a

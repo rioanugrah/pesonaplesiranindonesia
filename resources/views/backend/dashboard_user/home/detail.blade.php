@@ -130,7 +130,6 @@
                             <tr>
                                 <th scope="col">Deskripsi</th>
                                 <th scope="col" class="text-center">Jumlah</th>
-                                <th scope="col" class="text-end">Harga Satuan</th>
                                 <th scope="col" class="text-end">Total</th>
                             </tr>
                         </thead>
@@ -142,8 +141,9 @@
                                     <small class="text-muted">Anak-anak : {{ $booking->bookingDeparture->num_of_adult.' - Rp.'.number_format($booking->bookingDeparture->adult_price,2,',','.') }}</small>
                                 </td>
                                 <td class="text-center">1</td>
-                                <td class="text-end">Rp. {{ number_format(($booking->bookingDeparture->people_price/$booking->bookingDeparture->num_of_people)+($booking->bookingDeparture->adult_price/$booking->bookingDeparture->num_of_adult), 2,',','.') }}</td>
-                                <td class="text-end fw-bold">Rp. {{ number_format($booking->bookingDeparture->people_price+$booking->bookingDeparture->adult_price, 2,',','.') }}</td>
+                                {{-- <td class="text-end">Rp. {{ number_format(($booking->bookingDeparture->people_price/$booking->bookingDeparture->num_of_people)+($booking->bookingDeparture->adult_price/$booking->bookingDeparture->num_of_adult), 2,',','.') }}</td> --}}
+                                {{-- <td class="text-end">Rp. {{ number_format(($booking->bookingDeparture->people_price)+($booking->bookingDeparture->adult_price), 2,',','.') }}</td> --}}
+                                <td class="text-end fw-bold">Rp. {{ number_format(($booking->bookingDeparture->people_price*$booking->bookingDeparture->num_of_people)+($booking->bookingDeparture->adult_price*$booking->bookingDeparture->num_of_adult), 2,',','.') }}</td>
                             </tr>
                             @foreach ($booking->bookingExtra as $item)
                             @php
@@ -152,9 +152,10 @@
                             <tr>
                                 <td>
                                     <p class="fw-bold mb-0">{{ $item->booking_extra_name }}</p>
+                                    <small class="text-muted">Rp. {{ number_format($item->booking_extra_price,2,',','.') }}</small>
                                 </td>
                                 <td class="text-center">1</td>
-                                <td class="text-end">Rp. {{ number_format($item->booking_extra_price,2,',','.') }}</td>
+                                {{-- <td class="text-end">Rp. {{ number_format($item->booking_extra_price,2,',','.') }}</td> --}}
                                 <td class="text-end fw-bold">Rp. {{ number_format($item->booking_extra_price,2,',','.') }}</td>
                             </tr>
                             @endforeach
@@ -164,7 +165,12 @@
 
                 <!-- Total -->
                 @php
-                    $total = array_sum($subTotal)+($booking->bookingDeparture->people_price/$booking->bookingDeparture->num_of_people)+($booking->bookingDeparture->adult_price/$booking->bookingDeparture->num_of_adult);
+                    // $total = array_sum($subTotal)+($booking->bookingDeparture->people_price*$booking->bookingDeparture->num_of_people)+($booking->bookingDeparture->adult_price*$booking->bookingDeparture->num_of_adult);
+                    $total = array_sum($subTotal)+(
+                        $booking->bookingDeparture->people_price*$booking->bookingDeparture->num_of_people
+                        )+(
+                            $booking->bookingDeparture->adult_price*$booking->bookingDeparture->num_of_adult
+                        );
                 @endphp
                 <div class="row justify-content-end">
                     <div class="col-md-6">
