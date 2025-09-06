@@ -40,6 +40,19 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        // 'api' => [
+        //     'driver' => 'passport',
+        //     'provider' => 'users',
+        //     'hash' => true,
+        // ],
+        // 'api' => [
+        //     'driver' => 'passport',
+        //     'provider' => 'users',
+        // ],
+        'api' => [
+            'driver' => 'sanctum',
+            'provider' => 'users',
+        ],
     ],
 
     /*

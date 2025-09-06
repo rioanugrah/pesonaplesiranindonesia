@@ -19,8 +19,8 @@ class Payment extends Model
     protected $guarded = [];
 
     // Relasi: Payment dimiliki oleh satu Booking
-    public function booking()
-    {
-        return $this->belongsTo(\App\Models\Booking::class);
-    }
+    // public function booking()
+    // {
+    //     return $this->belongsTo(\App\Models\Booking::class);
+    // }
 }

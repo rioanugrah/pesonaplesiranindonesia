@@ -15,6 +15,9 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->decimal('amount', 10, 2);
             $table->string('payment_method', 50)->nullable();
+            $table->text('payment_references')->nullable();
+            $table->text('payment_billing')->nullable();
+            $table->text('payment_order')->nullable();
             $table->enum('status', ['Pending', 'Success', 'Failed'])->default('Pending');
             $table->timestamp('payment_date')->nullable();
             $table->timestamps();

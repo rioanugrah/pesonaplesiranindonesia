@@ -117,6 +117,16 @@
                                 </nav>
                             </div>
                         </div>
+                        {{-- @dd(auth()->user()->hasRole('Administrator')) --}}
+                        @auth
+                        <a href="{{ auth()->user()->hasRole('Administrator') == true  ? route('admin.home') : route('user.home') }}" class="theme-btn"> {{ auth()->user()->name }} <i
+                                class="fa-sharp fa-regular fa-arrow-right"></i></a>
+                        <div class="header__hamburger d-xl-none my-auto">
+                            <div class="sidebar__toggle">
+                                <i class="fas fa-bars"></i>
+                            </div>
+                        </div>
+                        @else
                         <a href="{{ route('login') }}" class="theme-btn"> Login / Register <i
                                 class="fa-sharp fa-regular fa-arrow-right"></i></a>
                         <div class="header__hamburger d-xl-none my-auto">
@@ -124,6 +134,7 @@
                                 <i class="fas fa-bars"></i>
                             </div>
                         </div>
+                        @endauth
                     </div>
                 </div>
             </div>

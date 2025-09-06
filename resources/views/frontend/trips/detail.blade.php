@@ -92,26 +92,28 @@
                     <div class="col-12 col-lg-4">
                         <div class="main-bar">
                             <div class="activities-card">
+                                <form action="{{ route('frontend.checkout',['id' => $trip_detail->id, 'trip_code' => $trip_detail->trip_code]) }}" method="post" enctype="multipart/form-data">
+                                @csrf
                                 <h3>
-                                    Pesan Tour Ini
+                                    Booking List :
                                 </h3>
                                 <div class="from-bar">
                                     <ul class="from-list">
-                                        <li>Tanggal:</li>
+                                        <li>Tanggal Berangkat:</li>
                                         <li>
-                                            <div id="datepicker" class="input-group date" data-date-format="dd-mm-yyyy">
-                                                <input class="form-control" type="text" placeholder=""
-                                                    readonly="">
+                                            <div id="datepicker" class="input-group date" data-date-format="yyyy-mm-dd">
+                                                <input class="form-control" type="text" name="departure_date" placeholder=""
+                                                    >
                                                 <span class="input-group-addon"><i class="far fa-calendar"></i></span>
                                             </div>
                                         </li>
                                     </ul>
-                                    <ul class="list">
+                                    <ul class="ticket">
                                         <li>
-                                            Pukul:
+                                            Waktu Berangkat:
                                         </li>
                                         <li>
-                                            <input type="time" name="" class="form-control" min="21:00" max="00:00" id="">
+                                            <input type="time" name="departure_time" class="form-control" min="21:00" max="00:00" id="">
                                         </li>
                                     </ul>
                                     <ul class="ticket">
@@ -119,9 +121,15 @@
                                             Tickets:
                                         </li>
                                         <li>
-                                            <span>
-                                                Please, Select Date Fist
-                                            </span>
+                                            <input type="number" class="form-control qty" name="qty" min="1" max="5" value="1">
+                                        </li>
+                                    </ul>
+                                    <ul class="ticket">
+                                        <li>
+                                            Adult:
+                                        </li>
+                                        <li>
+                                            <input type="number" class="form-control" name="adult" min="0" max="5" value="0">
                                         </li>
                                     </ul>
                                 </div>
@@ -131,7 +139,7 @@
                                     <label class="checkbox-single d-flex align-items-center">
                                         <span class="d-flex gap-xl-3 gap-2 align-items-center">
                                             <span class="checkbox-area d-center">
-                                                <input type="checkbox">
+                                                <input type="checkbox" name="extra_price[]" value="{{ $trip_extra->id.'|'.$trip_extra->extra_price }}" class="extra">
                                                 <span class="checkmark d-center"></span>
                                             </span>
                                             <span class="text-color">
@@ -146,11 +154,14 @@
                                         Total:
                                     </li>
                                     <li>
-                                        IDR {{ number_format($trip_detail->trip_price,2,',','.') }}
+                                        <span id="totalSum">{{ number_format($trip_detail->trip_price,2,',','.') }}</span>
                                     </li>
                                 </ul>
-                                <a href="https://wa.me/6285867224494?text=Halo, Saya mau order nih : {{ $trip_detail->trip_name.' IDR '.number_format($trip_detail->trip_price,2,',','.')}}" class="theme-btn">Book Now<i
-                                        class="fa-sharp fa-regular fa-arrow-right"></i></a>
+                                {{-- <a href="https://wa.me/6285867224494?text=Halo, Saya mau order nih : {{ $trip_detail->trip_name.' IDR '.number_format($trip_detail->trip_price,2,',','.')}}" class="theme-btn">Book Now<i
+                                        class="fa-sharp fa-regular fa-arrow-right"></i></a> --}}
+                                <button type="submit" class="theme-btn">Book Now<i
+                                        class="fa-sharp fa-regular fa-arrow-right"></i></button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -158,4 +169,90 @@
             </div>
         </div>
     </section>
+@endsection
+@section('js')
+    <script>
+        const amount = parseFloat({{ $trip_detail->trip_price }});
+        const formatterIDR = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+        });
+
+        function calculateSum() {
+            let total = 0;
+            const checkboxes = document.querySelectorAll('input[name="extra_price[]"]:checked');
+
+            checkboxes.forEach(checkbox => {
+                total += parseFloat(checkbox.value.split('|')[1]);
+            });
+
+            document.getElementById('totalSum').textContent = formatterIDR.format(amount+parseFloat(total.toFixed(2)));
+        }
+
+        const allCheckboxes = document.querySelectorAll('input[name="extra_price[]"]');
+
+        allCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', calculateSum);
+        });
+
+        // Initial calculation on page load
+        calculateSum();
+
+        $('.qty').on('change', function(){
+            // alert($('.qty').val());
+            if ("{{ $trip_detail->trip_category }}" == "O") {
+                const amount = parseFloat({{ $trip_detail->trip_price }}*parseInt($('.qty').val()));
+                const formatterIDR = new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                });
+
+                function calculateSum() {
+                    let total = 0;
+                    const checkboxes = document.querySelectorAll('input[name="extra_price[]"]:checked');
+
+                    checkboxes.forEach(checkbox => {
+                        total += parseFloat(checkbox.value.split('|')[1]);
+                    });
+
+                    document.getElementById('totalSum').textContent = formatterIDR.format(amount+parseFloat(total.toFixed(2)));
+                }
+
+                const allCheckboxes = document.querySelectorAll('input[name="extra_price[]"]');
+
+                allCheckboxes.forEach(checkbox => {
+                    checkbox.addEventListener('change', calculateSum);
+                });
+
+                // Initial calculation on page load
+                calculateSum();
+            }else{
+                const amount = parseFloat({{ $trip_detail->trip_price }});
+                const formatterIDR = new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                });
+
+                function calculateSum() {
+                    let total = 0;
+                    const checkboxes = document.querySelectorAll('input[name="extra_price[]"]:checked');
+
+                    checkboxes.forEach(checkbox => {
+                        total += parseFloat(checkbox.value.split('|')[1]);
+                    });
+
+                    document.getElementById('totalSum').textContent = formatterIDR.format(amount+parseFloat(total.toFixed(2)));
+                }
+
+                const allCheckboxes = document.querySelectorAll('input[name="extra_price"]');
+
+                allCheckboxes.forEach(checkbox => {
+                    checkbox.addEventListener('change', calculateSum);
+                });
+
+                // Initial calculation on page load
+                calculateSum();
+            }
+        })
+    </script>
 @endsection

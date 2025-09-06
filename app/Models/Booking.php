@@ -30,8 +30,18 @@ class Booking extends Model
     }
 
     // Relasi: Booking memiliki banyak payment
-    public function payments(): HasMany
+    public function payment()
     {
-        return $this->hasMany(\App\Models\Payment::class);
+        return $this->belongsTo(\App\Models\Payment::class);
+    }
+
+    public function bookingDeparture()
+    {
+        return $this->belongsTo(\App\Models\BookingDeparture::class, 'id', 'booking_id');
+    }
+
+    public function bookingExtra()
+    {
+        return $this->hasMany(\App\Models\BookingExtra::class, 'booking_id', 'id');
     }
 }

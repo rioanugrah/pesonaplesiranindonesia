@@ -3,14 +3,37 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use App\Http\Controllers\Payment\TripayController;
+
 use App\Models\Trip;
+use App\Models\TripExtra;
+use App\Models\Booking;
+use App\Models\BookingDeparture;
+use App\Models\BookingExtra;
+use App\Models\Payment;
+
+use \Carbon\Carbon;
+use DB;
 
 class FrontendController extends Controller
 {
     function __construct(
-        Trip $trip
+        TripayController $tripayPayment,
+        Booking $booking,
+        BookingDeparture $bookingDeparture,
+        BookingExtra $bookingExtra,
+        Payment $payment,
+        Trip $trip,
+        TripExtra $trip_extra
     ){
+        $this->tripay_payment = $tripayPayment;
         $this->trip = $trip;
+        $this->booking = $booking;
+        $this->bookingDeparture = $bookingDeparture;
+        $this->bookingExtra = $bookingExtra;
+        $this->payment = $payment;
+        $this->trip_extra = $trip_extra;
     }
 
     public function index()
@@ -120,5 +143,155 @@ class FrontendController extends Controller
     public function kontak_kami()
     {
         return view('frontend.kontak_kami');
+    }
+
+    public function checkout(Request $request, $id, $trip_code)
+    {
+        // dd($request->all());
+
+        $data['trip'] = $this->trip->where('id',$id)->where('trip_code',$trip_code)->first();
+
+        if (empty($data['trip'])) {
+            return redirect()->back()->with('error','Trip Tidak Ditemukan');
+        }
+
+        $data['listPayments'] = json_decode($this->tripay_payment->getPayment())->data;
+        $data['extra_prices'] = [];
+
+        if ($request->extra_price) {
+            $sumExtraPrice = [];
+            foreach ($request->extra_price as $key => $extra_price) {
+                $tripExtra = $this->trip_extra->find(explode('|',$extra_price)[0]);
+                $data['extra_prices'][] = [
+                    'id' => $tripExtra->id,
+                    'extra_name' => $tripExtra->extra_name,
+                    'extra_price' => $tripExtra->extra_price
+                ];
+
+                array_push($sumExtraPrice,$tripExtra->extra_price);
+            }
+            $data['total'] = array_sum($sumExtraPrice)+$data['trip']['trip_price'];
+        }else{
+            $data['total'] = $data['trip']['trip_price'];
+        }
+        // dd($data);
+
+        return view('frontend.checkout.index',$data);
+    }
+
+    public function checkout_simpan(Request $request, $id, $trip_code)
+    {
+        // dd($request->all());
+
+        DB::beginTransaction();
+        try {
+            $packet = $this->trip->where('id',$id)->where('trip_code',$trip_code)->first();
+
+            if (empty($packet)) {
+                return redirect()->back()->with('error','Trip Tidak Ditemukan');
+            }
+
+            $kode_jenis_transaksi = 'TRX-BRMO';
+            $kode_random_transaksi = Carbon::now()->format('Ym').rand(100,999);
+
+            $inputPayment['id'] = Str::uuid()->toString();
+            $inputPayment['payment_method'] = explode('|',$request->method)[0];
+
+            if ($request->extra_id) {
+                $idExtraPrice = $request->extra_id;
+                $extraPrice = $this->trip_extra->whereIn('id',$idExtraPrice)->sum('extra_price');
+            }else{
+                $extraPrice = 0;
+            }
+
+            if (explode('|',$request->method)[0] == 'QRISC') {
+                $price = $packet->trip_price;
+                $totalExtraPrice = $extraPrice;
+                $feeAdmin = (explode('|',$request->method)[1] / 100);
+
+                $inputPayment['amount'] = (($price+$totalExtraPrice)*$feeAdmin)+explode('|',$request->method)[2]+$price+$totalExtraPrice;
+                $amount = ($price+$totalExtraPrice);
+            }else{
+                $price = $packet->trip_price;
+                $totalExtraPrice = $extraPrice;
+                $feeAdmin = explode('|',$request->method)[1];
+
+                $inputPayment['amount'] = $price+$totalExtraPrice+$feeAdmin;
+                $amount = $price+$totalExtraPrice;
+            }
+
+            // dd($inputPayment);
+
+            $inputPayment['payment_billing'] = json_encode([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+                'phone' => $request->no_telp,
+            ]);
+
+            $paymentDetail = $this->tripay_payment->requestTransaction(
+                $packet->trip_name,
+                $inputPayment['payment_method'],$amount,
+                $request->first_name,$request->last_name,$request->email,$request->no_telp,
+                $kode_random_transaksi,
+                // $url_return
+                route('frontend.paymentSuccess')
+                // route('b.ticket_bromo.invoice',['transaction_code' => $input['transaction_code']])
+            );
+
+            $inputPayment['payment_references'] = json_decode($paymentDetail)->data->reference;
+            $inputPayment['payment_date'] = Carbon::now();
+
+            // dd($inputPayment);
+
+            $this->payment->create($inputPayment);
+
+            $idBooking = Str::uuid()->toString();
+
+            $saveBooking = $this->booking->create([
+                'id' => $idBooking,
+                'user_id' => auth()->user()->generate,
+                'payment_id' => $inputPayment['id'],
+                'booking_code' => 'E-TIKET'.$kode_random_transaksi,
+                'booking_name' => $packet->trip_name,
+                'total_price' => $inputPayment['amount'],
+            ]);
+
+            $this->bookingDeparture->create([
+                'booking_id' => $idBooking,
+                'booking_date' => $request->departure_date,
+                'booking_time' => $request->departure_time,
+                'num_of_people' => $request->qty,
+                'num_of_adult' => $request->adult,
+                'people_price' => $packet->trip_price,
+                'adult_price' => 50000,
+            ]);
+
+            $extraList = $this->trip_extra->whereIn('id',$idExtraPrice)->get();
+
+            foreach ($extraList as $key => $value) {
+                $this->bookingExtra->create([
+                    'booking_id' => $idBooking,
+                    'booking_extra_name' => $value->extra_name,
+                    'booking_extra_price' => $value->extra_price,
+                ]);
+            }
+
+            DB::commit();
+
+            // dd($inputPayment);
+            return redirect(json_decode($paymentDetail)->data->checkout_url);
+        } catch (\Exception $th) {
+            return $th;
+        }
+
+        // return view('frontend.checkout.index');
+    }
+
+    public function payment_success()
+    {
+        $data['detailPayment'] = json_decode($this->tripay_payment->detailTransaction(request()->get('tripay_reference')));
+        // dd($data);
+        return view('frontend.payment.orderSuccess',$data);
     }
 }

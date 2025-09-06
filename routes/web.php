@@ -29,22 +29,6 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
         Route::get('kontak-kami', 'kontak_kami')->name('frontend.kontak_kami');
     });
 
-    // Route::get('/', function () {
-    //     return view('frontend.index');
-    // })->name('frontend.index');
-
-    // Route::get('tentang-kami', function () {
-    //     return view('frontend.tentang_kami');
-    // })->name('frontend.tentang_kami');
-
-    // Route::get('team', function () {
-    //     return view('frontend.team');
-    // })->name('frontend.team');
-
-    // Route::get('kontak-kami', function () {
-    //     return view('frontend.kontak_kami');
-    // })->name('frontend.kontak_kami');
-
     Route::get('lay', function() {
         return view('layouts.backend.app');
     });
@@ -79,7 +63,26 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
         return response()->view('frontend.sitemap',$data)->header('Content-Type', 'text/xml');
     });
 
+    // Route::controller(App\Http\Controllers\Payment\TripayController::class)->group(function () {
+    //     Route::prefix('payment')->group(function () {
+    //         Route::get('/', 'getPayment');
+    //     });
+    // });
+
     Route::group(['middleware' => 'auth'], function () {
+        Route::controller(App\Http\Controllers\FrontendController::class)->group(function () {
+            Route::prefix('checkout')->group(function(){
+                Route::post('{id}/{trip_code}', 'checkout')->name('frontend.checkout')->middleware('verified');
+                Route::post('{id}/{trip_code}/simpan', 'checkout_simpan')->name('frontend.checkout.simpan')->middleware('verified');
+            });
+        });
+
+        Route::controller(App\Http\Controllers\FrontendController::class)->group(function () {
+            Route::prefix('payment')->group(function () {
+                Route::get('status', 'payment_success')->name('frontend.paymentSuccess');
+            });
+        });
+
         Route::group(['middleware' => ['role:Administrator']], function(){
             Route::prefix('admin')->group(function(){
                 Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin.home')->middleware('verified');
@@ -138,7 +141,14 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
         });
 
         Route::group(['middleware' => ['role:Users']], function(){
-            Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('user.home')->middleware('verified');
+            Route::prefix('my-dashboard')->group(function(){
+                Route::controller(App\Http\Controllers\HomeController::class)->group(function () {
+                    Route::get('home', 'index_user')->name('user.home')->middleware('verified');
+                    Route::prefix('booking')->group(function(){
+                        Route::get('{id}/{booking_code}', 'booking_detail_user')->name('user.booking.detail')->middleware('verified');
+                    });
+                });
+            });
         });
 
     });
