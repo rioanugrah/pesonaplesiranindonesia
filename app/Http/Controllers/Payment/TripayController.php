@@ -121,7 +121,8 @@ class TripayController extends Controller
         // dd($request->all());
         $privateKey = $this->tripay_private_key;
         $callbackSignature = $request->server('HTTP_X_CALLBACK_SIGNATURE');
-        dd($callbackSignature);
+        // dd($callbackSignature);
+        return $callbackSignature;
         $json = $request->getContent();
         $signature = hash_hmac('sha256', $json, $privateKey);
         if ($signature !== (string) $callbackSignature) {
