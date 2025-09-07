@@ -64,7 +64,7 @@
                                         <h1>
                                             Mari kita buat perjalanan terbaik Anda bersama kami
                                         </h1>
-                                        <div class="booking-list-area">
+                                        {{-- <div class="booking-list-area">
                                             <div class="booking-list">
                                                 <div class="icon">
                                                     <img src="{{ asset('frontend/') }}/assets/img/hero/icon-1.png"
@@ -124,7 +124,7 @@
                                                 </div>
                                             </div>
                                             <button class="theme-btn" type="submit">Search</button>
-                                        </div>
+                                        </div> --}}
                                         <div class="counter-area">
                                             <div class="counter-items">
                                                 <div class="counter-text">

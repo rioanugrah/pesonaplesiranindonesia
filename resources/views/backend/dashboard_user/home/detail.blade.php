@@ -173,6 +173,7 @@
                         )+(
                             $booking->bookingDeparture->adult_price*$booking->bookingDeparture->num_of_adult
                         );
+                    $feeAdmin = $booking->total_price - $total;
                 @endphp
                 <div class="row justify-content-end">
                     <div class="col-md-6">
@@ -180,9 +181,13 @@
                             <span class="text-muted">Subtotal:</span>
                             <span class="fw-medium">Rp {{ number_format($total,2,',','.') }}</span>
                         </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">Biaya Admin:</span>
+                            <span class="fw-medium">Rp {{ number_format($feeAdmin,2,',','.') }}</span>
+                        </div>
                         <div class="total-section d-flex justify-content-between">
                             <h5 class="fw-bold mb-0">Total Akhir:</h5>
-                            <h5 class="fw-bold text-primary mb-0">Rp {{ number_format($total,2,',','.') }}</h5>
+                            <h5 class="fw-bold text-primary mb-0">Rp {{ number_format($total+$feeAdmin,2,',','.') }}</h5>
                         </div>
                     </div>
                 </div>

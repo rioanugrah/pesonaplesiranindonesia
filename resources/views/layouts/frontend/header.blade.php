@@ -54,7 +54,7 @@
                         </li>
                     </ul>
                     <div class="header-button mt-4">
-                        <a href="#" class="theme-btn"> Login / Register <i
+                        <a href="{{ route('login') }}" class="theme-btn"> Login / Register <i
                                 class="fa-sharp fa-regular fa-arrow-right"></i></a>
                     </div>
                     <div class="social-icon d-flex align-items-center">

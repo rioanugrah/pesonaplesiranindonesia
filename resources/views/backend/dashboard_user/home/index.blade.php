@@ -115,7 +115,7 @@
                                             href="{{ route('user.booking.detail', ['id' => $booking->id, 'booking_code' => $booking->booking_code]) }}">{{ $booking->booking_code }}</a>
                                     </td>
                                     <td>{{ $booking->booking_name }}</td>
-                                    <td>{{ 'Rp. ' . number_format($total_booking, 2, ',', '.') }}</td>
+                                    <td>{{ 'Rp. ' . number_format($booking->total_price, 2, ',', '.') }}</td>
                                     <td>
                                         @switch($booking->status)
                                             @case('Pending')
@@ -135,6 +135,9 @@
                                     </td>
                                 </tr>
                                 @empty
+                                <tr>
+                                    <td colspan="4" class="text-center text-danger">No Booking</td>
+                                </tr>
                                 @endforelse
                             </tbody>
                         </table>

@@ -117,23 +117,11 @@
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <ul class="ticket mb-3">
-                                                    <li class="mb-2 fw-bold">
-                                                        Tickets:
-                                                    </li>
                                                     <li>
-                                                        <input type="number" name="qty" class="form-control" min="1" max="5" value="{{ request()->post('qty') }}" readonly id="">
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <ul class="ticket mb-3">
-                                                    <li class="mb-2 fw-bold">
-                                                        Adult:
-                                                    </li>
-                                                    <li>
-                                                        <input type="number" name="adult" class="form-control" min="0" max="5" value="{{ request()->post('adult') }}" readonly id="">
+                                                        <input type="hidden" name="qty" class="form-control" min="1" max="5" value="{{ request()->post('qty') }}" readonly id="">
+                                                        <input type="hidden" name="adult" class="form-control" min="0" max="5" value="{{ request()->post('adult') }}" readonly id="inputAdult">
                                                     </li>
                                                 </ul>
                                             </div>
@@ -165,7 +153,13 @@
                                                 <div class="fw-bold">Ticket Price</div>
                                             </div>
                                             <div class="col-md-6 text-end">
-                                                <div>Rp. {{ number_format($trip->trip_price,2,',','.') }}</div>
+                                                <div>{{ request()->post('qty') }} x Rp. {{ number_format($trip->trip_price,2,',','.') }}</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="fw-bold">Ticket Adult</div>
+                                            </div>
+                                            <div class="col-md-6 text-end">
+                                                <div id="adult"></div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="fw-bold">Fee Admin</div>
@@ -206,10 +200,12 @@
                 console.log('Selected value:', this.value);
                 if (this.value.split('|')[0] != 'QRISC') {
                     document.getElementById('feeAdmin').innerHTML = formatterIDR.format(this.value.split('|')[1]);
-                    document.getElementById('total').innerHTML = formatterIDR.format(parseFloat(this.value.split('|')[1])+parseFloat({{ $total }}));
+                    document.getElementById('total').innerHTML = formatterIDR.format(parseFloat(this.value.split('|')[1])+parseFloat({{ $total }})+parseFloat(50000*parseInt($('#inputAdult').val())));
+                    document.getElementById('adult').innerHTML = {{ request()->post('adult') }}+' x '+formatterIDR.format(50000*parseInt($('#inputAdult').val()));
                 }else{
                     document.getElementById('feeAdmin').innerHTML = formatterIDR.format((({{ $total }}*this.value.split('|')[1])/100)+parseFloat(this.value.split('|')[2]));
-                    document.getElementById('total').innerHTML = formatterIDR.format(parseFloat(({{ $total }}*this.value.split('|')[1])/100)+parseFloat({{ $total }})+parseFloat(this.value.split('|')[2]));
+                    document.getElementById('total').innerHTML = formatterIDR.format(parseFloat(({{ $total }}*this.value.split('|')[1])/100)+parseFloat({{ $total }})+parseFloat(this.value.split('|')[2])+parseFloat(50000*parseInt($('#inputAdult').val())));
+                    document.getElementById('adult').innerHTML = {{ request()->post('adult') }}+' x '+formatterIDR.format(50000*parseInt($('#inputAdult').val()));
                 }
                 // You can perform actions here based on the selected radio button
             });

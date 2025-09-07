@@ -64,7 +64,7 @@
                                             </ul>
                                             <div class="price">
                                                 <h6>IDR {{ number_format($trip->trip_price,2,',','.') }}<span>/Per pax</span></h6>
-                                                <a href="https://wa.me/6285867224494?text=Halo, Saya mau order nih : {{ $trip->trip_name.' IDR '.number_format($trip->trip_price,2,',','.')}}" class="theme-btn style-2">Book Now<i
+                                                <a href="{{ route('frontend.trip_detail',['id' => $trip->id, 'trip_code' => $trip->trip_code]) }}" class="theme-btn style-2">Book Now<i
                                                         class="fa-sharp fa-regular fa-arrow-right"></i></a>
                                             </div>
                                         </div>

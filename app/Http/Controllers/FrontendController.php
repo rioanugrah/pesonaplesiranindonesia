@@ -170,7 +170,7 @@ class FrontendController extends Controller
 
                 array_push($sumExtraPrice,$tripExtra->extra_price);
             }
-            $data['total'] = array_sum($sumExtraPrice)+$data['trip']['trip_price'];
+            $data['total'] = array_sum($sumExtraPrice)+$data['trip']['trip_price']*$request->qty;
         }else{
             $data['total'] = $data['trip']['trip_price'];
         }
@@ -197,27 +197,41 @@ class FrontendController extends Controller
             $inputPayment['id'] = Str::uuid()->toString();
             $inputPayment['payment_method'] = explode('|',$request->method)[0];
 
+            $idBooking = Str::uuid()->toString();
+
             if ($request->extra_id) {
                 $idExtraPrice = $request->extra_id;
                 $extraPrice = $this->trip_extra->whereIn('id',$idExtraPrice)->sum('extra_price');
+
+                $extraList = $this->trip_extra->whereIn('id',$idExtraPrice)->get();
+
+                foreach ($extraList as $key => $value) {
+                    $this->bookingExtra->create([
+                        'booking_id' => $idBooking,
+                        'booking_extra_name' => $value->extra_name,
+                        'booking_extra_price' => $value->extra_price,
+                    ]);
+                }
             }else{
                 $extraPrice = 0;
             }
 
             if (explode('|',$request->method)[0] == 'QRISC') {
-                $price = $packet->trip_price;
+                $price = $packet->trip_price*$request->qty;
+                $priceAdult = $request->adult*50000;
                 $totalExtraPrice = $extraPrice;
                 $feeAdmin = (explode('|',$request->method)[1] / 100);
 
-                $inputPayment['amount'] = (($price+$totalExtraPrice)*$feeAdmin)+explode('|',$request->method)[2]+$price+$totalExtraPrice;
-                $amount = ($price+$totalExtraPrice);
+                $inputPayment['amount'] = (($price+$totalExtraPrice)*$feeAdmin)+explode('|',$request->method)[2]+$price+$priceAdult+$totalExtraPrice;
+                $amount = $price+$priceAdult+$totalExtraPrice;
             }else{
-                $price = $packet->trip_price;
+                $price = $packet->trip_price*$request->qty;
+                $priceAdult = $request->adult*50000;
                 $totalExtraPrice = $extraPrice;
                 $feeAdmin = explode('|',$request->method)[1];
 
-                $inputPayment['amount'] = $price+$totalExtraPrice+$feeAdmin;
-                $amount = $price+$totalExtraPrice;
+                $inputPayment['amount'] = $price+$priceAdult+$totalExtraPrice+$feeAdmin;
+                $amount = $price+$priceAdult+$totalExtraPrice;
             }
 
             // dd($inputPayment);
@@ -246,8 +260,6 @@ class FrontendController extends Controller
 
             $this->payment->create($inputPayment);
 
-            $idBooking = Str::uuid()->toString();
-
             $saveBooking = $this->booking->create([
                 'id' => $idBooking,
                 'user_id' => auth()->user()->generate,
@@ -266,16 +278,6 @@ class FrontendController extends Controller
                 'people_price' => $packet->trip_price,
                 'adult_price' => 50000,
             ]);
-
-            $extraList = $this->trip_extra->whereIn('id',$idExtraPrice)->get();
-
-            foreach ($extraList as $key => $value) {
-                $this->bookingExtra->create([
-                    'booking_id' => $idBooking,
-                    'booking_extra_name' => $value->extra_name,
-                    'booking_extra_price' => $value->extra_price,
-                ]);
-            }
 
             DB::commit();
 
