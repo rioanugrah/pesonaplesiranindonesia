@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->decimal('amount', 10, 2);
+            $table->decimal('amount', 20, 2);
             $table->string('payment_method', 50)->nullable();
             $table->text('payment_references')->nullable();
             $table->text('payment_billing')->nullable();

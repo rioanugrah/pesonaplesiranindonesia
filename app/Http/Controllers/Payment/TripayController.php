@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
+use App\Models\Payments;
+
 class TripayController extends Controller
 {
     function __construct(
-
+        Payments $payment
     ){
         if (env('TRIPAY_IS_PRODUCTION') == false) {
             $this->tripay_api_key = env('TRIPAY_API_KEY_SANDBOX');
@@ -22,6 +24,8 @@ class TripayController extends Controller
             $this->tripay_merchant = env('TRIPAY_MERCHANT_PRODUCTION');
             $this->tripay_url = env('TRIPAY_PRODUCTION');
         }
+
+        $this->payment = $payment;
     }
 
     public function getPayment()
@@ -148,7 +152,7 @@ class TripayController extends Controller
         $status = strtoupper((string) $data->status);
 
         if ($data->is_closed_payment === 1) {
-            $transaction = $this->transactions->where('transaction_code',$data->merchant_ref)
+            $transaction = $this->payment->where('payment_references',$tripayReference)
                                             // ->where('status','Unpaid')
                                             ->first();
             if (!$transaction) {
@@ -158,10 +162,10 @@ class TripayController extends Controller
                 ]);
             }
             switch ($status) {
-                case 'PAID':
+                case 'Success':
                     $transaction->update([
                         // 'transaction_reference' => $data->reference,
-                        'status' => 'Paid'
+                        'status' => 'Success'
                     ]);
                     // $notifMail = $this->sendMail;
                     // $notifMail->sendMail(
@@ -172,14 +176,14 @@ class TripayController extends Controller
                     // );
                     break;
 
-                case 'EXPIRED':
+                case 'Pending':
                     $transaction->update([
                         // 'transaction_reference' => $data->reference,
-                        'status' => 'Expired'
+                        'status' => 'Pending'
                     ]);
                     break;
 
-                case 'FAILED':
+                case 'Failed':
                     $transaction->update([
                         // 'transaction_reference' => $data->reference,
                         'status' => 'Failed'
