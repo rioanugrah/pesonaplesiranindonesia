@@ -150,7 +150,7 @@ class TripayController extends Controller
 
         $invoiceId = $data->merchant_ref;
         $tripayReference = $data->reference;
-        return $tripayReference;
+        // return $tripayReference;
         $status = strtoupper((string) $data->status);
 
         if ($data->is_closed_payment === 1) {
@@ -164,11 +164,11 @@ class TripayController extends Controller
                 ]);
             }
             switch ($status) {
-                case 'Success':
-                    // $transaction->update([
-                    //     // 'transaction_reference' => $data->reference,
-                    //     'status' => 'Success'
-                    // ]);
+                case 'PAID':
+                    $transaction->update([
+                        // 'transaction_reference' => $data->reference,
+                        'status' => 'Success'
+                    ]);
                     // $notifMail = $this->sendMail;
                     // $notifMail->sendMail(
                     //     $transaction->status,$transaction->transaction_code,$transaction->transaction_price,
@@ -178,18 +178,18 @@ class TripayController extends Controller
                     // );
                     break;
 
-                case 'Pending':
-                    // $transaction->update([
-                    //     // 'transaction_reference' => $data->reference,
-                    //     'status' => 'Pending'
-                    // ]);
+                case 'EXPIRED':
+                    $transaction->update([
+                        // 'transaction_reference' => $data->reference,
+                        'status' => 'Failed'
+                    ]);
                     break;
 
-                case 'Failed':
-                    // $transaction->update([
-                    //     // 'transaction_reference' => $data->reference,
-                    //     'status' => 'Failed'
-                    // ]);
+                case 'FAILED':
+                    $transaction->update([
+                        // 'transaction_reference' => $data->reference,
+                        'status' => 'Failed'
+                    ]);
                     break;
 
                 default:
