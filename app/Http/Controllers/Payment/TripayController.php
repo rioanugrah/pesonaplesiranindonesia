@@ -6,12 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
-use App\Models\Payments;
+use App\Models\Payment;
 
 class TripayController extends Controller
 {
     function __construct(
-        Payments $payment
+        Payment $payment
     ){
         if (env('TRIPAY_IS_PRODUCTION') == false) {
             $this->tripay_api_key = env('TRIPAY_API_KEY_SANDBOX');
