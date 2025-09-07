@@ -8,6 +8,10 @@ use App\Models\BookingDeparture;
 use App\Models\BookingExtra;
 use App\Models\Payment;
 
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use PDF;
+use DNS2D;
 
 class HomeController extends Controller
 {
@@ -58,7 +62,31 @@ class HomeController extends Controller
             return redirect()->back();
         }
 
+        $data['barcode'] = DNS2D::getBarcodeHTML($data['booking']['id'], 'QRCODE', 5,5);
+
         // dd($id);
         return view('backend.dashboard_user.home.detail',$data);
+    }
+
+    public function booking_pdf_user($id, $booking_code)
+    {
+        $data['booking'] = $this->booking->with('bookingExtra')->where('id',$id)->where('booking_code',$booking_code)->first();
+        // dd($data);
+        if (empty($data['booking'])) {
+            return redirect()->back();
+        }
+
+        $data['barcode'] = DNS2D::getBarcodeHTML($data['booking']['id'], 'QRCODE', 5,5);
+
+        // return view('backend.dashboard_user.home.cetakpdf',$data);
+
+        $options = new Options();
+        $options->set('isRemoteEnabled', true);
+        $options->set('defaultPaperSize', 'A4');
+        $dompdf = new Dompdf($options);
+
+        $dompdf->loadHtml('backend.dashboard_user.home.cetakpdf',$data);
+        $dompdf->render();
+        return $dompdf->stream();
     }
 }

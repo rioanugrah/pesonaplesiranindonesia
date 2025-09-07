@@ -146,6 +146,7 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
                     Route::get('home', 'index_user')->name('user.home')->middleware('verified');
                     Route::prefix('booking')->group(function(){
                         Route::get('{id}/{booking_code}', 'booking_detail_user')->name('user.booking.detail')->middleware('verified');
+                        Route::get('{id}/{booking_code}/pdf', 'booking_pdf_user')->name('user.booking.pdf')->middleware('verified');
                     });
                 });
             });

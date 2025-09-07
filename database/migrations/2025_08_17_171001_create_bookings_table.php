@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid('payment_id');
             $table->string('booking_code');
             $table->string('booking_name');
-            $table->decimal('total_price', 16, 2);
+            $table->decimal('total_price', 20, 2);
             $table->enum('status', ['Pending', 'Confirmed', 'Cancelled'])->default('Pending');
             $table->index(['booking_code']);
             $table->timestamps();
@@ -31,8 +31,8 @@ return new class extends Migration
             $table->time('booking_time');
             $table->integer('num_of_people');
             $table->integer('num_of_adult');
-            $table->decimal('people_price', 16, 2);
-            $table->decimal('adult_price', 16, 2);
+            $table->decimal('people_price', 20, 2);
+            $table->decimal('adult_price', 20, 2);
             $table->index(['booking_id']);
             $table->timestamps();
         });
@@ -41,7 +41,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('booking_id');
             $table->string('booking_extra_name');
-            $table->integer('booking_extra_price');
+            $table->decimal('booking_extra_price', 20, 2);
             $table->index(['booking_id']);
             $table->timestamps();
         });

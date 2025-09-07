@@ -138,9 +138,11 @@
                                 <td>
                                     <p class="fw-bold mb-0">{{ $booking->booking_name }}</p>
                                     <small class="text-muted">Dewasa : {{ $booking->bookingDeparture->num_of_people.' - Rp.'.number_format($booking->bookingDeparture->people_price,2,',','.') }}</small> <br>
+                                    @if ($booking->bookingDeparture->num_of_adult > 0)
                                     <small class="text-muted">Anak-anak : {{ $booking->bookingDeparture->num_of_adult.' - Rp.'.number_format($booking->bookingDeparture->adult_price,2,',','.') }}</small>
+                                    @endif
                                 </td>
-                                <td class="text-center">1</td>
+                                <td class="text-center">{{ $booking->bookingDeparture->num_of_people + $booking->bookingDeparture->num_of_adult }}</td>
                                 {{-- <td class="text-end">Rp. {{ number_format(($booking->bookingDeparture->people_price/$booking->bookingDeparture->num_of_people)+($booking->bookingDeparture->adult_price/$booking->bookingDeparture->num_of_adult), 2,',','.') }}</td> --}}
                                 {{-- <td class="text-end">Rp. {{ number_format(($booking->bookingDeparture->people_price)+($booking->bookingDeparture->adult_price), 2,',','.') }}</td> --}}
                                 <td class="text-end fw-bold">Rp. {{ number_format(($booking->bookingDeparture->people_price*$booking->bookingDeparture->num_of_people)+($booking->bookingDeparture->adult_price*$booking->bookingDeparture->num_of_adult), 2,',','.') }}</td>
@@ -187,6 +189,9 @@
                 <div class="fw-bold mt-4">Informasi:</div>
                 <div class="row">
                     <div class="col-md-4">
+                        {!! $barcode !!}
+                    </div>
+                    <div class="col-md-4">
                         <div style="font-size: 10pt">Gunakan <b>E-TIKET</b> sebagai bukti validasi untuk melakukan pengecekan kepada team kami.</div>
                     </div>
                     <div class="col-md-4">
@@ -197,10 +202,10 @@
                 <!-- Footer -->
                 <footer class="text-center mt-5 pt-4 border-top">
                     <p class="text-muted small">Terima kasih atas kepercayaan Anda. Jika ada pertanyaan, silakan hubungi kami.</p>
-                     <div class="action-buttons">
+                     {{-- <div class="action-buttons">
                         <button class="btn btn-outline-primary px-4"><i class="fa-solid fa-download me-2"></i> Unduh PDF</button>
-                        <button class="btn btn-primary px-4"><i class="fa-solid fa-print me-2"></i> Cetak Invoice</button>
-                     </div>
+                        <a class="btn btn-primary px-4" href="{{ route('user.booking.pdf',['id' => $booking->id, 'booking_code' => $booking->booking_code]) }}"><i class="fa-solid fa-print me-2"></i> Cetak Invoice</a>
+                     </div> --}}
                 </footer>
             </main>
         </div>
