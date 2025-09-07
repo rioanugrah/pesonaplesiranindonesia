@@ -1,4 +1,4 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 
 @section('content')
 <div class="container">
@@ -62,4 +62,61 @@
         </div>
     </div>
 </div>
+@endsection --}}
+@extends('layouts.auth.backend.app')
+@section('title')
+    Konfirmasi Password
+@endsection
+@section('content')
+    <div class="row vh-100 d-flex justify-content-center">
+        <div class="col-12 align-self-center">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-4 mx-auto">
+                        <div class="card">
+                            <div class="card-body p-0 bg-black auth-header-box rounded-top">
+                                <div class="text-center p-3">
+                                    <a class="logo logo-admin">
+                                        <img src="{{ asset('backend') }}/assets/logo/logo_plesiran_new_white.png" height="50" alt="logo"
+                                            class="auth-logo">
+                                    </a>
+                                    <h4 class="mt-3 mb-1 fw-semibold text-white fs-18">Konfirmasi Reset Password</h4>
+                                </div>
+                            </div>
+                            <div class="card-body pt-0">
+                                @include('components.alert')
+                                <form method="POST" class="my-4" action="{{ route('password.update') }}">
+                                    @csrf
+                                    <input type="hidden" name="token" value="{{ $token }}">
+                                    <div class="form-group mb-2">
+                                        <label class="form-label" for="email">Email</label>
+                                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email"
+                                            placeholder="Enter Email" value="{{ $email ?? old('email') }}" required>
+                                    </div>
+                                    <div class="form-group mb-2">
+                                        <label class="form-label" for="password">Password</label>
+                                        <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password"
+                                            placeholder="Enter Password" required>
+                                    </div>
+                                    <div class="form-group mb-2">
+                                        <label class="form-label" for="konfirm-password">Konfirmasi Password</label>
+                                        <input type="password" class="form-control" id="konfirm-password" name="password_confirmation"
+                                            placeholder="Enter Konfirmasi Password" required>
+                                    </div>
+                                    <div class="form-group mb-0 row">
+                                        <div class="col-12">
+                                            <div class="d-grid mt-3">
+                                                <button class="btn btn-primary" type="submit">Submit <i
+                                                        class="fas fa-sign-in-alt ms-1"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

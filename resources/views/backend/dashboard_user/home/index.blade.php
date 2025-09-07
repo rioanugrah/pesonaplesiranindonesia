@@ -108,22 +108,24 @@
                                     $adult_price = $booking->bookingDeparture->adult_price;
                                     $extra_price = $booking->bookingExtra->sum('booking_extra_price');
 
-                                    $total_booking = ($people_price*$booking->bookingDeparture->num_of_people) + ($adult_price*$booking->bookingDeparture->num_of_adult) + $extra_price;
+                                    // $total_booking = ($people_price*$booking->bookingDeparture->num_of_people) + ($adult_price*$booking->bookingDeparture->num_of_adult) + $extra_price;
+                                    // $total_booking = ($people_price*$booking->bookingDeparture->num_of_people) + ($adult_price*$booking->bookingDeparture->num_of_adult) + $extra_price;
+                                    $total_booking = $booking->total_price+$booking->payment->fee_admin;
                                 @endphp
                                 <tr>
                                     <td><a
                                             href="{{ route('user.booking.detail', ['id' => $booking->id, 'booking_code' => $booking->booking_code]) }}">{{ $booking->booking_code }}</a>
                                     </td>
                                     <td>{{ $booking->booking_name }}</td>
-                                    <td>{{ 'Rp. ' . number_format($booking->total_price, 2, ',', '.') }}</td>
+                                    <td>{{ 'Rp. ' . number_format($total_booking, 2, ',', '.') }}</td>
                                     <td>
-                                        @switch($booking->status)
+                                        @switch($booking->payment->status)
                                             @case('Pending')
                                                 <span class="badge bg-warning text-dark">Pending</span>
                                             @break
 
-                                            @case('Confirm')
-                                                <span class="badge bg-success">Confirm</span>
+                                            @case('Success')
+                                                <span class="badge bg-success">PAID</span>
                                             @break
 
                                             @case('Cancel')

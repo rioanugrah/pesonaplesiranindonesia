@@ -99,13 +99,13 @@
                                         <label class="form-label" for="email">Email</label>
                                         <input type="email" class="form-control" id="email" name="email"
                                             placeholder="Enter Email">
-                                    </div><!--end form-group-->
+                                    </div>
 
                                     <div class="form-group">
                                         <label class="form-label" for="userpassword">Password</label>
                                         <input type="password" class="form-control" name="password" id="userpassword"
                                             placeholder="Enter Password">
-                                    </div><!--end form-group-->
+                                    </div>
 
                                     <div class="form-group row mt-3">
                                         <div class="col-sm-6">
@@ -114,12 +114,12 @@
                                                 <label class="form-check-label" for="customSwitchSuccess">Remember
                                                     me</label>
                                             </div>
-                                        </div><!--end col-->
+                                        </div>
                                         <div class="col-sm-6 text-end">
-                                            <a href="auth-recover-pw.html" class="text-muted font-13"><i
-                                                    class="dripicons-lock"></i> Forgot password?</a>
-                                        </div><!--end col-->
-                                    </div><!--end form-group-->
+                                            <a href="{{ route('password.request') }}" class="text-muted font-13"><i
+                                                    class="dripicons-lock"></i> Lupa Password?</a>
+                                        </div>
+                                    </div>
 
                                     <div class="form-group mb-0 row">
                                         <div class="col-12">
@@ -127,11 +127,11 @@
                                                 <button class="btn btn-primary" type="submit">Log In <i
                                                         class="fas fa-sign-in-alt ms-1"></i></button>
                                             </div>
-                                        </div><!--end col-->
-                                    </div> <!--end form-group-->
-                                </form><!--end form-->
+                                        </div>
+                                    </div>
+                                </form>
                                 <div class="text-center  mb-2">
-                                    <p class="text-muted">Belum mempunyai akun ? <a href="auth-register.html"
+                                    <p class="text-muted">Belum mempunyai akun ? <a href="{{ route('register') }}"
                                             class="text-primary ms-2">Daftar Sekarang</a></p>
                                     <h6 class="px-3 d-inline-block">Atau login dengan</h6>
                                 </div>
@@ -141,11 +141,11 @@
                                         <i class="fab fa-google align-self-center"></i>
                                     </a>
                                 </div>
-                            </div><!--end card-body-->
-                        </div><!--end card-->
-                    </div><!--end col-->
-                </div><!--end row-->
-            </div><!--end card-body-->
-        </div><!--end col-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

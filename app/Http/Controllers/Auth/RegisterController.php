@@ -29,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = 'my-dashboard/home';
 
     /**
      * Create a new controller instance.
@@ -64,11 +64,17 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        // dd($data);
+        $user = User::create([
             'generate' => Str::uuid()->toString(),
+            'username' => strtolower(Str::of($data['name'])->explode(' ')->get(0)) . mt_rand(11111, 99999),
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        $user->assignRole('Users');
+
+        return $user;
     }
 }

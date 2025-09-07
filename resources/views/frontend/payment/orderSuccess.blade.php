@@ -34,7 +34,7 @@
                                     <path d="M12 16h.01" />
                                 </svg>
                             </div>
-                            <h1 class="h2 fw-bold text-dark mb-3">Pembayaran Sedang Diproses!</h1>
+                            <h1 class="h2 fw-bold text-dark mb-3">Menunggu Pembayaran!</h1>
                             <p class="text-secondary mb-4 fs-5">
                                 Terima kasih! Kami telah menerima pembayaran Anda. Selesaikan Pesanan Anda akan segera kami proses.
                             </p>
@@ -65,7 +65,7 @@
                     </div>
 
                     <!-- Tombol Aksi -->
-                    <a href="#" class="btn btn-primary w-100 py-3 fs-5 rounded-3 shadow-sm">
+                    <a href="{{ route('user.home') }}" class="btn btn-primary w-100 py-3 fs-5 rounded-3 shadow-sm">
                         Kembali ke Beranda
                     </a>
                 </div>

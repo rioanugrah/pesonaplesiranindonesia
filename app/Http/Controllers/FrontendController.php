@@ -220,17 +220,25 @@ class FrontendController extends Controller
                 $price = $packet->trip_price*$request->qty;
                 $priceAdult = $request->adult*50000;
                 $totalExtraPrice = $extraPrice;
-                $feeAdmin = (explode('|',$request->method)[1] / 100);
+                $feeAdmin = (($price+$priceAdult+$totalExtraPrice)*(explode('|',$request->method)[1] / 100))+explode('|',$request->method)[2];
+                // $feeAdmin = (explode('|',$request->method)[1] / 100);
 
-                $inputPayment['amount'] = (($price+$totalExtraPrice)*$feeAdmin)+explode('|',$request->method)[2]+$price+$priceAdult+$totalExtraPrice;
+                $inputPayment['fee_admin'] = $feeAdmin;
+
+                $inputPayment['amount'] = $price+$priceAdult+$totalExtraPrice;
+                // $inputPayment['amount'] = (($price+$totalExtraPrice)*$feeAdmin)+explode('|',$request->method)[2]+$price+$priceAdult+$totalExtraPrice;
                 $amount = $price+$priceAdult+$totalExtraPrice;
             }else{
                 $price = $packet->trip_price*$request->qty;
                 $priceAdult = $request->adult*50000;
                 $totalExtraPrice = $extraPrice;
                 $feeAdmin = explode('|',$request->method)[1];
+                // $feeAdmin = explode('|',$request->method)[1];
 
-                $inputPayment['amount'] = $price+$priceAdult+$totalExtraPrice+$feeAdmin;
+                $inputPayment['fee_admin'] = $feeAdmin;
+
+                $inputPayment['amount'] = $price+$priceAdult+$totalExtraPrice;
+                // $inputPayment['amount'] = $price+$priceAdult+$totalExtraPrice+$feeAdmin;
                 $amount = $price+$priceAdult+$totalExtraPrice;
             }
 

@@ -173,7 +173,8 @@
                         )+(
                             $booking->bookingDeparture->adult_price*$booking->bookingDeparture->num_of_adult
                         );
-                    $feeAdmin = $booking->total_price - $total;
+                    $feeAdmin = $booking->payment->fee_admin;
+                    // $feeAdmin = ($booking->total_price) - $total;
                 @endphp
                 <div class="row justify-content-end">
                     <div class="col-md-6">
@@ -207,10 +208,13 @@
                 <!-- Footer -->
                 <footer class="text-center mt-5 pt-4 border-top">
                     <p class="text-muted small">Terima kasih atas kepercayaan Anda. Jika ada pertanyaan, silakan hubungi kami.</p>
-                     {{-- <div class="action-buttons">
-                        <button class="btn btn-outline-primary px-4"><i class="fa-solid fa-download me-2"></i> Unduh PDF</button>
-                        <a class="btn btn-primary px-4" href="{{ route('user.booking.pdf',['id' => $booking->id, 'booking_code' => $booking->booking_code]) }}"><i class="fa-solid fa-print me-2"></i> Cetak Invoice</a>
-                     </div> --}}
+                    @switch($booking->payment->status)
+                        @case('Pending')
+                        <div class="action-buttons">
+                            <a href="{{ $linkPayment }}" class="btn btn-outline-primary px-4"><i class="fa fa-dollar me-2"></i> Bayar Sekarang</a>
+                        </div>
+                        @break
+                    @endswitch
                 </footer>
             </main>
         </div>

@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes([
     'verify' => true,
-    'register' => false
+    'register' => true
 ]);
 Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
     Route::controller(App\Http\Controllers\FrontendController::class)->group(function () {
@@ -29,8 +29,16 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
         Route::get('kontak-kami', 'kontak_kami')->name('frontend.kontak_kami');
     });
 
-    Route::get('lay', function() {
-        return view('layouts.backend.app');
+    Route::get('test-email', function() {
+        $data['billing'] = [
+            'first_name' => 'Rio',
+            'last_name' => 'Anugrah',
+            'email' => 'rioanugrah999@gmail.com',
+            'phone' => '08',
+        ];
+        return view('emails.payment',$data);
+        \Mail::to('rioanugrah999@gmail.com')->send(new \App\Mail\Payment());
+        dd("Email is sent successfully.");
     });
 
     // Route::get('trips', [App\Http\Controllers\TripController::class, 'index']);

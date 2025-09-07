@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Payment\TripayController;
 use App\Models\Booking;
 use App\Models\BookingDeparture;
 use App\Models\BookingExtra;
@@ -21,6 +22,7 @@ class HomeController extends Controller
      * @return void
      */
     public function __construct(
+        TripayController $tripayPayment,
         Booking $booking,
         BookingDeparture $bookingDeparture,
         BookingExtra $bookingExtra,
@@ -28,6 +30,8 @@ class HomeController extends Controller
     )
     {
         $this->middleware('auth');
+
+        $this->tripay_payment = $tripayPayment;
         $this->booking = $booking;
         $this->bookingDeparture = $bookingDeparture;
         $this->bookingExtra = $bookingExtra;
@@ -61,9 +65,9 @@ class HomeController extends Controller
         if (empty($data['booking'])) {
             return redirect()->back();
         }
-
         $data['barcode'] = DNS2D::getBarcodeHTML($data['booking']['id'], 'QRCODE', 5,5);
-
+        $data['linkPayment'] = json_decode($this->tripay_payment->detailTransaction($data['booking']['payment']['payment_references']))->data->checkout_url;
+        // dd($data);
         // dd($id);
         return view('backend.dashboard_user.home.detail',$data);
     }

@@ -136,7 +136,7 @@
         </div>
 
         <div class="row justify-content-center">
-            <div class="col-md-12 col-lg-6 order-1 order-lg-2">
+            <div class="col-md-12 col-lg-12 order-1 order-lg-2">
                 <div class="card">
                     <div class="card-header">
                         <div class="row align-items-center">
@@ -163,13 +163,28 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($bookings as $booking)
+                                    @forelse ($bookings as $key => $booking)
                                         <tr>
+                                            <td>{{ $key+1 }}</td>
                                             <td>{{ $booking->booking_code }}</td>
-                                            <td>{{ $booking->user_id }}</td>
+                                            <td>{{ $booking->user->name }}</td>
                                             <td>{{ $booking->booking_name }}</td>
                                             <td>{{ 'IDR ' . number_format($booking->total_price, 2, ',', '.') }}</td>
-                                            <td>{{ $booking->status }}</td>
+                                            <td>
+                                                @switch($booking->status)
+                                                    @case('Pending')
+                                                        <span class="badge bg-warning text-dark">Menunggu Konfirmasi</span>
+                                                        @break
+                                                    @case('Confirm')
+                                                        <span class="badge bg-success">Success</span>
+                                                        @break
+                                                    @case('Cancelled')
+                                                        <span class="badge bg-danger">Batal</span>
+                                                        @break
+                                                    @default
+
+                                                @endswitch
+                                            </td>
                                             <td></td>
                                         </tr>
                                     @empty
@@ -183,7 +198,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12 col-lg-6 order-1 order-lg-2">
+            <div class="col-md-12 col-lg-12 order-1 order-lg-2">
                 <div class="card">
                     <div class="card-header">
                         <div class="row align-items-center">
