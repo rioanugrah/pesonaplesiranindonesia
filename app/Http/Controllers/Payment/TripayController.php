@@ -122,7 +122,7 @@ class TripayController extends Controller
         $privateKey = $this->tripay_private_key;
         $callbackSignature = $request->server('HTTP_X_CALLBACK_SIGNATURE');
         // dd($callbackSignature);
-        return $callbackSignature;
+        // return $callbackSignature;
         $json = $request->getContent();
         $signature = hash_hmac('sha256', $json, $privateKey);
         if ($signature !== (string) $callbackSignature) {
@@ -150,6 +150,7 @@ class TripayController extends Controller
 
         $invoiceId = $data->merchant_ref;
         $tripayReference = $data->reference;
+        return $tripayReference;
         $status = strtoupper((string) $data->status);
 
         if ($data->is_closed_payment === 1) {
