@@ -163,10 +163,10 @@ class TripayController extends Controller
             }
             switch ($status) {
                 case 'Success':
-                    $transaction->update([
-                        // 'transaction_reference' => $data->reference,
-                        'status' => 'Success'
-                    ]);
+                    // $transaction->update([
+                    //     // 'transaction_reference' => $data->reference,
+                    //     'status' => 'Success'
+                    // ]);
                     // $notifMail = $this->sendMail;
                     // $notifMail->sendMail(
                     //     $transaction->status,$transaction->transaction_code,$transaction->transaction_price,
@@ -177,17 +177,17 @@ class TripayController extends Controller
                     break;
 
                 case 'Pending':
-                    $transaction->update([
-                        // 'transaction_reference' => $data->reference,
-                        'status' => 'Pending'
-                    ]);
+                    // $transaction->update([
+                    //     // 'transaction_reference' => $data->reference,
+                    //     'status' => 'Pending'
+                    // ]);
                     break;
 
                 case 'Failed':
-                    $transaction->update([
-                        // 'transaction_reference' => $data->reference,
-                        'status' => 'Failed'
-                    ]);
+                    // $transaction->update([
+                    //     // 'transaction_reference' => $data->reference,
+                    //     'status' => 'Failed'
+                    // ]);
                     break;
 
                 default:
