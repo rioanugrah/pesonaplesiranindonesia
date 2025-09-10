@@ -28,8 +28,27 @@
                                         <span class="fs-16 fw-semibold">Balance</span>
                                     </div>
 
-                                    <h4 class="my-2 fs-24 fw-semibold">IDR 0</h4>
+                                    <h4 class="my-2 fs-24 fw-semibold">Rp. {{ number_format($total_income,2,',','.') }}</h4>
                                     <button type="button" class="btn btn-soft-primary">Transfer</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-12">
+                        <div class="card bg-corner-img">
+                            <div class="card-body">
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-9">
+                                        <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Total Omset</p>
+                                        <h4 class="mt-1 mb-0 fw-medium">Rp. {{ number_format($total_omset,2,',','.') }}</h4>
+                                    </div>
+
+                                    <div class="col-3 align-self-center">
+                                        <div
+                                            class="d-flex justify-content-center align-items-center thumb-md border-dashed border-primary rounded mx-auto">
+                                            <i class="iconoir-dollar-circle fs-22 align-self-center mb-0 text-primary"></i>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -43,31 +62,8 @@
                             <div class="card-body">
                                 <div class="row d-flex justify-content-center">
                                     <div class="col-9">
-                                        <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Total Omset</p>
-                                        <h4 class="mt-1 mb-0 fw-medium">IDR 0</h4>
-                                    </div>
-
-                                    <div class="col-3 align-self-center">
-                                        <div
-                                            class="d-flex justify-content-center align-items-center thumb-md border-dashed border-primary rounded mx-auto">
-                                            <i class="iconoir-dollar-circle fs-22 align-self-center mb-0 text-primary"></i>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <div class="col-md-6 col-lg-6">
-                        <div class="card bg-corner-img">
-                            <div class="card-body">
-                                <div class="row d-flex justify-content-center">
-                                    <div class="col-9">
-                                        <p class="text-muted text-uppercase mb-0 fw-normal fs-13">New Order</p>
-                                        <h4 class="mt-1 mb-0 fw-medium">0</h4>
+                                        <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Total Order</p>
+                                        <h4 class="mt-1 mb-0 fw-medium">{{ $total_order }}</h4>
                                     </div>
 
                                     <div class="col-3 align-self-center">
@@ -76,37 +72,47 @@
                                             <i class="iconoir-cart fs-22 align-self-center mb-0 text-info"></i>
                                         </div>
                                     </div>
-
                                 </div>
-
                             </div>
-
                         </div>
-
                     </div>
                     <div class="col-md-6 col-lg-6">
                         <div class="card bg-corner-img">
                             <div class="card-body">
                                 <div class="row d-flex justify-content-center">
                                     <div class="col-9">
-                                        <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Sessions</p>
-                                        <h4 class="mt-1 mb-0 fw-medium">0</h4>
+                                        <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Total Pending</p>
+                                        <h4 class="mt-1 mb-0 fw-medium">{{ $total_pending }}</h4>
                                     </div>
 
                                     <div class="col-3 align-self-center">
                                         <div
-                                            class="d-flex justify-content-center align-items-center thumb-md border-dashed border-warning rounded mx-auto">
-                                            <i
-                                                class="iconoir-percentage-circle fs-22 align-self-center mb-0 text-warning"></i>
+                                            class="d-flex justify-content-center align-items-center thumb-md border-dashed border-info rounded mx-auto">
+                                            <i class="iconoir-cart fs-22 align-self-center mb-0 text-info"></i>
                                         </div>
                                     </div>
-
                                 </div>
-
                             </div>
-
                         </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6">
+                        <div class="card bg-corner-img">
+                            <div class="card-body">
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-9">
+                                        <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Total Cancelled</p>
+                                        <h4 class="mt-1 mb-0 fw-medium">{{ $total_cancel }}</h4>
+                                    </div>
 
+                                    <div class="col-3 align-self-center">
+                                        <div
+                                            class="d-flex justify-content-center align-items-center thumb-md border-dashed border-info rounded mx-auto">
+                                            <i class="iconoir-cart fs-22 align-self-center mb-0 text-info"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-6 col-lg-6">
                         <div class="card bg-corner-img">
@@ -114,7 +120,7 @@
                                 <div class="row d-flex justify-content-center">
                                     <div class="col-9">
                                         <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Rata-Rata Order</p>
-                                        <h4 class="mt-1 mb-0 fw-medium">IDR 0</h4>
+                                        <h4 class="mt-1 mb-0 fw-medium">Rp. {{ number_format($total_average,2,',','.') }}</h4>
                                     </div>
 
                                     <div class="col-3 align-self-center">
@@ -185,7 +191,10 @@
 
                                                 @endswitch
                                             </td>
-                                            <td></td>
+                                            <td>
+                                                <a href="#"><i class="las la-print text-secondary fs-18"></i></a>
+                                                <a href="#"><i class="las la-download text-secondary fs-18"></i></a>
+                                            </td>
                                         </tr>
                                     @empty
                                         <tr>
@@ -225,21 +234,34 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($payments as $payment)
+                                    @forelse ($payments as $key => $payment)
                                         <tr>
-                                            <td>{{ $payment->id }}</td>
-                                            <td>20 July 2024 <span>03:25pm</span></td>
-                                            <td>Transfer</td>
-                                            <td>IDR 500000</td>
-                                            <td><span
-                                                    class="badge bg-success-subtle text-success fs-11 fw-medium px-2">Credit</span>
+                                            <td>{{ $key+1 }}</td>
+                                            <td>{{ $payment->booking->booking_code }}</td>
+                                            <td>{{ $payment->payment_date }}</td>
+                                            <td>{{ $payment->payment_method }}</td>
+                                            <td>Rp. {{ number_format($payment->amount,2,',','.') }}</td>
+                                            <td>
+                                                @switch($payment->status)
+                                                    @case('Pending')
+                                                    <span
+                                                        class="badge bg-warning-subtle text-warning fs-11 fw-medium px-2">Menunggu Pembayaran</span>
+                                                        @break
+                                                    @case('Success')
+                                                    <span
+                                                        class="badge bg-success-subtle text-success fs-11 fw-medium px-2">Success</span>
+                                                        @break
+                                                    @case('Failed')
+                                                    <span
+                                                        class="badge bg-danger-subtle text-danger fs-11 fw-medium px-2">Gagal Pembayaran</span>
+                                                        @break
+                                                    @default
+
+                                                @endswitch
                                             </td>
-                                            <td>20 July 2024 <span>03:25pm</span></td>
                                             <td>
                                                 <a href="#"><i class="las la-print text-secondary fs-18"></i></a>
                                                 <a href="#"><i class="las la-download text-secondary fs-18"></i></a>
-                                                <a href="#"><i
-                                                        class="las la-trash-alt text-secondary fs-18"></i></a>
                                             </td>
                                         </tr>
                                     @empty

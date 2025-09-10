@@ -58,11 +58,16 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
             ],
             [
                 'id' => 3,
-                'slug' => 'team',
+                'slug' => 'trip',
                 'created_at' => '2025-08-10 08:00:00'
             ],
             [
                 'id' => 4,
+                'slug' => 'team',
+                'created_at' => '2025-08-10 08:00:00'
+            ],
+            [
+                'id' => 5,
                 'slug' => 'kontak-kami',
                 'created_at' => '2025-08-10 08:00:00'
             ],
