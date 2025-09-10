@@ -48,7 +48,7 @@ class HomeController extends Controller
         $data['bookings'] = $this->booking->orderBy('created_at','desc')->paginate(10);
         $data['payments'] = $this->payment->orderBy('created_at','desc')->paginate(10);
         $data['total_income'] = $this->payment->where('status','Success')->sum('amount');
-        $data['total_omset'] = $this->payment->sum('amount');
+        $data['total_omset'] = $this->payment->where('status','Success')->sum('amount');
         $data['total_order'] = $this->booking->count();
         $data['total_pending'] = $this->booking->where('status','Pending')->count();
         $data['total_cancel'] = $this->booking->where('status','Cancelled')->count();
