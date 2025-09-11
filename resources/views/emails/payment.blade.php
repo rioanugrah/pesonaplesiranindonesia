@@ -327,7 +327,7 @@ Thanks,<br>
                                                     style="font-family:'Catamaran',Arial,Helvetica,sans-serif;font-size:12px;line-height:24px;font-weight:900;font-style:normal;color:#ff9019;text-decoration:none;letter-spacing:2px;">
                                                     <singleline>
                                                         <div mc:edit Simpli>
-                                                            Hallo, {{ $booking->user->name }}
+                                                            Hallo, {{ $transaction->booking->user->name }}
                                                         </div>
                                                     </singleline>
                                                 </td>
@@ -386,7 +386,7 @@ Thanks,<br>
                                                                             <singleline>
                                                                                 <div mc:edit Simpli>
                                                                                     <strong
-                                                                                        style="color:#FFFFFF;">{{ $booking->booking_code }}</strong>
+                                                                                        style="color:#FFFFFF;">{{ $transaction->booking->booking_code }}</strong>
                                                                                 </div>
                                                                             </singleline>
                                                                         </td>
@@ -442,9 +442,9 @@ Thanks,<br>
                                                                             style="font-family:'Catamaran',Arial,Helvetica,sans-serif;font-size:16px;line-height:20px;font-weight:400;font-style:normal;color:#666666;text-decoration:none;letter-spacing:0px;">
                                                                             <singleline>
                                                                                 <div mc:edit Simpli>
-                                                                                    {{ json_decode($booking->payment->payment_billing)->first_name.' '.json_decode($booking->payment->payment_billing)->last_name }} <br>
-                                                                                    {{ $booking->user->email }} <br>
-                                                                                    {{ json_decode($booking->payment->payment_billing)->phone }}
+                                                                                    {{ json_decode($transaction->booking->payment->payment_billing)->first_name.' '.json_decode($transaction->booking->payment->payment_billing)->last_name }} <br>
+                                                                                    {{ $transaction->booking->user->email }} <br>
+                                                                                    {{ json_decode($transaction->booking->payment->payment_billing)->phone }}
                                                                                 </div>
                                                                             </singleline>
                                                                         </td>
@@ -477,7 +477,7 @@ Thanks,<br>
                                                                             style="font-family:'Catamaran',Arial,Helvetica,sans-serif;font-size:16px;line-height:20px;font-weight:400;font-style:normal;color:#666666;text-decoration:none;letter-spacing:0px;">
                                                                             <singleline>
                                                                                 <div mc:edit Simpli>
-                                                                                    {{ $booking->payment->payment_date }}
+                                                                                    {{ $transaction->booking->payment->payment_date }}
                                                                                 </div>
                                                                             </singleline>
                                                                         </td>
@@ -533,7 +533,7 @@ Thanks,<br>
                                                     style="font-family:'Catamaran',Arial,Helvetica,sans-serif;font-size:20px;line-height:24px;font-weight:700;font-style:normal;color:#ff9019;text-decoration:none;letter-spacing:0px;">
                                                     <singleline>
                                                         <div mc:edit Simpli>
-                                                            {{ $booking->booking_name }}
+                                                            {{ $transaction->booking->booking_name }}
                                                         </div>
                                                     </singleline>
                                                 </td>
@@ -547,10 +547,10 @@ Thanks,<br>
                                                     style="font-family:'Catamaran',Arial,Helvetica,sans-serif;font-size:16px;line-height:24px;font-weight:400;font-style:normal;color:#333333;text-decoration:none;letter-spacing:0px;">
                                                     <singleline>
                                                         <div mc:edit Simpli>
-                                                            Dewasa : {{ $booking->bookingDeparture->num_of_adult.' x Rp. '.number_format($booking->bookingDeparture->adult_price*$booking->bookingDeparture->num_of_adult,2,',','.') }}
+                                                            Dewasa : {{ $transaction->booking->bookingDeparture->num_of_adult.' x Rp. '.number_format($transaction->booking->bookingDeparture->adult_price*$transaction->booking->bookingDeparture->num_of_adult,2,',','.') }}
                                                         </div>
                                                         <div mc:edit Simpli>
-                                                            Anak - Anak : {{ $booking->bookingDeparture->num_of_child.' x Rp. '.number_format($booking->bookingDeparture->child_price*$booking->bookingDeparture->num_of_child,2,',','.') }}
+                                                            Anak - Anak : {{ $transaction->booking->bookingDeparture->num_of_child.' x Rp. '.number_format($transaction->booking->bookingDeparture->child_price*$transaction->booking->bookingDeparture->num_of_child,2,',','.') }}
                                                         </div>
                                                     </singleline>
                                                 </td>
@@ -564,7 +564,7 @@ Thanks,<br>
                                                     style="font-family:'Catamaran',Arial,Helvetica,sans-serif;font-size:16px;line-height:24px;font-weight:400;font-style:normal;color:#333333;text-decoration:none;letter-spacing:0px;">
                                                     <singleline>
                                                         <div mc:edit Simpli>
-                                                            <strong>Total Berangkat :</strong> {{ $booking->bookingDeparture->num_of_adult + $booking->bookingDeparture->num_of_child }} Pax
+                                                            <strong>Total Berangkat :</strong> {{ $transaction->booking->bookingDeparture->num_of_adult + $transaction->booking->bookingDeparture->num_of_child }} Pax
                                                         </div>
                                                     </singleline>
                                                 </td>
@@ -629,7 +629,7 @@ Thanks,<br>
                                                                             style="font-family:'Catamaran',Arial,Helvetica,sans-serif;font-size:16px;line-height:40px;font-weight:400;font-style:normal;color:#666666;text-decoration:none;letter-spacing:0px;">
                                                                             <singleline>
                                                                                 <div mc:edit Simpli>
-                                                                                    {{ $booking->payment->payment_method }}
+                                                                                    {{ $transaction->payment_method }}
                                                                                 </div>
                                                                             </singleline>
                                                                         </td>
@@ -654,12 +654,12 @@ Thanks,<br>
                                                                             style="font-family:'Catamaran',Arial,Helvetica,sans-serif;font-size:16px;line-height:40px;font-weight:400;font-style:normal;color:#666666;text-decoration:none;letter-spacing:0px;">
                                                                             <singleline>
                                                                                 <div mc:edit Simpli>
-                                                                                    @switch($booking->payment->status)
+                                                                                    @switch($transaction->status)
                                                                                         @case('Pending')
                                                                                             <span style="color: orange">Menunggu Pembayaran</span>
                                                                                             @break
                                                                                         @case('Success')
-                                                                                            <span style="color: green">Pembayaran Diterima</span>
+                                                                                            <span style="color: green">Pembayaran Berhasil</span>
                                                                                             @break
                                                                                         @case('Failed')
                                                                                             <span style="color: red">Pembayaran Gagal</span>
@@ -706,7 +706,7 @@ Thanks,<br>
                                                                 bgcolor="#ff9019">
                                                                 <singleline>
                                                                     <div mc:edit Simpli>
-                                                                        TOTAL: Rp. {{ number_format($booking->total_price,2,',','.') }}
+                                                                        TOTAL: Rp. {{ number_format($transaction->booking->total_price,2,',','.') }}
                                                                     </div>
                                                                 </singleline>
                                                             </td>

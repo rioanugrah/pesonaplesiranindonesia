@@ -13,14 +13,14 @@ class Payment extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $booking;
+    public $transaction;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($booking)
+    public function __construct($transaction)
     {
-        $this->booking = $booking;
+        $this->transaction = $transaction;
     }
 
     /**
@@ -29,7 +29,7 @@ class Payment extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Payment - '.$this->booking->booking_name,
+            subject: 'Payment - '.$this->transaction->booking->booking_name,
         );
     }
 

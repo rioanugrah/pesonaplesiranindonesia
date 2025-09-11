@@ -270,7 +270,7 @@ class FrontendController extends Controller
 
             // dd($inputPayment);
 
-            $this->payment->create($inputPayment);
+            $data['transaction'] = $this->payment->create($inputPayment);
 
             $data['booking'] = $this->booking->create([
                 'id' => $idBooking,
@@ -293,7 +293,7 @@ class FrontendController extends Controller
 
             DB::commit();
 
-            \Mail::to($request->email)->send(new \App\Mail\Payment($data['booking']));
+            \Mail::to($request->email)->send(new \App\Mail\Payment($data['transaction']));
 
             // dd($inputPayment);
             return redirect(json_decode($paymentDetail)->data->checkout_url);

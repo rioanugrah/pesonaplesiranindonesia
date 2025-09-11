@@ -166,7 +166,6 @@ class TripayController extends Controller
             switch ($status) {
                 case 'PAID':
                     $transaction->update([
-                        // 'transaction_reference' => $data->reference,
                         'status' => 'Success'
                     ]);
                     // $notifMail = $this->sendMail;
@@ -176,7 +175,7 @@ class TripayController extends Controller
                     //     json_decode($transaction->transaction_order)->email,json_decode($transaction->transaction_order)->phone,json_decode($transaction->transaction_order)->address,
                     //     $transaction->transaction_qty,$transaction->transaction_reference,$transaction->verifikasi_tiket->kode_tiket
                     // );
-                    \Mail::to(json_decode($transaction->payment_billing)->email)->send(new \App\Mail\Payment($transaction->booking));
+                    \Mail::to(json_decode($transaction->payment_billing)->email)->send(new \App\Mail\Payment($transaction));
                     break;
 
                 case 'EXPIRED':

@@ -104,13 +104,16 @@ class HomeController extends Controller
 
     public function email($id)
     {
-        $data['booking'] = $this->booking->find($id);
+        $data['transaction'] = $this->payment->with('booking')->whereHas('booking', function($query) use($id){
+                                            $query->where('id',$id);
+                                        })->first();
+        // $data['booking'] = $this->booking->find($id);
         // dd($data);
-        if (empty($data['booking'])) {
+        if (empty($data['transaction'])) {
             return redirect()->back();
         }
 
-        \Mail::to($data['booking']['user']['email'])->send(new \App\Mail\Payment($data['booking']));
+        \Mail::to($data['transaction']['booking']['user']['email'])->send(new \App\Mail\Payment($data['transaction']));
 
         return view('emails.payment',$data);
     }
