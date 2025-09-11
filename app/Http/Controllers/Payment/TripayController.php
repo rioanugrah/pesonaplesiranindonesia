@@ -157,6 +157,7 @@ class TripayController extends Controller
             $data['transaction'] = $this->payment->where('payment_references',$tripayReference)
                                             // ->where('status','Unpaid')
                                             ->first();
+                                            return $data;
             if (!$data['transaction']) {
                 return Response::json([
                     'success' => false,
