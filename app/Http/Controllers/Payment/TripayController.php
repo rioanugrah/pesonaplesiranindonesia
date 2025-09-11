@@ -154,11 +154,11 @@ class TripayController extends Controller
         $status = strtoupper((string) $data->status);
 
         if ($data->is_closed_payment === 1) {
-            $data = $this->payment->where('payment_references',$tripayReference)
+            $datas['transaction'] = $this->payment->where('payment_references',$tripayReference)
                                             // ->where('status','Unpaid')
                                             ->first();
-                                            return $data;
-            if (!$data['transaction']) {
+                                            // return $data;
+            if (!$datas['transaction']) {
                 return Response::json([
                     'success' => false,
                     'message' => 'No invoice found or already paid: ' . $invoiceId,
@@ -166,7 +166,7 @@ class TripayController extends Controller
             }
             switch ($status) {
                 case 'PAID':
-                    $data['transaction']->update([
+                    $datas['transaction']->update([
                         'status' => 'Success'
                     ]);
                     // $notifMail = $this->sendMail;
@@ -176,18 +176,18 @@ class TripayController extends Controller
                     //     json_decode($transaction->transaction_order)->email,json_decode($transaction->transaction_order)->phone,json_decode($transaction->transaction_order)->address,
                     //     $transaction->transaction_qty,$transaction->transaction_reference,$transaction->verifikasi_tiket->kode_tiket
                     // );
-                    \Mail::to(json_decode($data['transaction']->payment_billing)->email)->send(new \App\Mail\Payment($data['transaction']));
+                    \Mail::to(json_decode($datas['transaction']->payment_billing)->email)->send(new \App\Mail\Payment($datas['transaction']));
                     break;
 
                 case 'EXPIRED':
-                    $data['transaction']->update([
+                    $datas['transaction']->update([
                         // 'transaction_reference' => $data->reference,
                         'status' => 'Failed'
                     ]);
                     break;
 
                 case 'FAILED':
-                    $data['transaction']->update([
+                    $datas['transaction']->update([
                         // 'transaction_reference' => $data->reference,
                         'status' => 'Failed'
                     ]);
