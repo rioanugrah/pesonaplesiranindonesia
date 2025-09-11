@@ -101,4 +101,17 @@ class HomeController extends Controller
         $dompdf->render();
         return $dompdf->stream();
     }
+
+    public function email($id)
+    {
+        $data['booking'] = $this->booking->find($id);
+        // dd($data);
+        if (empty($data['booking'])) {
+            return redirect()->back();
+        }
+
+        \Mail::to($data['booking']['user']['email'])->send(new \App\Mail\Payment($data['booking']));
+
+        return view('emails.payment',$data);
+    }
 }

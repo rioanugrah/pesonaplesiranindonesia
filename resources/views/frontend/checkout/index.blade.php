@@ -100,7 +100,7 @@
                                             <div class="col-md-6">
                                                 <ul class="ticket mb-3">
                                                     <li class="mb-2 fw-bold">
-                                                        Departure Date:
+                                                        Tanggal Berangkat:
                                                     </li>
                                                     <li>
                                                         <input type="date" name="departure_date" class="form-control" value="{{ request()->post('departure_date') }}" readonly id="">
@@ -110,7 +110,7 @@
                                             <div class="col-md-6">
                                                 <ul class="ticket mb-3">
                                                     <li class="mb-2 fw-bold">
-                                                        Departure Time:
+                                                        Waktu Berangkat:
                                                     </li>
                                                     <li>
                                                         <input type="text" name="departure_time" class="form-control" value="{{ request()->post('departure_time') }}" readonly id="">
@@ -121,22 +121,12 @@
                                                 <ul class="ticket mb-3">
                                                     <li>
                                                         <input type="hidden" name="qty" class="form-control" min="1" max="5" value="{{ request()->post('qty') }}" readonly id="">
-                                                        <input type="hidden" name="adult" class="form-control" min="0" max="5" value="{{ request()->post('adult') }}" readonly id="inputAdult">
+                                                        <input type="hidden" name="child" class="form-control" min="0" max="5" value="{{ request()->post('child') }}" readonly id="inputChild">
                                                     </li>
                                                 </ul>
                                             </div>
                                         </div>
-                                        {{-- <ul class="ticket mb-3">
-                                            <li class="mb-2 fw-bold">
-                                                Extra Trip:
-                                            </li>
-                                            @foreach ($extra_prices as $item)
-                                            <li>
-                                                {{ $item['extra_name'].' - Rp. '.number_format($item['extra_price'],2,',','.') }}
-                                            </li>
-                                            @endforeach
-                                        </ul> --}}
-                                        <div class="fw-bold">Extra Trip:</div>
+                                        <div class="fw-bold">Perjalanan Ekstra:</div>
                                         <div class="row mb-3">
                                             @foreach ($extra_prices as $item)
                                             <div class="col-md-6">
@@ -150,19 +140,19 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <div class="fw-bold">Ticket Price</div>
+                                                <div class="fw-bold">Dewasa</div>
                                             </div>
                                             <div class="col-md-6 text-end">
                                                 <div>{{ request()->post('qty') }} x Rp. {{ number_format($trip->trip_price,2,',','.') }}</div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div class="fw-bold">Ticket Adult</div>
+                                                <div class="fw-bold">Anak - Anak</div>
                                             </div>
                                             <div class="col-md-6 text-end">
-                                                <div id="adult"></div>
+                                                <div id="child"></div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div class="fw-bold">Fee Admin</div>
+                                                <div class="fw-bold">Biaya Admin</div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="text-end" id="feeAdmin"></div>
@@ -200,12 +190,12 @@
                 console.log('Selected value:', this.value);
                 if (this.value.split('|')[0] != 'QRISC') {
                     document.getElementById('feeAdmin').innerHTML = formatterIDR.format(this.value.split('|')[1]);
-                    document.getElementById('total').innerHTML = formatterIDR.format(parseFloat(this.value.split('|')[1])+parseFloat({{ $total }})+parseFloat(50000*parseInt($('#inputAdult').val())));
-                    document.getElementById('adult').innerHTML = {{ request()->post('adult') }}+' x '+formatterIDR.format(50000*parseInt($('#inputAdult').val()));
+                    document.getElementById('total').innerHTML = formatterIDR.format(parseFloat(this.value.split('|')[1])+parseFloat({{ $total }})+parseFloat(50000*parseInt($('#inputChild').val())));
+                    document.getElementById('child').innerHTML = {{ request()->post('child') }}+' x '+formatterIDR.format(50000*parseInt($('#inputChild').val()));
                 }else{
                     document.getElementById('feeAdmin').innerHTML = formatterIDR.format((({{ $total }}*this.value.split('|')[1])/100)+parseFloat(this.value.split('|')[2]));
-                    document.getElementById('total').innerHTML = formatterIDR.format(parseFloat(({{ $total }}*this.value.split('|')[1])/100)+parseFloat({{ $total }})+parseFloat(this.value.split('|')[2])+parseFloat(50000*parseInt($('#inputAdult').val())));
-                    document.getElementById('adult').innerHTML = {{ request()->post('adult') }}+' x '+formatterIDR.format(50000*parseInt($('#inputAdult').val()));
+                    document.getElementById('total').innerHTML = formatterIDR.format(parseFloat(({{ $total }}*this.value.split('|')[1])/100)+parseFloat({{ $total }})+parseFloat(this.value.split('|')[2])+parseFloat(50000*parseInt($('#inputChild').val())));
+                    document.getElementById('child').innerHTML = {{ request()->post('child') }}+' x '+formatterIDR.format(50000*parseInt($('#inputChild').val()));
                 }
                 // You can perform actions here based on the selected radio button
             });

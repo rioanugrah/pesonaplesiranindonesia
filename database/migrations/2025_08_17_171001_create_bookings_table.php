@@ -29,10 +29,10 @@ return new class extends Migration
             $table->uuid('booking_id');
             $table->date('booking_date');
             $table->time('booking_time');
-            $table->integer('num_of_people');
             $table->integer('num_of_adult');
-            $table->decimal('people_price', 20, 2);
+            $table->integer('num_of_child');
             $table->decimal('adult_price', 20, 2);
+            $table->decimal('child_price', 20, 2);
             $table->index(['booking_id']);
             $table->timestamps();
         });

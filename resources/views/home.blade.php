@@ -192,6 +192,7 @@
                                                 @endswitch
                                             </td>
                                             <td>
+                                                <a href="{{ route('sendEmail',['id' => $booking->id]) }}"><i class="las la-envelope text-secondary fs-18"></i></a>
                                                 <a href="#"><i class="las la-print text-secondary fs-18"></i></a>
                                                 <a href="#"><i class="las la-download text-secondary fs-18"></i></a>
                                             </td>

@@ -118,7 +118,7 @@
                                     </ul>
                                     <ul class="ticket">
                                         <li>
-                                            Tickets:
+                                            Dewasa:
                                         </li>
                                         <li>
                                             <input type="number" class="form-control qty" name="qty" min="1" max="5" value="1">
@@ -126,10 +126,10 @@
                                     </ul>
                                     <ul class="ticket">
                                         <li>
-                                            Adult:
+                                            Anak - Anak:
                                         </li>
                                         <li>
-                                            <input type="number" class="form-control" name="adult" min="0" max="5" value="0">
+                                            <input type="number" class="form-control" name="child" min="0" max="5" value="0">
                                         </li>
                                     </ul>
                                 </div>

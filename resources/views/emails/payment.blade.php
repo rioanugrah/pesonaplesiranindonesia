@@ -327,7 +327,7 @@ Thanks,<br>
                                                     style="font-family:'Catamaran',Arial,Helvetica,sans-serif;font-size:12px;line-height:24px;font-weight:900;font-style:normal;color:#ff9019;text-decoration:none;letter-spacing:2px;">
                                                     <singleline>
                                                         <div mc:edit Simpli>
-                                                            Hallo, ....
+                                                            Hallo, {{ $booking->user->name }}
                                                         </div>
                                                     </singleline>
                                                 </td>
@@ -385,8 +385,8 @@ Thanks,<br>
                                                                             style="font-family:'Catamaran',Arial,Helvetica,sans-serif;font-size:22px;line-height:26px;font-weight:400;font-style:normal;color:#FFFFFF;text-decoration:none;letter-spacing:0px;">
                                                                             <singleline>
                                                                                 <div mc:edit Simpli>
-                                                                                    ORDER: <strong
-                                                                                        style="color:#FFFFFF;">WR#5TB5@QXZ</strong>
+                                                                                    <strong
+                                                                                        style="color:#FFFFFF;">{{ $booking->booking_code }}</strong>
                                                                                 </div>
                                                                             </singleline>
                                                                         </td>
@@ -442,9 +442,9 @@ Thanks,<br>
                                                                             style="font-family:'Catamaran',Arial,Helvetica,sans-serif;font-size:16px;line-height:20px;font-weight:400;font-style:normal;color:#666666;text-decoration:none;letter-spacing:0px;">
                                                                             <singleline>
                                                                                 <div mc:edit Simpli>
-                                                                                    {{ $billing['first_name'].' '.$billing['last_name'] }} <br>
-                                                                                    {{ $billing['email'] }} <br>
-                                                                                    {{ $billing['phone'] }}
+                                                                                    {{ json_decode($booking->payment->payment_billing)->first_name.' '.json_decode($booking->payment->payment_billing)->last_name }} <br>
+                                                                                    {{ $booking->user->email }} <br>
+                                                                                    {{ json_decode($booking->payment->payment_billing)->phone }}
                                                                                 </div>
                                                                             </singleline>
                                                                         </td>
@@ -477,7 +477,7 @@ Thanks,<br>
                                                                             style="font-family:'Catamaran',Arial,Helvetica,sans-serif;font-size:16px;line-height:20px;font-weight:400;font-style:normal;color:#666666;text-decoration:none;letter-spacing:0px;">
                                                                             <singleline>
                                                                                 <div mc:edit Simpli>
-                                                                                    02/26/21 – 02/28/21
+                                                                                    {{ $booking->payment->payment_date }}
                                                                                 </div>
                                                                             </singleline>
                                                                         </td>
@@ -516,26 +516,6 @@ Thanks,<br>
                                     <td height="40" style="font-size:40px;line-height:40px;" Simpli>&nbsp;</td>
                                 </tr>
                                 <tr>
-                                    <td class="center-text" Simpli align="center"
-                                        style="font-family:'Catamaran',Arial,Helvetica,sans-serif;font-size:12px;line-height:24px;font-weight:900;font-style:normal;color:#ff9019;text-decoration:none;letter-spacing:2px;">
-                                        <singleline>
-                                            <div mc:edit Simpli>
-                                                WHAT'S INSIDE
-                                            </div>
-                                        </singleline>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="center-text" Simpli align="center"
-                                        style="font-family:'Catamaran',Arial,Helvetica,sans-serif;font-size:28px;line-height:34px;font-weight:700;font-style:normal;color:#333333;text-decoration:none;letter-spacing:0px;">
-                                        <singleline>
-                                            <div mc:edit Simpli>
-                                                Your Member
-                                            </div>
-                                        </singleline>
-                                    </td>
-                                </tr>
-                                <tr>
                                     <td height="20" style="font-size:20px;line-height:20px;" Simpli>&nbsp;</td>
                                 </tr>
                                 <tr>
@@ -553,7 +533,7 @@ Thanks,<br>
                                                     style="font-family:'Catamaran',Arial,Helvetica,sans-serif;font-size:20px;line-height:24px;font-weight:700;font-style:normal;color:#ff9019;text-decoration:none;letter-spacing:0px;">
                                                     <singleline>
                                                         <div mc:edit Simpli>
-                                                            Product Name
+                                                            {{ $booking->booking_name }}
                                                         </div>
                                                     </singleline>
                                                 </td>
@@ -567,8 +547,10 @@ Thanks,<br>
                                                     style="font-family:'Catamaran',Arial,Helvetica,sans-serif;font-size:16px;line-height:24px;font-weight:400;font-style:normal;color:#333333;text-decoration:none;letter-spacing:0px;">
                                                     <singleline>
                                                         <div mc:edit Simpli>
-                                                            Lorem ipsum dolor sit amet, consec tetur adipisicing elit,
-                                                            sed do eiusmod tempor ut labore et dolore.
+                                                            Dewasa : {{ $booking->bookingDeparture->num_of_adult.' x Rp. '.number_format($booking->bookingDeparture->adult_price*$booking->bookingDeparture->num_of_adult,2,',','.') }}
+                                                        </div>
+                                                        <div mc:edit Simpli>
+                                                            Anak - Anak : {{ $booking->bookingDeparture->num_of_child.' x Rp. '.number_format($booking->bookingDeparture->child_price*$booking->bookingDeparture->num_of_child,2,',','.') }}
                                                         </div>
                                                     </singleline>
                                                 </td>
@@ -582,27 +564,7 @@ Thanks,<br>
                                                     style="font-family:'Catamaran',Arial,Helvetica,sans-serif;font-size:16px;line-height:24px;font-weight:400;font-style:normal;color:#333333;text-decoration:none;letter-spacing:0px;">
                                                     <singleline>
                                                         <div mc:edit Simpli>
-                                                            <strong>Color:</strong> white
-                                                        </div>
-                                                    </singleline>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="center-text" Simpli align="left"
-                                                    style="font-family:'Catamaran',Arial,Helvetica,sans-serif;font-size:16px;line-height:24px;font-weight:400;font-style:normal;color:#333333;text-decoration:none;letter-spacing:0px;">
-                                                    <singleline>
-                                                        <div mc:edit Simpli>
-                                                            <strong>Qty:</strong> 1
-                                                        </div>
-                                                    </singleline>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="center-text" Simpli align="left"
-                                                    style="font-family:'Catamaran',Arial,Helvetica,sans-serif;font-size:16px;line-height:24px;font-weight:400;font-style:normal;color:#333333;text-decoration:none;letter-spacing:0px;">
-                                                    <singleline>
-                                                        <div mc:edit Simpli>
-                                                            <strong>Price:</strong> $199.99
+                                                            <strong>Total Berangkat :</strong> {{ $booking->bookingDeparture->num_of_adult + $booking->bookingDeparture->num_of_child }} Pax
                                                         </div>
                                                     </singleline>
                                                 </td>
@@ -648,7 +610,6 @@ Thanks,<br>
                                                         <tr>
                                                             <td>
 
-
                                                                 <table border="0" align="left" cellpadding="0"
                                                                     cellspacing="0" role="presentation"
                                                                     class="row" width="240"
@@ -668,14 +629,49 @@ Thanks,<br>
                                                                             style="font-family:'Catamaran',Arial,Helvetica,sans-serif;font-size:16px;line-height:40px;font-weight:400;font-style:normal;color:#666666;text-decoration:none;letter-spacing:0px;">
                                                                             <singleline>
                                                                                 <div mc:edit Simpli>
-                                                                                    Mastercard ending in 4097
+                                                                                    {{ $booking->payment->payment_method }}
                                                                                 </div>
                                                                             </singleline>
                                                                         </td>
                                                                     </tr>
                                                                 </table>
+                                                                <table border="0" align="right" cellpadding="0"
+                                                                    cellspacing="0" role="presentation"
+                                                                    class="row" width="240"
+                                                                    style="width:240px;max-width:240px;">
+                                                                    <tr>
+                                                                        <td class="center-text" Simpli align="left"
+                                                                            style="font-family:'Catamaran',Arial,Helvetica,sans-serif;font-size:20px;line-height:24px;font-weight:700;font-style:normal;color:#00000c;text-decoration:none;letter-spacing:0px;">
+                                                                            <singleline>
+                                                                                <div mc:edit Simpli>
+                                                                                    Status
+                                                                                </div>
+                                                                            </singleline>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="center-text" Simpli align="left"
+                                                                            style="font-family:'Catamaran',Arial,Helvetica,sans-serif;font-size:16px;line-height:40px;font-weight:400;font-style:normal;color:#666666;text-decoration:none;letter-spacing:0px;">
+                                                                            <singleline>
+                                                                                <div mc:edit Simpli>
+                                                                                    @switch($booking->payment->status)
+                                                                                        @case('Pending')
+                                                                                            <span style="color: orange">Menunggu Pembayaran</span>
+                                                                                            @break
+                                                                                        @case('Success')
+                                                                                            <span style="color: green">Pembayaran Diterima</span>
+                                                                                            @break
+                                                                                        @case('Failed')
+                                                                                            <span style="color: red">Pembayaran Gagal</span>
+                                                                                            @break
+                                                                                        @default
 
-
+                                                                                    @endswitch
+                                                                                </div>
+                                                                            </singleline>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
 
                                                                 <table border="0" align="left" cellpadding="0"
                                                                     cellspacing="0" role="presentation"
@@ -687,119 +683,6 @@ Thanks,<br>
                                                                             &nbsp;</td>
                                                                     </tr>
                                                                 </table>
-
-
-
-                                                                <table border="0" align="left" cellpadding="0"
-                                                                    cellspacing="0" role="presentation"
-                                                                    class="row m-padding-top20" width="250"
-                                                                    style="width:250px;max-width:250px;">
-                                                                    <tr>
-                                                                        <td align="center">
-
-                                                                            <table border="0" align="right"
-                                                                                cellpadding="0" cellspacing="0"
-                                                                                role="presentation"
-                                                                                class="center-float">
-                                                                                <tr>
-                                                                                    <td align="center">
-
-
-                                                                                        <table border="0"
-                                                                                            align="left"
-                                                                                            cellpadding="0"
-                                                                                            cellspacing="0"
-                                                                                            role="presentation"
-                                                                                            width="100"
-                                                                                            style="width:100px;max-width:100px;">
-                                                                                            <tr>
-                                                                                                <td Simpli
-                                                                                                    align="right"
-                                                                                                    style="font-family:'Catamaran',Arial,Helvetica,sans-serif;font-size:20px;line-height:30px;font-weight:700;font-style:normal;color:#00000c;text-decoration:none;letter-spacing:0px;">
-                                                                                                    <singleline>
-                                                                                                        <div mc:edit
-                                                                                                            Simpli>
-                                                                                                            Subtotal:
-                                                                                                        </div>
-                                                                                                    </singleline>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                            <tr>
-                                                                                                <td Simpli
-                                                                                                    align="right"
-                                                                                                    style="font-family:'Catamaran',Arial,Helvetica,sans-serif;font-size:20px;line-height:30px;font-weight:700;font-style:normal;color:#00000c;text-decoration:none;letter-spacing:0px;">
-                                                                                                    <singleline>
-                                                                                                        <div mc:edit
-                                                                                                            Simpli>
-                                                                                                            Tax:
-                                                                                                        </div>
-                                                                                                    </singleline>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                        </table>
-
-
-
-                                                                                        <table border="0"
-                                                                                            align="left"
-                                                                                            cellpadding="0"
-                                                                                            cellspacing="0"
-                                                                                            role="presentation"
-                                                                                            width="20"
-                                                                                            style="width:20px;max-width:20px;">
-                                                                                            <tr>
-                                                                                                <td height="20"
-                                                                                                    style="font-size:20px;line-height:20px;">
-                                                                                                    &nbsp;</td>
-                                                                                            </tr>
-                                                                                        </table>
-
-
-
-                                                                                        <table border="0"
-                                                                                            align="left"
-                                                                                            cellpadding="0"
-                                                                                            cellspacing="0"
-                                                                                            role="presentation"
-                                                                                            width="70"
-                                                                                            style="width:70px;max-width:70px;">
-                                                                                            <tr>
-                                                                                                <td Simpli
-                                                                                                    align="left"
-                                                                                                    style="font-family:'Catamaran',Arial,Helvetica,sans-serif;font-size:20px;line-height:30px;font-weight:400;font-style:normal;color:#00000c;text-decoration:none;letter-spacing:0px;">
-                                                                                                    <singleline>
-                                                                                                        <div mc:edit
-                                                                                                            Simpli>
-                                                                                                            Rp.
-                                                                                                            1.500.000
-                                                                                                        </div>
-                                                                                                    </singleline>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                            <tr>
-                                                                                                <td Simpli
-                                                                                                    align="left"
-                                                                                                    style="font-family:'Catamaran',Arial,Helvetica,sans-serif;font-size:20px;line-height:30px;font-weight:400;font-style:normal;color:#00000c;text-decoration:none;letter-spacing:0px;">
-                                                                                                    <singleline>
-                                                                                                        <div mc:edit
-                                                                                                            Simpli>
-                                                                                                            $96.00
-                                                                                                        </div>
-                                                                                                    </singleline>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                        </table>
-
-
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </table>
-
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
-
-
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -808,7 +691,6 @@ Thanks,<br>
                                                             </td>
                                                         </tr>
                                                     </table>
-
 
                                                 </td>
                                             </tr>
@@ -824,7 +706,7 @@ Thanks,<br>
                                                                 bgcolor="#ff9019">
                                                                 <singleline>
                                                                     <div mc:edit Simpli>
-                                                                        TOTAL: Rp. 1.500.000
+                                                                        TOTAL: Rp. {{ number_format($booking->total_price,2,',','.') }}
                                                                     </div>
                                                                 </singleline>
                                                             </td>

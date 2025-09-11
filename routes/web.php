@@ -29,17 +29,21 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
         Route::get('kontak-kami', 'kontak_kami')->name('frontend.kontak_kami');
     });
 
-    Route::get('test-email', function() {
-        $data['billing'] = [
-            'first_name' => 'Rio',
-            'last_name' => 'Anugrah',
-            'email' => 'rioanugrah999@gmail.com',
-            'phone' => '08',
-        ];
-        return view('emails.payment',$data);
-        \Mail::to('rioanugrah999@gmail.com')->send(new \App\Mail\Payment());
-        dd("Email is sent successfully.");
-    });
+    // Route::get('test-email', function() {
+    //     $data['billing'] = [
+    //         'first_name' => 'Rio',
+    //         'last_name' => 'Anugrah',
+    //         'email' => 'rioanugrah999@gmail.com',
+    //         'phone' => '08',
+    //     ];
+    //     return view('emails.payment',$data);
+    //     \Mail::to('rioanugrah999@gmail.com')->send(new \App\Mail\Payment());
+    //     dd("Email is sent successfully.");
+    // });
+
+    // Route::controller(App\Http\Controllers\HomeController::class)->group(function () {
+    //     Route::get('coba-email/{id}', 'email')->name('backend.emailTest');
+    // });
 
     // Route::get('trips', [App\Http\Controllers\TripController::class, 'index']);
     // Route::get('trips/{trip}', [App\Http\Controllers\TripController::class, 'show']);
@@ -151,6 +155,10 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
                     });
                 });
             });
+        });
+
+        Route::controller(App\Http\Controllers\HomeController::class)->group(function () {
+            Route::get('send-email/{id}', 'email')->name('sendEmail')->middleware('verified');
         });
 
         Route::group(['middleware' => ['role:Users']], function(){
