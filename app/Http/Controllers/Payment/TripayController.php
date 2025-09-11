@@ -154,7 +154,7 @@ class TripayController extends Controller
         $status = strtoupper((string) $data->status);
 
         if ($data->is_closed_payment === 1) {
-            $data['transaction'] = $this->payment->where('payment_references',$tripayReference)
+            $data = $this->payment->where('payment_references',$tripayReference)
                                             // ->where('status','Unpaid')
                                             ->first();
                                             return $data;
