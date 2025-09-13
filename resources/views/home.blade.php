@@ -165,7 +165,6 @@
                                         <th class="border-top-0">Booking Name</th>
                                         <th class="border-top-0">Amount</th>
                                         <th class="border-top-0">Status</th>
-                                        <th class="border-top-0">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -175,13 +174,13 @@
                                             <td>{{ $booking->booking_code }}</td>
                                             <td>{{ $booking->user->name }}</td>
                                             <td>{{ $booking->booking_name }}</td>
-                                            <td>{{ 'IDR ' . number_format($booking->total_price, 2, ',', '.') }}</td>
+                                            <td>{{ 'Rp. ' . number_format($booking->total_price, 2, ',', '.') }}</td>
                                             <td>
                                                 @switch($booking->status)
                                                     @case('Pending')
                                                         <span class="badge bg-warning text-dark">Menunggu Konfirmasi</span>
                                                         @break
-                                                    @case('Confirm')
+                                                    @case('Confirmed')
                                                         <span class="badge bg-success">Success</span>
                                                         @break
                                                     @case('Cancelled')
@@ -190,11 +189,6 @@
                                                     @default
 
                                                 @endswitch
-                                            </td>
-                                            <td>
-                                                <a href="{{ route('sendEmail',['id' => $booking->id]) }}"><i class="las la-envelope text-secondary fs-18"></i></a>
-                                                <a href="#"><i class="las la-print text-secondary fs-18"></i></a>
-                                                <a href="#"><i class="las la-download text-secondary fs-18"></i></a>
                                             </td>
                                         </tr>
                                     @empty
@@ -231,7 +225,6 @@
                                         <th class="border-top-0">Payment Method</th>
                                         <th class="border-top-0">Amount</th>
                                         <th class="border-top-0">Status</th>
-                                        <th class="border-top-0">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -246,23 +239,19 @@
                                                 @switch($payment->status)
                                                     @case('Pending')
                                                     <span
-                                                        class="badge bg-warning-subtle text-warning fs-11 fw-medium px-2">Menunggu Pembayaran</span>
+                                                        class="badge bg-warning text-dark fs-11 fw-medium px-2">Menunggu Pembayaran</span>
                                                         @break
                                                     @case('Success')
                                                     <span
-                                                        class="badge bg-success-subtle text-success fs-11 fw-medium px-2">Success</span>
+                                                        class="badge bg-success text-success fs-11 fw-medium px-2">Success</span>
                                                         @break
                                                     @case('Failed')
                                                     <span
-                                                        class="badge bg-danger-subtle text-danger fs-11 fw-medium px-2">Gagal Pembayaran</span>
+                                                        class="badge bg-danger text-danger fs-11 fw-medium px-2">Gagal Pembayaran</span>
                                                         @break
                                                     @default
 
                                                 @endswitch
-                                            </td>
-                                            <td>
-                                                <a href="#"><i class="las la-print text-secondary fs-18"></i></a>
-                                                <a href="#"><i class="las la-download text-secondary fs-18"></i></a>
                                             </td>
                                         </tr>
                                     @empty
