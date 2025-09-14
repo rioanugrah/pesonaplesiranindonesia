@@ -219,19 +219,33 @@ class FrontendController extends Controller
             }
 
             if (explode('|',$request->method)[0] == 'QRISC') {
-                $price = $packet->trip_price*$request->qty;
-                $priceChild = $request->child*50000;
-                $totalExtraPrice = $extraPrice;
-                $feeAdmin = (($price+$priceChild+$totalExtraPrice)*(explode('|',$request->method)[1] / 100))+explode('|',$request->method)[2];
-                // $feeAdmin = (explode('|',$request->method)[1] / 100);
+                if ($packet->trip_category == 'O') {
+                    $price = $packet->trip_price*$request->qty;
+                    $priceChild = $request->child*50000;
+                    $totalExtraPrice = $extraPrice;
+                    $feeAdmin = (($price+$priceChild+$totalExtraPrice)*(explode('|',$request->method)[1] / 100))+explode('|',$request->method)[2];
+                    // $feeAdmin = (explode('|',$request->method)[1] / 100);
 
-                $inputPayment['fee_admin'] = $feeAdmin;
+                    $inputPayment['fee_admin'] = $feeAdmin;
 
-                $inputPayment['amount'] = $price+$priceChild+$totalExtraPrice;
-                // $inputPayment['amount'] = (($price+$totalExtraPrice)*$feeAdmin)+explode('|',$request->method)[2]+$price+$priceAdult+$totalExtraPrice;
-                $amount = $price+$priceChild+$totalExtraPrice;
+                    $inputPayment['amount'] = $price+$priceChild+$totalExtraPrice;
+                    // $inputPayment['amount'] = (($price+$totalExtraPrice)*$feeAdmin)+explode('|',$request->method)[2]+$price+$priceAdult+$totalExtraPrice;
+                    $amount = $price+$priceChild+$totalExtraPrice;
+                }else{
+                    $price = $packet->trip_price*$request->qty;
+                    $priceChild = $request->child*50000;
+                    $totalExtraPrice = $extraPrice;
+                    $feeAdmin = (($price+$priceChild+$totalExtraPrice)*(explode('|',$request->method)[1] / 100))+explode('|',$request->method)[2];
+                    // $feeAdmin = (explode('|',$request->method)[1] / 100);
+
+                    $inputPayment['fee_admin'] = $feeAdmin;
+
+                    $inputPayment['amount'] = $price+$priceChild+$totalExtraPrice;
+                    // $inputPayment['amount'] = (($price+$totalExtraPrice)*$feeAdmin)+explode('|',$request->method)[2]+$price+$priceAdult+$totalExtraPrice;
+                    $amount = $price+$priceChild+$totalExtraPrice;
+                }
             }else{
-                $price = $packet->trip_price*$request->qty;
+                $price = $packet->trip_price*1;
                 $priceChild = $request->child*50000;
                 $totalExtraPrice = $extraPrice;
                 $feeAdmin = explode('|',$request->method)[1];
