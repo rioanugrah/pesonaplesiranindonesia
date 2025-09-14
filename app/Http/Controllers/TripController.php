@@ -26,8 +26,8 @@ class TripController extends Controller
     ){
         $this->middleware('permission:trip-list', ['only' => ['index','show']]);
         $this->middleware('permission:trip-create', ['only' => ['create','simpan']]);
-        $this->middleware('permission:trip-edit', ['only' => ['edit']]);
-        $this->middleware('permission:trip-update', ['only' => ['update']]);
+        $this->middleware('permission:trip-edit', ['only' => ['edit','update']]);
+        // $this->middleware('permission:trip-update', ['only' => ['update']]);
         $this->middleware('permission:trip-delete', ['only' => ['destroy']]);
 
         $this->trip = $trip;
@@ -215,6 +215,8 @@ class TripController extends Controller
                 return redirect()->back()->with('error','Trip Tidak Ditemukan');
             }
 
+            // dd($request->all());
+
             $input['trip_name'] = $request->trip_name;
             $input['trip_category'] = $request->trip_category;
             $input['trip_description'] = $request->trip_description;
@@ -241,32 +243,34 @@ class TripController extends Controller
                 $input['trip_images'] = $fileName;
             }
 
-            $arrayDeleteTripGallery = [];
-            foreach (json_decode($trip->trip_gallery) as $key => $trip_gallery) {
-                $arrayDeleteTripGallery[] = '/plesiranindonesia/trip/trip_gallery/'.$trip->trip_code.'/'.$trip_gallery->trip_gallery;
+            if ($request->select_upload_file == 'Y') {
+                $arrayDeleteTripGallery = [];
+                foreach (json_decode($trip->trip_gallery) as $key => $trip_gallery) {
+                    $arrayDeleteTripGallery[] = '/plesiranindonesia/trip/trip_gallery/'.$trip->trip_code.'/'.$trip_gallery->trip_gallery;
+                }
+
+                Storage::disk('s3')->delete($arrayDeleteTripGallery);
+
+                $tujuanUploadTripGallery = 'plesiranindonesia/trip/trip_gallery/'.$trip->trip_code;
+
+                $array_trip_gallery = [];
+                foreach ($request->trip_gallery as $key => $trip_gallery) {
+                    $fileTripGallery = $trip_gallery['image_gallery'];
+                    $imgTripGallery = Image::make($fileTripGallery->path());
+                    $imgTripGallery = $imgTripGallery->encode('webp', 30);
+                    $fileNameTripGallery = 'trip_gallery_'.Carbon::now()->format('dmY_His').'_'.rand(1000,9999).'.webp';
+
+                    Storage::disk('s3')->putFileAs($tujuanUploadTripGallery, $fileTripGallery, $fileNameTripGallery);
+                    Storage::disk('s3')->setVisibility($tujuanUploadTripGallery."/".$fileNameTripGallery,"public");
+                    $resultTripGallery = Storage::disk('s3')->url($tujuanUploadTripGallery."/".$fileNameTripGallery);
+
+                    $array_trip_gallery[] = [
+                        'trip_gallery' => $fileNameTripGallery
+                    ];
+                }
+
+                $input['trip_gallery'] = json_encode($array_trip_gallery);
             }
-
-            Storage::disk('s3')->delete($arrayDeleteTripGallery);
-
-            $tujuanUploadTripGallery = 'plesiranindonesia/trip/trip_gallery/'.$trip->trip_code;
-
-            $array_trip_gallery = [];
-            foreach ($request->trip_gallery as $key => $trip_gallery) {
-                $fileTripGallery = $trip_gallery['image_gallery'];
-                $imgTripGallery = Image::make($fileTripGallery->path());
-                $imgTripGallery = $imgTripGallery->encode('webp', 30);
-                $fileNameTripGallery = 'trip_gallery_'.Carbon::now()->format('dmY_His').'_'.rand(1000,9999).'.webp';
-
-                Storage::disk('s3')->putFileAs($tujuanUploadTripGallery, $fileTripGallery, $fileNameTripGallery);
-                Storage::disk('s3')->setVisibility($tujuanUploadTripGallery."/".$fileNameTripGallery,"public");
-                $resultTripGallery = Storage::disk('s3')->url($tujuanUploadTripGallery."/".$fileNameTripGallery);
-
-                $array_trip_gallery[] = [
-                    'trip_gallery' => $fileNameTripGallery
-                ];
-            }
-
-            $input['trip_gallery'] = json_encode($array_trip_gallery);
 
             $trip->update($input);
 
