@@ -80,7 +80,7 @@
                                                     @default
 
                                                 @endswitch
-                                                <a href="#"><i class="fas fa-eye text-success ms-1 me-1 fs-18"></i></a>
+                                                <a href="{{ route('admin.booking.detail',['id' => $booking->id]) }}"><i class="fas fa-eye text-success ms-1 me-1 fs-18"></i></a>
                                                 <a href="#"><i class="fas fa-file-pdf text-primary ms-1 me-1 fs-18"></i></a>
                                             </td>
                                         </tr>

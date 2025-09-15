@@ -86,6 +86,17 @@ class BookingController extends Controller
         ]);
     }
 
+    public function detail($id)
+    {
+        $data['booking'] = $this->booking->find($id);
+
+        if (empty($data['booking'])) {
+            return redirect()->back()->with('error','Booking Tidak Ditemukan');
+        }
+
+        return view('backend.bookings.detail',$data);
+    }
+
     // Membuat booking baru untuk sebuah trip
     public function store(Request $request, Trip $trip)
     {

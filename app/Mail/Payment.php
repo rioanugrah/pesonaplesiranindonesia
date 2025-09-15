@@ -29,7 +29,7 @@ class Payment extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Payment - '.$this->transaction->booking->booking_name,
+            subject: 'Confirm Payment - '.$this->transaction->booking->booking_name,
         );
     }
 

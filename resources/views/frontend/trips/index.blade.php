@@ -40,12 +40,12 @@
                                                     <i class="fa-thin fa-location-dot"></i>
                                                     Indonesia
                                                 </li>
-                                                <li class="rating">
+                                                {{-- <li class="rating">
                                                     <div class="star">
                                                         <i class="fa-solid fa-star"></i>
                                                     </div>
                                                     <p>0</p>
-                                                </li>
+                                                </li> --}}
                                             </ul>
                                             <h5>
                                                 <a href="{{ route('frontend.trip_detail',['id' => $trip->id, 'trip_code' => $trip->trip_code]) }}">
@@ -57,13 +57,13 @@
                                                     <i class="fa-regular fa-clock"></i>
                                                     {{ $trip->created_at->diffForHumans() }}
                                                 </li>
-                                                <li>
+                                                {{-- <li>
                                                     <i class="fa-thin fa-users"></i>
                                                     50+
-                                                </li>
+                                                </li> --}}
                                             </ul>
                                             <div class="price">
-                                                <h6>IDR {{ number_format($trip->trip_price,2,',','.') }}<span>/Per pax</span></h6>
+                                                <h6>IDR {{ number_format($trip->trip_price,2,',','.') }}<span>/Per {{ $trip->trip_category == 'O' ? 'Pax' : '5 Pax' }} </span></h6>
                                                 <a href="{{ route('frontend.trip_detail',['id' => $trip->id, 'trip_code' => $trip->trip_code]) }}" class="theme-btn style-2">Book Now<i
                                                         class="fa-sharp fa-regular fa-arrow-right"></i></a>
                                             </div>

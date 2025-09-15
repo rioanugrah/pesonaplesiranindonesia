@@ -53,10 +53,17 @@
                             </div>
                         </li>
                     </ul>
+                    @auth
+                    <div class="header-button mt-4">
+                        <a href="{{ auth()->user()->hasRole('Administrator') == true  ? route('admin.home') : route('user.home') }}" class="theme-btn"> {{ auth()->user()->name }} <i
+                                class="fa-sharp fa-regular fa-arrow-right"></i></a>
+                    </div>
+                    @else
                     <div class="header-button mt-4">
                         <a href="{{ route('login') }}" class="theme-btn"> Login / Register <i
                                 class="fa-sharp fa-regular fa-arrow-right"></i></a>
                     </div>
+                    @endauth
                     <div class="social-icon d-flex align-items-center">
                         <a href="https://www.instagram.com/pesonaplesiranid.official/"><i class="fab fa-instagram"></i></a>
                         <a href="https://www.instagram.com/plesiranmalang.id/"><i class="fab fa-instagram"></i></a>

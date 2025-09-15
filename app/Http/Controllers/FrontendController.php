@@ -307,7 +307,9 @@ class FrontendController extends Controller
 
             DB::commit();
 
-            \Mail::to($request->email)->send(new \App\Mail\Payment($data['transaction']));
+            \Mail::to($request->email)
+                ->cc('rioanugrah999@gmail.com')
+                ->send(new \App\Mail\Payment($data['transaction']));
 
             // dd($inputPayment);
             return redirect(json_decode($paymentDetail)->data->checkout_url);

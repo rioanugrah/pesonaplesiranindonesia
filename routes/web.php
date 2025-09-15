@@ -119,6 +119,7 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
                         Route::get('/', 'index')->name('admin.booking')->middleware('verified');
                         Route::post('confirm/simpan', 'konfirmasi_simpan')->name('admin.booking.konfirmasi.simpan')->middleware('verified');
                         Route::get('{id}', 'konfirmasi')->name('admin.booking.konfirmasi')->middleware('verified');
+                        Route::get('{id}/detail', 'detail')->name('admin.booking.detail')->middleware('verified');
                     });
                 });
                 Route::prefix('transactions')->group(function(){
