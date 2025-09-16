@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Response;
 
 use App\Models\Payment;
 
+use \Carbon\Carbon;
+
 class TripayController extends Controller
 {
     function __construct(
@@ -167,6 +169,7 @@ class TripayController extends Controller
             switch ($status) {
                 case 'PAID':
                     $datas['transaction']->update([
+                        'payment_date' => Carbon::now(),
                         'status' => 'Success'
                     ]);
                     // $notifMail = $this->sendMail;

@@ -65,7 +65,9 @@ class RouteServiceProvider extends ServiceProvider
             return Limit::perMinute(60);
         });
         RateLimiter::for('login', function (Request $request) {
-            return Limit::perMinute(5)->by($request->user()?->id ?: $request->ip());
+            return Limit::perMinute(5)->by($request->user()?->id ?: $request->ip())->response(function (Request $request, array $headers) {
+                return response('Too many login attempts. Please try again in a minute.', 429);
+            });
         });
         // RateLimiter::for('login-apps', function (Request $request) {
         //     return Limit::perMinute(3)->by(optional($request->user())->id ?: $request->ip())->response(function () {

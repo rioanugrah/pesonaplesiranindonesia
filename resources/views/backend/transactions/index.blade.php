@@ -30,8 +30,9 @@
                                             <div class="card-body">
                                                 <div class="row d-flex justify-content-center">
                                                     <div class="col-9">
-                                                        <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Daily</p>
-                                                        <h4 class="mt-1 mb-0 fw-medium">IDR 0</h4>
+                                                        <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Harian</p>
+                                                        <p class="text-muted text-uppercase mb-0 fw-normal fs-13">{{ \Carbon\Carbon::now()->isoFormat('DD MMMM YYYY') }}</p>
+                                                        <h4 class="mt-1 mb-0 fw-medium">Rp. {{ number_format($totalDay,2,',','.') }}</h4>
                                                     </div>
 
                                                     <div class="col-3 align-self-center">
@@ -53,8 +54,9 @@
                                             <div class="card-body">
                                                 <div class="row d-flex justify-content-center">
                                                     <div class="col-9">
-                                                        <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Weekly</p>
-                                                        <h4 class="mt-1 mb-0 fw-medium">IDR 0</h4>
+                                                        <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Mingguan</p>
+                                                        <p class="text-muted text-uppercase mb-0 fw-normal fs-13">{{ \Carbon\Carbon::now()->startOfWeek()->isoFormat('DD MMMM YYYY').' - '.\Carbon\Carbon::now()->endOfWeek()->isoFormat('DD MMMM YYYY') }}</p>
+                                                        <h4 class="mt-1 mb-0 fw-medium">Rp. {{ number_format($totalWeek,2,',','.') }}</h4>
                                                     </div>
 
                                                     <div class="col-3 align-self-center">
@@ -76,9 +78,10 @@
                                             <div class="card-body">
                                                 <div class="row d-flex justify-content-center">
                                                     <div class="col-9">
-                                                        <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Monthly
+                                                        <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Bulanan
                                                         </p>
-                                                        <h4 class="mt-1 mb-0 fw-medium">IDR 0</h4>
+                                                        <p class="text-muted text-uppercase mb-0 fw-normal fs-13">{{ \Carbon\Carbon::now()->startOfMonth()->isoFormat('DD MMMM YYYY').' - '.\Carbon\Carbon::now()->endOfMonth()->isoFormat('DD MMMM YYYY') }}</p>
+                                                        <h4 class="mt-1 mb-0 fw-medium">Rp. {{ number_format($totalMonth,2,',','.') }}</h4>
                                                     </div>
 
                                                     <div class="col-3 align-self-center">
@@ -134,29 +137,49 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th class="border-top-0 text-center">#</th>
-                                        <th class="border-top-0 text-center">Date</th>
-                                        <th class="border-top-0 text-center">Payment Method</th>
-                                        <th class="border-top-0 text-center">Amount</th>
+                                        <th class="border-top-0 text-center">Tanggal</th>
+                                        <th class="border-top-0 text-center">Metode Pembayaran</th>
+                                        <th class="border-top-0 text-center">Total</th>
                                         <th class="border-top-0 text-center">Status</th>
-                                        <th class="border-top-0 text-center">Payment Date</th>
+                                        <th class="border-top-0 text-center">Tanggal Pembayaran</th>
                                         <th class="border-top-0 text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($payments as $payment)
+                                    @forelse ($payments as $key => $payment)
                                     <tr>
-                                        <td>{{ $payment->id }}</td>
-                                        <td>20 July 2024 <span>03:25pm</span></td>
-                                        <td>Transfer</td>
-                                        <td>IDR 500000</td>
-                                        <td><span
-                                                class="badge bg-success-subtle text-success fs-11 fw-medium px-2">Credit</span>
+                                        <td class="text-center">{{ $key+1 }}</td>
+                                        <td class="text-center">{{ \Carbon\Carbon::create($payment->created_at)->isoFormat('LLLL') }}</td>
+                                        <td class="text-center">{{ $payment->payment_method }}</td>
+                                        <td class="text-end">Rp. {{ number_format($payment->amount,2,',','.') }}</td>
+                                        <td class="text-center">
+                                            @switch($payment->status)
+                                                @case('Pending')
+                                                    <span
+                                                        class="badge bg-warning-subtle text-warning fs-11 fw-medium px-2">Menunggu Pembayaran</span>
+                                                        @break
+                                                @case('Success')
+                                                    <span
+                                                        class="badge bg-success-subtle text-success fs-11 fw-medium px-2">Pembayaran Berhasil</span>
+                                                    @break
+                                                @case('Failed')
+                                                    <span
+                                                        class="badge bg-danger-subtle text-danger fs-11 fw-medium px-2">Pembayaran Gagal</span>
+                                                    @break
+                                                @default
+
+                                            @endswitch
                                         </td>
-                                        <td>20 July 2024 <span>03:25pm</span></td>
-                                        <td>
+                                        <td class="text-center">
+                                            @if (empty($payment->payment_date))
+                                                <span class="text-danger">Belum Terbayar</span>
+                                            @else
+                                            {{ \Carbon\Carbon::create($payment->payment_date)->isoFormat('LLLL') }}
+                                            @endif
+                                        </td>
+                                        <td class="text-center">
                                             <a href="#"><i class="las la-print text-secondary fs-18"></i></a>
                                             <a href="#"><i class="las la-download text-secondary fs-18"></i></a>
-                                            <a href="#"><i class="las la-trash-alt text-secondary fs-18"></i></a>
                                         </td>
                                     </tr>
                                     @empty

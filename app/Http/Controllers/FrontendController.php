@@ -280,7 +280,6 @@ class FrontendController extends Controller
             );
 
             $inputPayment['payment_references'] = json_decode($paymentDetail)->data->reference;
-            $inputPayment['payment_date'] = Carbon::now();
 
             // dd($inputPayment);
 
