@@ -106,8 +106,7 @@
                     Reserved.
                 </p>
                 <ul class="bottom-list wow fadeInUp" data-wow-delay=".5s">
-                    <li>Terms of use</li>
-                    <li>Privacy Environmental Policy</li>
+                    <li><a href="{{ route('frontend.kebijakanprivasi') }}" class="text-white">Kebijakan Privasi</a></li>
                 </ul>
             </div>
         </div>

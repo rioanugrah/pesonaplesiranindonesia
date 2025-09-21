@@ -27,6 +27,7 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
         });
         Route::get('team', 'team')->name('frontend.team');
         Route::get('kontak-kami', 'kontak_kami')->name('frontend.kontak_kami');
+        Route::get('kebijakan-privasi', 'kebijakan_privasi')->name('frontend.kebijakanprivasi');
     });
 
     // Route::get('test-email', function() {

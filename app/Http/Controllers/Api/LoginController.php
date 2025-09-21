@@ -28,7 +28,14 @@ class LoginController extends Controller
         }
         $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
         return response()->json([
-            'access_token' => $token,
-        ]);
+            'status' => true,
+            'data' => [
+                'generate' => $user->generate,
+                'username' => $user->username,
+                'name' => $user->name,
+                'email' => $user->email
+            ],
+            'token' => $token,
+        ],200);
     }
 }

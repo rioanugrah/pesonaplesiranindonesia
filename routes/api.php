@@ -30,10 +30,27 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
             Route::get('/', 'getPayment');
         });
     });
-    // Route::middleware('auth:sanctum')->group( function () {
+    Route::middleware('auth:sanctum')->group( function () {
     //     Route::get('/',function(){
     //         return 'test';
     //     });
-
-    // });
+        Route::group(['middleware' => ['role:Users']], function(){
+            Route::controller(App\Http\Controllers\Api\TripsController::class)->group(function () {
+                Route::prefix('trips')->group(function(){
+                    Route::get('/', 'getTrip');
+                });
+            });
+            Route::controller(App\Http\Controllers\Api\BookingController::class)->group(function () {
+                Route::prefix('my-booking')->group(function(){
+                    Route::get('/', 'getMyBooking');
+                });
+            });
+            Route::controller(App\Http\Controllers\Api\UserController::class)->group(function () {
+                Route::prefix('user')->group(function(){
+                    Route::get('/', 'getUser');
+                    Route::get('{generate}', 'getUserDetail');
+                });
+            });
+        });
+    });
 });
