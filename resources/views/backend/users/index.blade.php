@@ -47,6 +47,8 @@
                                         <th class="text-center">Name</th>
                                         <th class="text-center">Email</th>
                                         <th class="text-center">Roles</th>
+                                        <th class="text-center">Last Seen</th>
+                                        <th class="text-center">Status</th>
                                         <th class="text-center">Actions</th>
                                     </tr>
                                 </thead>
@@ -62,40 +64,53 @@
                                                     @switch($v)
                                                         @case('Administrator')
                                                             <span class="badge bg-primary">{{ $v }}</span>
-                                                            @break
+                                                        @break
+
                                                         @case('Users')
                                                             <span class="badge bg-success">{{ $v }}</span>
-                                                            @break
-                                                        @default
+                                                        @break
 
+                                                        @default
                                                     @endswitch
                                                 @endforeach
                                             </td>
                                             <td class="text-center">
+                                                {{ empty($user->last_seen) ? '-' : \Carbon\Carbon::create($user->last_seen)->isoFormat('LLLL') }}
+                                            </td>
+                                            <td class="text-center">
+                                                @if (Cache::has('user-is-online-' . $user->id))
+                                                    <span class="text-success">Online</span>
+                                                @else
+                                                    <span class="text-secondary">Offline</span>
+                                                @endif
+                                            </td>
+                                            <td class="text-center">
                                                 <div class="flex-wrap gap-2">
-                                                    <a href="#" class="btn btn-success"><i class="fas fa-eye"></i> View</a>
+                                                    <a href="#" class="btn btn-success"><i class="fas fa-eye"></i>
+                                                        View</a>
                                                     @can('user-edit')
-                                                    <a href="{{ route('admin.users.edit',['generate' => $user->generate]) }}" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
+                                                        <a href="{{ route('admin.users.edit', ['generate' => $user->generate]) }}"
+                                                            class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
                                                     @endcan
                                                     @can('user-delete')
-                                                    <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
+                                                        <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i>
+                                                            Delete</a>
                                                     @endcan
                                                 </div>
                                             </td>
                                         </tr>
-                                    @empty
-
-                                    @endforelse
-                                </tbody>
-                            </table>
+                                        @empty
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-@endsection
-@section('js')
-    <script src="{{ asset('backend') }}/assets/libs/simple-datatables/umd/simple-datatables.js"></script>
-    <script src="{{ asset('backend') }}/assets/js/pages/datatable.init.js"></script>
-@endsection
+    @endsection
+    @section('js')
+        <script src="{{ asset('backend') }}/assets/libs/simple-datatables/umd/simple-datatables.js"></script>
+        <script src="{{ asset('backend') }}/assets/js/pages/datatable.init.js"></script>
+    @endsection
