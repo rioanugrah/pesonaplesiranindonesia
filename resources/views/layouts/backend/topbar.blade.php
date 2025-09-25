@@ -233,7 +233,7 @@
                     <div class="dropdown-menu dropdown-menu-end py-0">
                         <div class="d-flex align-items-center dropdown-item py-2 bg-secondary-subtle">
                             <div class="flex-shrink-0">
-                                <img src="assets/images/users/avatar-1.jpg" alt=""
+                                <img src="{{ asset('backend') }}/assets/images/users/avatar-1.jpg" alt=""
                                     class="thumb-md rounded-circle">
                             </div>
                             <div class="flex-grow-1 ms-2 text-truncate align-self-center">
@@ -241,7 +241,7 @@
                                 <small class="text-muted mb-0">{{ auth()->user()->email }}</small>
                             </div>
                         </div>
-                        <div class="dropdown-divider mt-0"></div>
+                        {{-- <div class="dropdown-divider mt-0"></div>
                         <small class="text-muted px-2 pb-1 d-block">Account</small>
                         <a class="dropdown-item" href="pages-profile.html"><i
                                 class="las la-user fs-18 me-1 align-text-bottom"></i> Profile</a>
@@ -252,7 +252,7 @@
                                 class="las la-lock fs-18 me-1 align-text-bottom"></i> Security</a>
                         <a class="dropdown-item" href="pages-faq.html"><i
                                 class="las la-question-circle fs-18 me-1 align-text-bottom"></i> Help Center</a>
-                        <div class="dropdown-divider mb-0"></div>
+                        <div class="dropdown-divider mb-0"></div> --}}
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
                         </form>

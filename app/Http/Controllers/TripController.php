@@ -51,6 +51,9 @@ class TripController extends Controller
         //                     ->rawColumns(['action','status','images'])
         //                     ->make(true);
         // }
+        // activity()->all()->last();
+        // activity()->log('Look mum, I logged something');
+
         return view('backend.trips.index',$data);
     }
 

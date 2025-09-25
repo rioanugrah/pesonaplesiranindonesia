@@ -95,6 +95,7 @@
                             <div class="card-body pt-0">
                                 <form method="POST" class="my-4" action="{{ route('login') }}">
                                     @csrf
+                                    @include('components.alert')
                                     <div class="form-group mb-2">
                                         <label class="form-label" for="email">Email</label>
                                         <input type="email" class="form-control" id="email" name="email"

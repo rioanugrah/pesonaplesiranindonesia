@@ -5,11 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Booking extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use LogsActivity;
 
     public $table = 'bookings';
     protected $primaryKey = 'id';
@@ -17,6 +20,14 @@ class Booking extends Model
     protected $dates = ['deleted_at'];
 
     protected $guarded = [];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->logOnly(['user_id', 'payment_id'])
+        ->logOnlyDirty();
+        // Chain fluent methods for configuration options
+    }
 
     public function user()
     {

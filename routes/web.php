@@ -18,16 +18,18 @@ Auth::routes([
     'register' => true
 ]);
 Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
-    Route::controller(App\Http\Controllers\FrontendController::class)->group(function () {
-        Route::get('/', 'index')->name('frontend.index');
-        Route::get('tentang-kami', 'tentang_kami')->name('frontend.tentang_kami');
-        Route::prefix('trip')->group(function(){
-            Route::get('/', 'trip')->name('frontend.trip');
-            Route::get('{id}/{trip_code}', 'trip_detail')->name('frontend.trip_detail');
+    Route::middleware('LogVisits')->group(function(){
+        Route::controller(App\Http\Controllers\FrontendController::class)->group(function () {
+            Route::get('/', 'index')->name('frontend.index');
+            Route::get('tentang-kami', 'tentang_kami')->name('frontend.tentang_kami');
+            Route::prefix('trip')->group(function(){
+                Route::get('/', 'trip')->name('frontend.trip');
+                Route::get('{id}/{trip_code}', 'trip_detail')->name('frontend.trip_detail');
+            });
+            Route::get('team', 'team')->name('frontend.team');
+            Route::get('kontak-kami', 'kontak_kami')->name('frontend.kontak_kami');
+            Route::get('kebijakan-privasi', 'kebijakan_privasi')->name('frontend.kebijakanprivasi');
         });
-        Route::get('team', 'team')->name('frontend.team');
-        Route::get('kontak-kami', 'kontak_kami')->name('frontend.kontak_kami');
-        Route::get('kebijakan-privasi', 'kebijakan_privasi')->name('frontend.kebijakanprivasi');
     });
 
     // Route::get('test-email', function() {
@@ -101,7 +103,7 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
             });
         });
 
-        Route::group(['middleware' => ['role:Administrator']], function(){
+        Route::group(['middleware' => ['role:Administrator', 'LogVisits']], function(){
             Route::prefix('admin')->group(function(){
                 Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin.home')->middleware('verified');
                 Route::prefix('trips')->group(function(){
@@ -165,7 +167,7 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
             Route::get('send-email/{id}', 'email')->name('sendEmail')->middleware('verified');
         });
 
-        Route::group(['middleware' => ['role:Users']], function(){
+        Route::group(['middleware' => ['role:Users','LogVisits']], function(){
             Route::prefix('my-dashboard')->group(function(){
                 Route::controller(App\Http\Controllers\HomeController::class)->group(function () {
                     Route::get('home', 'index_user')->name('user.home')->middleware('verified');
