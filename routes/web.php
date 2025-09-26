@@ -106,8 +106,8 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
         Route::group(['middleware' => ['role:Administrator', 'LogVisits']], function(){
             Route::prefix('admin')->group(function(){
                 Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin.home')->middleware('verified');
-                Route::prefix('trips')->group(function(){
-                    Route::controller(App\Http\Controllers\TripController::class)->group(function () {
+                Route::controller(App\Http\Controllers\TripController::class)->group(function () {
+                    Route::prefix('trips')->group(function(){
                         Route::get('/', 'index')->name('admin.trip')->middleware('verified');
                         Route::get('create', 'create')->name('admin.trip.create')->middleware('verified');
                         Route::post('simpan', 'simpan')->name('admin.trip.simpan')->middleware('verified');
@@ -117,21 +117,21 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
                         Route::delete('{id}/delete', 'destroy')->name('admin.trip.destroy')->middleware('verified');
                     });
                 });
-                Route::prefix('bookings')->group(function(){
-                    Route::controller(App\Http\Controllers\BookingController::class)->group(function () {
+                Route::controller(App\Http\Controllers\BookingController::class)->group(function () {
+                    Route::prefix('bookings')->group(function(){
                         Route::get('/', 'index')->name('admin.booking')->middleware('verified');
                         Route::post('confirm/simpan', 'konfirmasi_simpan')->name('admin.booking.konfirmasi.simpan')->middleware('verified');
                         Route::get('{id}', 'konfirmasi')->name('admin.booking.konfirmasi')->middleware('verified');
                         Route::get('{id}/detail', 'detail')->name('admin.booking.detail')->middleware('verified');
                     });
                 });
-                Route::prefix('transactions')->group(function(){
-                    Route::controller(App\Http\Controllers\TransactionController::class)->group(function () {
+                Route::controller(App\Http\Controllers\TransactionController::class)->group(function () {
+                    Route::prefix('transactions')->group(function(){
                         Route::get('/', 'index')->name('admin.transaction')->middleware('verified');
                     });
                 });
-                Route::prefix('users')->group(function(){
-                    Route::controller(App\Http\Controllers\UserController::class)->group(function () {
+                Route::controller(App\Http\Controllers\UserController::class)->group(function () {
+                    Route::prefix('users')->group(function(){
                         Route::get('/', 'index')->name('admin.users')->middleware('verified');
                         Route::get('create', 'create')->name('admin.users.create')->middleware('verified');
                         Route::post('simpan', 'store')->name('admin.users.store')->middleware('verified');
@@ -139,8 +139,8 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
                         Route::post('{generate}/update', 'update')->name('admin.users.update')->middleware('verified');
                     });
                 });
-                Route::prefix('roles')->group(function(){
-                    Route::controller(App\Http\Controllers\RoleController::class)->group(function () {
+                Route::controller(App\Http\Controllers\RoleController::class)->group(function () {
+                    Route::prefix('roles')->group(function(){
                         Route::get('/', 'index')->name('admin.roles')->middleware('verified');
                         Route::get('create', 'create')->name('admin.roles.create')->middleware('verified');
                         Route::post('simpan', 'store')->name('admin.roles.store')->middleware('verified');
@@ -150,14 +150,19 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
                         Route::delete('{id}/delete', 'destroy')->name('admin.roles.destroy')->middleware('verified');
                     });
                 });
-                Route::prefix('permissions')->group(function(){
-                    Route::controller(App\Http\Controllers\PermissionController::class)->group(function () {
+                Route::controller(App\Http\Controllers\PermissionController::class)->group(function () {
+                    Route::prefix('permissions')->group(function(){
                         Route::get('/', 'index')->name('admin.permission')->middleware('verified');
                         Route::get('create', 'create')->name('admin.permission.create')->middleware('verified');
                         Route::post('simpan', 'store')->name('admin.permission.store')->middleware('verified');
                         Route::get('{id}/edit', 'edit')->name('admin.permission.edit')->middleware('verified');
                         Route::post('{id}/update', 'update')->name('admin.permission.update')->middleware('verified');
                         Route::delete('{id}/delete', 'destroy')->name('admin.permission.destroy')->middleware('verified');
+                    });
+                });
+                Route::controller(App\Http\Controllers\VisitorController::class)->group(function () {
+                    Route::prefix('visitors')->group(function(){
+                        Route::get('/', 'index')->name('admin.visitor')->middleware('verified');
                     });
                 });
             });

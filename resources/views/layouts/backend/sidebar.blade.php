@@ -76,6 +76,15 @@
                             <span>Permissions</span>
                         </a>
                     </li>
+                    <li class="menu-label mt-2">
+                        <span>Visitor</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.visitor') }}">
+                            <i class="iconoir-report-columns menu-icon"></i>
+                            <span>Visitor</span>
+                        </a>
+                    </li>
 
                 </ul>
             </div>
