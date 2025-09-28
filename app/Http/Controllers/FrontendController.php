@@ -272,7 +272,7 @@ class FrontendController extends Controller
                 'phone' => $request->no_telp,
             ]);
 
-            // dd($inputPayment);
+            dd($inputPayment);
 
             $paymentDetail = $this->tripay_payment->requestTransaction(
                 $packet->trip_name,
