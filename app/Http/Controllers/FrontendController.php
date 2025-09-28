@@ -286,7 +286,7 @@ class FrontendController extends Controller
 
             $inputPayment['payment_references'] = json_decode($paymentDetail)->data->reference;
 
-            dd($inputPayment);
+            // dd($inputPayment);
 
             $data['transaction'] = $this->payment->create($inputPayment);
 
@@ -308,6 +308,8 @@ class FrontendController extends Controller
                 'adult_price' => $packet->trip_price,
                 'child_price' => 50000,
             ]);
+
+            dd($data);
 
             DB::commit();
 
