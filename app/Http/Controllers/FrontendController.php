@@ -309,7 +309,7 @@ class FrontendController extends Controller
                 'child_price' => 50000,
             ]);
 
-            dd($data);
+            // dd($data);
 
             DB::commit();
 
