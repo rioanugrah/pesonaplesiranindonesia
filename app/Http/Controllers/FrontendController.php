@@ -272,7 +272,7 @@ class FrontendController extends Controller
                 'phone' => $request->no_telp,
             ]);
 
-            dd($inputPayment);
+            // dd($inputPayment);
 
             $paymentDetail = $this->tripay_payment->requestTransaction(
                 $packet->trip_name,
@@ -286,7 +286,7 @@ class FrontendController extends Controller
 
             $inputPayment['payment_references'] = json_decode($paymentDetail)->data->reference;
 
-            // dd($inputPayment);
+            dd($inputPayment);
 
             $data['transaction'] = $this->payment->create($inputPayment);
 
