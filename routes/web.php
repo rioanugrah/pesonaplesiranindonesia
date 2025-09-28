@@ -32,6 +32,14 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
         });
     });
 
+    Route::controller(App\Http\Controllers\TelegramController::class)->group(function () {
+        Route::prefix('telegram')->group(function(){
+            Route::get('sendMessage', 'sendMesssage');
+            Route::get('sendPhoto', 'sendPhoto');
+        });
+    });
+
+
     // Route::get('test-email', function() {
     //     $data['billing'] = [
     //         'first_name' => 'Rio',

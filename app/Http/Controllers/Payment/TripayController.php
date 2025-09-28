@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Response;
 
 use App\Models\Payment;
 
+use Telegram\Bot\Laravel\Facades\Telegram;
+use Telegram\Bot\FileUpload\InputFile;
+
 use \Carbon\Carbon;
 
 class TripayController extends Controller
@@ -182,6 +185,21 @@ class TripayController extends Controller
                     \Mail::to(json_decode($datas['transaction']->payment_billing)->email)
                             ->cc('rioanugrah999@gmail.com')
                             ->send(new \App\Mail\Payment($datas['transaction']));
+                    try {
+                        Telegram::sendMessage([
+                            'chat_id' => env('TELEGRAM_CHAT_ID'),
+                            'text' => 'Booking Code : '.$datas['transaction']['booking']['booking_code']."\n".
+                                    'Booking Name : '.$datas['transaction']['booking']['booking_name']."\n".
+                                    'Billing Name : '.json_decode($datas['transaction']['payment_billing'])->first_name.' '.json_decode($datas['transaction']['payment_billing'])->last_name."\n".
+                                    'Billing Email : '.json_decode($datas['transaction']['payment_billing'])->email."\n".
+                                    'Billing Phone : '.json_decode($datas['transaction']['payment_billing'])->phone."\n".
+                                    'Total : Rp. '.number_format($datas['transaction']['amount'],2,',','.')."\n".
+                                    'Status : '.$datas['transaction']['status']."\n".
+                                    'Tanggal Pembayaran : '.$datas['transaction']['payment_date']
+                        ]);
+                    } catch (\Exception $th) {
+
+                    }
                     break;
 
                 case 'EXPIRED':
