@@ -95,9 +95,9 @@
                     <table class="table">
                         <thead class="thead">
                             <tr class="tr">
-                                <th class="th" scope="col">Booking Code</th>
-                                <th class="th" scope="col">Booking Name</th>
-                                <th class="th" scope="col">Price</th>
+                                <th class="th" scope="col">Kode Booking</th>
+                                <th class="th" scope="col">Nama Booking</th>
+                                <th class="th" scope="col">Harga</th>
                                 <th class="th" scope="col">Status</th>
                             </tr>
                         </thead>

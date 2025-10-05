@@ -83,32 +83,32 @@ class FrontendController extends Controller
             ],
         ];
 
-        $data['tims'] = [
-            [
-                'id' => 1,
-                'name' => 'Nurwahid Abdillah',
-                'position' => 'Chief Executive Officer',
-                'image' => asset('frontend/assets/img/team/profil_wahid.jpg')
-            ],
-            [
-                'id' => 2,
-                'name' => 'Fabrizio Danindra K.',
-                'position' => 'Chief Operating Officer',
-                'image' => asset('frontend/assets/img/team/profil_dani.jpg')
-            ],
-            [
-                'id' => 3,
-                'name' => 'Bima Gani',
-                'position' => 'Chief Marketing Officer',
-                'image' => asset('frontend/assets/img/team/profil_bima.jpg')
-            ],
-            [
-                'id' => 4,
-                'name' => 'Rio Anugrah A.S',
-                'position' => 'Chief Technology Officer',
-                'image' => asset('frontend/assets/img/team/profil_rio.jpg')
-            ],
-        ];
+        // $data['tims'] = [
+        //     [
+        //         'id' => 1,
+        //         'name' => 'Nurwahid Abdillah',
+        //         'position' => 'Chief Executive Officer',
+        //         'image' => asset('frontend/assets/img/team/profil_wahid.jpg')
+        //     ],
+        //     [
+        //         'id' => 2,
+        //         'name' => 'Fabrizio Danindra K.',
+        //         'position' => 'Chief Operating Officer',
+        //         'image' => asset('frontend/assets/img/team/profil_dani.jpg')
+        //     ],
+        //     [
+        //         'id' => 3,
+        //         'name' => 'Bima Gani',
+        //         'position' => 'Chief Marketing Officer',
+        //         'image' => asset('frontend/assets/img/team/profil_bima.jpg')
+        //     ],
+        //     [
+        //         'id' => 4,
+        //         'name' => 'Rio Anugrah A.S',
+        //         'position' => 'Chief Technology Officer',
+        //         'image' => asset('frontend/assets/img/team/profil_rio.jpg')
+        //     ],
+        // ];
 
         return view('frontend.index',$data);
     }
@@ -314,7 +314,7 @@ class FrontendController extends Controller
             DB::commit();
 
             \Mail::to($request->email)
-                ->cc('rioanugrah999@gmail.com')
+                // ->cc('rioanugrah999@gmail.com')
                 ->send(new \App\Mail\Payment($data['transaction']));
 
             // dd($inputPayment);

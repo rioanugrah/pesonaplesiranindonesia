@@ -324,78 +324,6 @@
         </div>
     </section>
 
-    <section class="popular-destination-section section-padding pt-0">
-        <div class="car-shape float-bob-x">
-            <img src="{{ asset('frontend/') }}/assets/img/destination/car.png" alt="img">
-        </div>
-        <div class="container">
-            <div class="section-title-area justify-content-between">
-                <div class="section-title">
-                    <span class="sub-title wow fadeInUp">
-                        Tempat Terbaik yang Direkomendasikan
-                    </span>
-                    <h2 class="wow fadeInUp wow" data-wow-delay=".3s">
-                        Destinasi Populer yang kami tawarkan untuk semua
-                    </h2>
-                </div>
-                <a href="#" class="theme-btn wow fadeInUp wow" data-wow-delay=".5s">View All Tour<i
-                        class="fa-sharp fa-regular fa-arrow-right"></i></a>
-            </div>
-            <div class="row">
-                @forelse ($destinations as $destination)
-                <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp wow" data-wow-delay=".2s">
-                    <div class="destination-card-items">
-                        <div class="destination-image">
-                            <img src="{{ asset('frontend/') }}/assets/img/destination/01.jpg" alt="img">
-                            <div class="heart-icon">
-                                <i class="fa-regular fa-heart"></i>
-                            </div>
-                        </div>
-                        <div class="destination-content">
-                            <ul class="meta">
-                                <li>
-                                    <i class="fa-thin fa-location-dot"></i>
-                                    {{ $destination['location'] }}
-                                </li>
-                                <li class="rating">
-                                    <div class="star">
-                                        <i class="fa-solid fa-star"></i>
-                                    </div>
-                                    <p>4.7</p>
-                                </li>
-                            </ul>
-                            <h5>
-                                <a href="tour-details.html">
-                                    {{ $destination['title'] }}
-                                </a>
-                            </h5>
-                            <ul class="info">
-                                <li>
-                                    <i class="fa-regular fa-clock"></i>
-                                    {{ $destination['duration'] }}
-                                </li>
-                                <li>
-                                    <i class="fa-thin fa-users"></i>
-                                    {{ $destination['quantity'] }}
-                                </li>
-                            </ul>
-                            <div class="price">
-                                <h6>{{ 'IDR '.number_format($destination['price'],0,',','.') }}<span>/Per pax</span></h6>
-                                <a href="tour-details.html" class="theme-btn style-2">Book Now<i
-                                        class="fa-sharp fa-regular fa-arrow-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @empty
-                <div class="col-xl-12 col-lg-12 col-md-12 text-center wow fadeInUp wow" data-wow-delay=".3s">
-                    Trip Belum Tersedia
-                </div>
-                @endforelse
-            </div>
-        </div>
-    </section>
-
     <section class="testimonial-section section-padding fix bg-cover">
         <div class="bag-shape float-bob-x">
             <img src="{{ asset('frontend/') }}/assets/img/testimonial/bag-shape.png" alt="img">
@@ -541,35 +469,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="team-section fix section-padding">
-        <div class="jip-shape float-bob-x">
-            <img src="{{ asset('frontend/') }}/assets/img/team/jip.png" alt="img">
-        </div>
-        <div class="container">
-            <div class="section-title text-center">
-                <span class="sub-title wow fadeInUp">
-                    Tim Kami
-                </span>
-                <h2 class="wow fadeInUp wow" data-wow-delay=".2s">Tim Kami</h2>
-            </div>
-            <div class="row">
-                @foreach ($tims as $tim)
-                <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp wow" data-wow-delay=".2s">
-                    <div class="team-card-item">
-                        <div class="team-image">
-                            <img src="{{ $tim['image'] }}">
-                        </div>
-                        <div class="team-content">
-                            <h4><a>{{ $tim['name'] }}</a></h4>
-                            <p>{{ $tim['position'] }}</p>
-                        </div>
-                    </div>
-                </div>
-                @endforeach
             </div>
         </div>
     </section>
