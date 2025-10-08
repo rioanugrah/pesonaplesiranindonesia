@@ -298,7 +298,7 @@ class TripayController extends Controller
         $privateKey   = $this->tripay_private_key;
         $merchantCode = $this->tripay_merchant;
         $merchantRef  = 'INV'.Carbon::now()->format('Ymd').rand(1000,9999);
-        $method       = 'BCAVA';
+        $method       = 'BCAVAOP';
 
         $data = [
             'method'        => $method,
