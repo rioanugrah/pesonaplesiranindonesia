@@ -258,41 +258,77 @@ class TripayController extends Controller
 
     public function handle_open_payment(Request $request)
     {
-        $privateKey = $this->tripay_private_key;
-        $callbackSignature = $request->server('HTTP_X_CALLBACK_SIGNATURE');
+        // $privateKey = $this->tripay_private_key;
+        // $callbackSignature = $request->server('HTTP_X_CALLBACK_SIGNATURE');
+        // $merchantCode = $this->tripay_merchant;
+        // $channel = 'BCAVA';
+        // // $merchantRef = 'INV'.rand(1000000,999999);
+        // $merchantRef = 'INV587214';
+        // // dd($merchantRef);
+        // $signature = hash_hmac('sha256', $merchantCode.$channel.$merchantRef, $privateKey);
+        // // dd($signature);
+        // if ($signature !== (string) $callbackSignature) {
+        //     return Response::json([
+        //         'success' => false,
+        //         'message' => 'Invalid signature',
+        //     ]);
+        // }
+
+        // if ('payment_status' !== (string) $request->server('HTTP_X_CALLBACK_EVENT')) {
+        //     return Response::json([
+        //         'success' => false,
+        //         'message' => 'Unrecognized callback event, no action was taken',
+        //     ]);
+        // }
+
+        // $data = json_decode($json);
+
+        // if (JSON_ERROR_NONE !== json_last_error()) {
+        //     return Response::json([
+        //         'success' => false,
+        //         'message' => 'Invalid data sent by tripay',
+        //     ]);
+        // }
+
+        // $invoiceId = $data->merchant_ref;
+        // $tripayReference = $data->reference;
+        // $status = strtoupper((string) $data->status);
+
+        $apiKey       = $this->tripay_api_key;
+        $privateKey   = $this->tripay_private_key;
         $merchantCode = $this->tripay_merchant;
-        $channel = 'BCAVA';
-        // $merchantRef = 'INV'.rand(1000000,999999);
-        $merchantRef = 'INV587214';
-        // dd($merchantRef);
-        $signature = hash_hmac('sha256', $merchantCode.$channel.$merchantRef, $privateKey);
-        // dd($signature);
-        if ($signature !== (string) $callbackSignature) {
-            return Response::json([
-                'success' => false,
-                'message' => 'Invalid signature',
-            ]);
-        }
+        $merchantRef  = 'INV'.Carbon::now()->format('Ymd').rand(1000,9999);
+        $method       = 'BCAVA';
 
-        if ('payment_status' !== (string) $request->server('HTTP_X_CALLBACK_EVENT')) {
-            return Response::json([
-                'success' => false,
-                'message' => 'Unrecognized callback event, no action was taken',
-            ]);
-        }
+        $data = [
+            'method'        => $method,
+            'merchant_ref'  => $merchantRef,
+            'customer_name' => $request->customer_name,
+            'signature'     => hash_hmac('sha256', $merchantCode.$method.$merchantRef, $privateKey)
+        ];
 
-        $data = json_decode($json);
+        $curl = curl_init();
 
-        if (JSON_ERROR_NONE !== json_last_error()) {
-            return Response::json([
-                'success' => false,
-                'message' => 'Invalid data sent by tripay',
-            ]);
-        }
+        curl_setopt_array($curl, [
+            CURLOPT_FRESH_CONNECT  => true,
+            CURLOPT_URL            => $this->tripay_url."/open-payment/create",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HEADER         => false,
+            CURLOPT_HTTPHEADER     => ['Authorization: Bearer '.$apiKey],
+            CURLOPT_FAILONERROR    => false,
+            CURLOPT_POST           => true,
+            CURLOPT_POSTFIELDS     => http_build_query($data),
+            CURLOPT_IPRESOLVE      => CURL_IPRESOLVE_V4
+        ]);
 
-        $invoiceId = $data->merchant_ref;
-        $tripayReference = $data->reference;
-        $status = strtoupper((string) $data->status);
+        $response = curl_exec($curl);
+        $error = curl_error($curl);
+
+        curl_close($curl);
+
+        // echo empty($error) ? $response : $error;
+        return empty($error) ? $response : $error;
+
     }
 
 }

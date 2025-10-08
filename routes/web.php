@@ -39,6 +39,12 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
         });
     });
 
+    // Route::controller(App\Http\Controllers\TestingController::class)->group(function () {
+    //     Route::prefix('testing')->group(function(){
+    //         Route::get('/', 'testing1');
+    //     });
+    // });
+
 
     // Route::get('test-email', function() {
     //     $data['billing'] = [

@@ -28,6 +28,7 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
         Route::post('callback', 'handle');
         Route::prefix('payment')->group(function () {
             Route::get('/', 'getPayment');
+            Route::post('handle_open_payment', 'handle_open_payment');
         });
     });
     Route::middleware('auth:sanctum')->group( function () {
