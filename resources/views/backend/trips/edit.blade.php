@@ -43,8 +43,6 @@
                             <div class="nav nav-tabs mb-3" id="nav-tab">
                                 <a class="nav-link py-2 active" id="step1-tab" data-bs-toggle="tab" href="#step1">Trip</a>
                                 <a class="nav-link py-2" id="step2-tab" data-bs-toggle="tab" href="#step2">Extra</a>
-                                <a class="nav-link py-2" id="step3-tab" data-bs-toggle="tab" href="#step3">Confirm
-                                    Detail</a>
                             </div>
                         </nav>
                         <div class="tab-content" id="nav-tabContent">
@@ -263,7 +261,10 @@
 
     {{-- <script src="{{ asset('backend') }}/assets/libs/quill/quill.js"></script>
     <script src="{{ asset('backend') }}/assets/js/pages/form-editor.init.js"></script> --}}
-    <script src="https://cdn.jsdelivr.net/npm/ckeditor4@4.22.1/ckeditor.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/ckeditor4@4.22.1/ckeditor.js"></script> --}}
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.25.1/ckeditor.js" integrity="sha512-ezOU3Fadltxh7pT43hqqMHK5eif2u61EVR95JUjTQnUfYomiCa8NO00Fs46JSEGzh27jyHlX8k+dEDIHh1DlFA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.25.1/ckeditor.min.js" integrity="sha512-jJXRE/u6z571DgYqZx5zGCQOQkGDRabQ5w6EX4sFebmMwp8ptn8Zdx/Xq74UJFVP/9x16UM2ta78BoNl22hDBw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js"
         integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -271,10 +272,12 @@
         integrity="sha512-bZAXvpVfp1+9AUHQzekEZaXclsgSlAeEnMJ6LfFAvjqYUVZfcuVXeQoN5LhD7Uw0Jy4NCY9q3kbdEXbwhZUmUQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="{{ asset('backend') }}/assets/js/pages/form-wizard.js"></script>
+    {{-- <script src="{{ asset('backend') }}/assets/js/ckeditor/ckeditor.js"></script> --}}
 
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js" integrity="sha512-foIijUdV0fR0Zew7vmw98E6mOWd9gkGWQBWaoA1EOFAx+pY+N8FmmtIYAVj64R98KeD2wzZh1aHK0JSpKmRH8w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
     <script>
-        CKEDITOR.replace('editor');
+        // CKEDITOR.replace('editor');
+        CKEDITOR.replace('trip_description');
 
         $('#repeater_experience').repeater({
             initEmpty: false,

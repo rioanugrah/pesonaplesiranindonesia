@@ -178,8 +178,7 @@
                                             @endif
                                         </td>
                                         <td class="text-center">
-                                            <a href="#"><i class="las la-print text-secondary fs-18"></i></a>
-                                            <a href="#"><i class="las la-download text-secondary fs-18"></i></a>
+                                            <a href="{{ route('admin.transaction.download',['id' => $payment->id]) }}" target="_blank"><i class="las la-download text-primary fs-18"></i></a>
                                         </td>
                                     </tr>
                                     @empty

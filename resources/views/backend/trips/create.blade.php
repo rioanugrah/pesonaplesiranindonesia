@@ -38,7 +38,6 @@
                             <div class="nav nav-tabs mb-3" id="nav-tab">
                                 <a class="nav-link py-2 active" id="step1-tab" data-bs-toggle="tab" href="#step1">Make Trip</a>
                                 <a class="nav-link py-2" id="step2-tab" data-bs-toggle="tab" href="#step2">Extra</a>
-                                <a class="nav-link py-2" id="step3-tab" data-bs-toggle="tab" href="#step3">Confirm Detail</a>
                             </div>
                         </nav>
                         <div class="tab-content" id="nav-tabContent">
@@ -48,9 +47,9 @@
                             <div class="tab-pane" id="step2">
                                 @include('backend.trips.steps.step2')
                             </div>
-                            <div class="tab-pane" id="step3">
+                            {{-- <div class="tab-pane" id="step3">
                                 @include('backend.trips.steps.step3')
-                            </div>
+                            </div> --}}
                         </div>
                         </form>
                     </div>

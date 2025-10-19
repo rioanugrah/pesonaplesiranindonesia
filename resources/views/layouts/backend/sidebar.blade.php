@@ -41,18 +41,27 @@
                         </a>
                     </li>
                     <li class="menu-label mt-2">
+                        <span>Destinasi</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="iconoir-report-columns menu-icon"></i>
+                            <span>Kategori</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="iconoir-report-columns menu-icon"></i>
+                            <span>Destinasi</span>
+                        </a>
+                    </li>
+                    <li class="menu-label mt-2">
                         <span>Transactions</span>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.transaction') }}">
                             <i class="iconoir-report-columns menu-icon"></i>
                             <span>Transactions</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="iconoir-report-columns menu-icon"></i>
-                            <span>Invoices</span>
                         </a>
                     </li>
                     <li class="menu-label mt-2">
@@ -74,6 +83,15 @@
                         <a class="nav-link" href="{{ route('admin.permission') }}">
                             <i class="iconoir-report-columns menu-icon"></i>
                             <span>Permissions</span>
+                        </a>
+                    </li>
+                    <li class="menu-label mt-2">
+                        <span>Maintenance</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="iconoir-report-columns menu-icon"></i>
+                            <span>Maintenance</span>
                         </a>
                     </li>
                     <li class="menu-label mt-2">

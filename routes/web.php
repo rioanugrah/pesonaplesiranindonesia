@@ -142,6 +142,8 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
                 Route::controller(App\Http\Controllers\TransactionController::class)->group(function () {
                     Route::prefix('transactions')->group(function(){
                         Route::get('/', 'index')->name('admin.transaction')->middleware('verified');
+                        Route::get('testing', 'testing')->middleware('verified');
+                        Route::get('{id}/download', 'downloadInvoice')->name('admin.transaction.download')->middleware('verified');
                     });
                 });
                 Route::controller(App\Http\Controllers\UserController::class)->group(function () {
