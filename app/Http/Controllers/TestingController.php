@@ -5,6 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Payment\DuitkuController;
 
+use setasign\Fpdi\Fpdi;
+use Codedge\Fpdf\Fpdf\Fpdf;
+
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use PDF;
+use DNS2D;
+
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use \Carbon\Carbon;
+
 class TestingController extends Controller
 {
     function __construct(
@@ -33,5 +44,137 @@ class TestingController extends Controller
         $payment = $this->duitkuPayment->store($data);
 
         return $payment;
+    }
+
+    public function testingEtiket()
+    {
+        $pdf = Pdf::loadView('backend.testing.test');
+        $customPaper = array(0, 0, 151.3701, 439.3701);
+        $pdf->setPaper($customPaper, 'landscape');
+        $pdf->setOptions(['isRemoteEnabled' => true]);
+
+        return $pdf->stream();
+    }
+
+    public function testingEtiket2()
+    {
+        // $pdf = new Fpdi('L','cm',[15,5.34]);
+        // $pdf->AddPage();
+
+        // $pdf->setSourceFile(public_path('backend/etiket/etiketplesiran.pdf'));
+        // $tplId = $pdf->importPage(1);
+        // $size = $pdf->getTemplateSize($tplId);
+        // $pdf->useTemplate($tplId, 0, 0, 15);
+        // $pdf->SetMargins(0, 0, 0, 0);
+
+        // return $pdf->Output();
+
+        $pdf = new Fpdi('L','cm',[22.5,8.01]);
+        // $pdf = new Fpdf();
+
+        $inv = Carbon::now()->format('Ymd').rand(1000,9999);
+        for ($i=1; $i<=3; $i++) {
+            $pdf->AddPage();
+            $pdf->SetMargins(0, 0, 0, 0);
+
+            $x = 0; // Posisi X (mm)
+            $y = 0; // Posisi Y (mm)
+            $width = 22.5; // Lebar gambar (mm),
+            $imagePath = public_path('backend/etiket/etiketplesiran.jpg');
+            $pdf->Image($imagePath, $x, $y, $width);
+
+            // $pdf->setSourceFile(public_path('backend/etiket/etiketplesiran.pdf'));
+            // $tplId = $pdf->importPage(1);
+            // $size = $pdf->getTemplateSize($tplId);
+            // $pdf->useTemplate($tplId, 0, 0, 22.5);
+            // $pdf->SetMargins(0, 0, 0, 0);
+
+            // lembar 1
+            $pdf->SetTextColor(255, 186, 2);
+            // // $pdf->SetXY($x + 9.5, $y + 0.5);
+            $pdf->SetXY($x+12.5, $y+0.8);
+            $pdf->SetFont('Arial', 'B', 18);
+            $pdf->Cell(0, 0, '#'.$inv.'-'.$i);
+
+            $pdf->SetTextColor(0, 0, 0);
+            $pdf->SetXY($x+11, $y+3);
+            $pdf->SetFont('Arial', '', 12);
+            $pdf->Write(0,'Destinasi');
+
+            $pdf->SetTextColor(0, 0, 0);
+            $pdf->SetXY($x+11, $y+3.5);
+            $pdf->SetFont('Arial', 'B', 12);
+            $pdf->Write(0,'Open Trip Bromo');
+
+            $pdf->SetTextColor(0, 0, 0);
+            $pdf->SetXY($x+11, $y+6);
+            $pdf->SetFont('Arial', 'B', 8);
+            $pdf->Write(0, 'Tanggal Pembelian : '.Carbon::now()->format('Y-m-d H:i'));
+
+            $pdf->SetTextColor(0, 0, 0);
+            $pdf->SetXY($x + 0.8, $y + 3.6);
+            $pdf->SetFont('Arial', 'B', 18);
+            $pdf->Write(0, 'E-TIKET');
+
+            $pdf->SetTextColor(0, 0, 0);
+            $pdf->SetXY($x + 0.8, $y + 4.4);
+            $pdf->SetFont('Arial', 'B', 18);
+            $pdf->Write(0, '2512');
+
+            $pdf->SetTextColor(0, 0, 0);
+            $pdf->SetXY($x + 0.8, $y + 5.1);
+            $pdf->SetFont('Arial', 'B', 18);
+            $pdf->Write(0, '2025');
+
+            // lembar 2
+            $pdf->SetTextColor(255, 186, 2);
+            $pdf->SetXY($x+19, $y+0.8);
+            $pdf->SetFont('Arial', '', 10);
+            $pdf->Write(0,'#'.$inv.'-'.$i);
+
+            $pdf->SetTextColor(255, 186, 2);
+            $pdf->SetXY($x+19.35, $y+1.25);
+            $pdf->SetFont('Arial', 'B', 8);
+            $pdf->Cell(0, 0, Carbon::now()->format('Y-m-d H:i'));
+
+            $pdf->SetTextColor(255, 186, 2);
+            $pdf->SetXY($x+19, $y+3);
+            $pdf->SetFont('Arial', '', 10);
+            $pdf->Write(0,'Destinasi');
+
+            $pdf->SetTextColor(255, 186, 2);
+            $pdf->SetXY($x+19, $y+3.5);
+            $pdf->SetFont('Arial', 'B', 10);
+            $pdf->Write(0,'Open Trip Bromo');
+        }
+
+
+        // $noBarcode = '44456456562';
+        // $barcode = base64_encode(\DNS1D::getBarcodePNG($noBarcode, 'C128', 2, 2));
+        // return $barcode;
+        // // Save barcode to a temporary file
+        // $tempPath = public_path('backend/etiket/'.$noBarcode.'.png');
+        // $tempPath = public_path('backend/etiket/testingbarcode.png');
+        // $tempPath = 'testingbarcode.png';
+        // // $tempPath->move();
+        // file_put_contents($tempPath, $barcode);
+
+        // $noBarcode = '44456456562';
+        // $image = \DNS1D::getBarcodePNG($noBarcode, 'C128', 2, 2);
+        // $path = 'barcodes/product-123.png';
+        // \Storage::disk('public')->put($path, $image);
+
+        $noBarcode = '44456456562';
+        $tempPath = public_path('backend/etiket/'.$noBarcode.'.png');
+        QrCode::size(300)
+            ->generate('A simple example of QR code', $tempPath);
+
+        // $pdf->Image($tempPath, 10, 10, 350, 450, 'PNG');
+
+        // Output the PDF to the browser
+        $pdf->Output('I', 'document.pdf'); // 'D' forces download
+        // unlink($tempPath);
+        exit;
+
     }
 }

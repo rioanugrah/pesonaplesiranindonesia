@@ -120,6 +120,11 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
         Route::group(['middleware' => ['role:Administrator', 'LogVisits']], function(){
             Route::prefix('admin')->group(function(){
                 Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin.home')->middleware('verified');
+                Route::controller(App\Http\Controllers\TestingController::class)->group(function () {
+                    Route::prefix('testing')->group(function(){
+                        Route::get('etiket', 'testingEtiket2')->middleware('verified');
+                    });
+                });
                 Route::controller(App\Http\Controllers\TripController::class)->group(function () {
                     Route::prefix('trips')->group(function(){
                         Route::get('/', 'index')->name('admin.trip')->middleware('verified');

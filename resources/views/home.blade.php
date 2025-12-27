@@ -45,8 +45,8 @@
 
                                     <div class="col-3 align-self-center">
                                         <div
-                                            class="d-flex justify-content-center align-items-center thumb-md border-dashed border-primary rounded mx-auto">
-                                            <i class="iconoir-dollar-circle fs-22 align-self-center mb-0 text-primary"></i>
+                                            class="d-flex justify-content-center align-items-center thumb-md border-dashed border-success rounded mx-auto">
+                                            <i class="iconoir-dollar-circle fs-22 align-self-center mb-0 text-success"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -68,8 +68,8 @@
 
                                     <div class="col-3 align-self-center">
                                         <div
-                                            class="d-flex justify-content-center align-items-center thumb-md border-dashed border-info rounded mx-auto">
-                                            <i class="iconoir-cart fs-22 align-self-center mb-0 text-info"></i>
+                                            class="d-flex justify-content-center align-items-center thumb-md border-dashed border-success rounded mx-auto">
+                                            <i class="iconoir-cart fs-22 align-self-center mb-0 text-success"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -87,8 +87,8 @@
 
                                     <div class="col-3 align-self-center">
                                         <div
-                                            class="d-flex justify-content-center align-items-center thumb-md border-dashed border-info rounded mx-auto">
-                                            <i class="iconoir-cart fs-22 align-self-center mb-0 text-info"></i>
+                                            class="d-flex justify-content-center align-items-center thumb-md border-dashed border-success rounded mx-auto">
+                                            <i class="iconoir-cart fs-22 align-self-center mb-0 text-success"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -106,8 +106,8 @@
 
                                     <div class="col-3 align-self-center">
                                         <div
-                                            class="d-flex justify-content-center align-items-center thumb-md border-dashed border-info rounded mx-auto">
-                                            <i class="iconoir-cart fs-22 align-self-center mb-0 text-info"></i>
+                                            class="d-flex justify-content-center align-items-center thumb-md border-dashed border-success rounded mx-auto">
+                                            <i class="iconoir-cart fs-22 align-self-center mb-0 text-success"></i>
                                         </div>
                                     </div>
                                 </div>

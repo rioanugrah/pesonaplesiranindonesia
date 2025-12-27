@@ -6,8 +6,8 @@
                 <img src="{{ asset('backend') }}/assets/images/logo-sm.png" class="logo-sm">
             </span>
             <span class="">
-                <img src="{{ asset('backend') }}/assets/logo/logo_plesiran_new_white.png" class="logo-lg logo-light">
-                <img src="{{ asset('backend') }}/assets/logo/logo_plesiran_black.webp" class="logo-lg logo-dark">
+                <img src="{{ asset('backend') }}/assets/logo/logo_plesiran_new_white.png" class="logo-lg logo-light" width="150" style="height: 5%">
+                <img src="{{ asset('backend') }}/assets/logo/logo_plesiran_black.webp" class="logo-lg logo-dark" width="150" style="height: 5%">
             </span>
         </a>
     </div>
@@ -24,19 +24,19 @@
 
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.home') }}">
-                            <i class="iconoir-report-columns menu-icon"></i>
+                            <i class="iconoir-home-alt menu-icon"></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.trip') }}">
-                            <i class="iconoir-report-columns menu-icon"></i>
+                            <i class="iconoir-extrude menu-icon"></i>
                             <span>Trips</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.booking') }}">
-                            <i class="iconoir-report-columns menu-icon"></i>
+                            <i class="iconoir-book-stack menu-icon"></i>
                             <span>Booking</span>
                         </a>
                     </li>
@@ -45,7 +45,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">
-                            <i class="iconoir-report-columns menu-icon"></i>
+                            <i class="iconoir-box-iso menu-icon"></i>
                             <span>Kategori</span>
                         </a>
                     </li>
@@ -60,7 +60,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.transaction') }}">
-                            <i class="iconoir-report-columns menu-icon"></i>
+                            <i class="iconoir-money-square menu-icon"></i>
                             <span>Transactions</span>
                         </a>
                     </li>
@@ -69,19 +69,19 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.users') }}">
-                            <i class="iconoir-report-columns menu-icon"></i>
+                            <i class="iconoir-community menu-icon"></i>
                             <span>Users</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.roles') }}">
-                            <i class="iconoir-report-columns menu-icon"></i>
+                            <i class="iconoir-dimmer-switch menu-icon"></i>
                             <span>Roles</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.permission') }}">
-                            <i class="iconoir-report-columns menu-icon"></i>
+                            <i class="iconoir-dimmer-switch menu-icon"></i>
                             <span>Permissions</span>
                         </a>
                     </li>
@@ -90,7 +90,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">
-                            <i class="iconoir-report-columns menu-icon"></i>
+                            <i class="iconoir-minus-circle menu-icon"></i>
                             <span>Maintenance</span>
                         </a>
                     </li>
