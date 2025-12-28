@@ -64,6 +64,67 @@
                                         <h1>
                                             Mari kita buat perjalanan terbaik Anda bersama kami
                                         </h1>
+                                        {{-- <div class="booking-list-area">
+                                            <div class="booking-list">
+                                                <div class="icon">
+                                                    <img src="{{ asset('frontend/') }}/assets/img/hero/icon-1.png"
+                                                        alt="img">
+                                                </div>
+                                                <div class="content">
+                                                    <h6>Lokasi</h6>
+                                                    <div class="form">
+                                                        <select class="single-select w-100">
+                                                            <option>Indonesia</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="booking-list">
+                                                <div class="icon">
+                                                    <img src="{{ asset('frontend/') }}/assets/img/hero/icon-2.png"
+                                                        alt="img">
+                                                </div>
+                                                <div class="content">
+                                                    <h6>Durasi</h6>
+                                                    <div class="form">
+                                                        <select class="single-select w-100">
+                                                            <option>1 Day</option>
+                                                            <option>2 Day</option>
+                                                            <option>3 Day</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="booking-list">
+                                                <div class="icon">
+                                                    <img src="{{ asset('frontend/') }}/assets/img/hero/icon-3.png"
+                                                        alt="img">
+                                                </div>
+                                                <div class="content">
+                                                    <h6>Tanggal Berangkat</h6>
+                                                    <div class="form-clt">
+                                                        <input type="date" id="date1" name="date1">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="booking-list">
+                                                <div class="icon">
+                                                    <img src="{{ asset('frontend/') }}/assets/img/hero/icon-3.png"
+                                                        alt="img">
+                                                </div>
+                                                <div class="content">
+                                                    <h6>Traveler</h6>
+                                                    <div class="form">
+                                                        <select class="single-select w-100">
+                                                            @for ($i = 1; $i <= 7; $i++)
+                                                            <option>{{ $i }}</option>
+                                                            @endfor
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button class="theme-btn" type="submit">Search</button>
+                                        </div> --}}
                                         <div class="counter-area">
                                             <div class="counter-items">
                                                 <div class="counter-text">
@@ -90,6 +151,88 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="feature-section section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp wow" data-wow-delay=".4s">
+                    <div class="feature-card-items">
+                        <div class="icon bg-color">
+                            <img src="{{ asset('frontend/') }}/assets/img/icon/02.svg" alt="img">
+                        </div>
+                        <div class="content">
+                            <h3>
+                                Best Guide
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp wow" data-wow-delay=".6s">
+                    <div class="feature-card-items">
+                        <div class="icon">
+                            <img src="{{ asset('frontend/') }}/assets/img/icon/03.svg" alt="img">
+                        </div>
+                        <div class="content">
+                            <h3>
+                                24/7 Support
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp wow" data-wow-delay=".8s">
+                    <div class="feature-card-items">
+                        <div class="icon">
+                            <img src="{{ asset('frontend/') }}/assets/img/icon/04.svg" alt="img">
+                        </div>
+                        <div class="content">
+                            <h3>
+                                Travel Management
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="destination-category-section section-padding pt-0">
+        <div class="plane-shape float-bob-y">
+            <img src="{{ asset('frontend/') }}/assets/img/destination/shape.png" alt="img">
+        </div>
+        <div class="container">
+            <div class="section-title text-center">
+                <span class="sub-title wow fadeInUp">Tempat yang Indah Untukmu</span>
+                <h2 class="wow fadeInUp wow" data-wow-delay=".2s">
+                    Telusuri Berdasarkan Kategori Tujuan
+                </h2>
+            </div>
+        </div>
+        <div class="container-fluid">
+
+            <div class="swiper category-slider">
+                <div class="swiper-wrapper">
+                    @foreach ($kategoriTujuans as $kategoriTujuan)
+                    <div class="swiper-slide">
+                        <div class="destination-category-item">
+                            <div class="category-image">
+                                <img src="{{ $kategoriTujuan['image'] }}">
+                                <div class="category-content">
+                                    <h5>
+                                        <a href="destination-details.html">{{ $kategoriTujuan['title'] }}</a>
+                                    </h5>
+                                    <p>{{ $kategoriTujuan['tour'] }} Tour</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+            <div class="swiper-dot4 mt-5">
+                <div class="dot"></div>
             </div>
         </div>
     </section>
@@ -237,49 +380,6 @@
                     <div class="array-button">
                         <button class="array-prevs">Previews</button>
                         <button class="array-nexts">Next</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="feature-section section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp wow" data-wow-delay=".4s">
-                    <div class="feature-card-items">
-                        <div class="icon bg-color">
-                            <img src="{{ asset('frontend/') }}/assets/img/icon/02.svg" alt="img">
-                        </div>
-                        <div class="content">
-                            <h3>
-                                Best Guide
-                            </h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp wow" data-wow-delay=".6s">
-                    <div class="feature-card-items">
-                        <div class="icon">
-                            <img src="{{ asset('frontend/') }}/assets/img/icon/03.svg" alt="img">
-                        </div>
-                        <div class="content">
-                            <h3>
-                                24/7 Support
-                            </h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp wow" data-wow-delay=".8s">
-                    <div class="feature-card-items">
-                        <div class="icon">
-                            <img src="{{ asset('frontend/') }}/assets/img/icon/04.svg" alt="img">
-                        </div>
-                        <div class="content">
-                            <h3>
-                                Travel Management
-                            </h3>
-                        </div>
                     </div>
                 </div>
             </div>

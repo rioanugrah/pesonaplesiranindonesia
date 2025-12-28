@@ -55,20 +55,20 @@
                                         <tr>
                                             <td><img src="{{ Storage::disk('s3')->url('/plesiranindonesia/trip/'.$trip->trip_code.'/'.$trip->trip_images) }}" width="200"></td>
                                             <td>{{ $trip->trip_name }}</td>
-                                            <td>{{ $trip->trip_category == 'O' ? 'Open Trip' : 'Private Trip' }}</td>
-                                            <td>{{ 'IDR '.number_format($trip->trip_price,2,',','.') }}</td>
-                                            <td>{!! $trip->status == 'Active' ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-danger">InActive</span>' !!}</td>
-                                            <td>
-                                                <div class="d-flex flex-wrap gap-2">
-                                                    <a href="{{ route('admin.trip.show',['id' => $trip->id]) }}" class="btn btn-success"><i class="fas fa-eye"></i> View</a>
+                                            <td class="text-center">{{ $trip->trip_category == 'O' ? 'Open Trip' : 'Private Trip' }}</td>
+                                            <td class="text-center">{{ 'IDR '.number_format($trip->trip_price,2,',','.') }}</td>
+                                            <td class="text-center">{!! $trip->status == 'Active' ? '<span class="badge bg-success-subtle text-success fs-11 fw-medium px-2">Active</span>' : '<span class="badge bg-danger-subtle text-danger fs-11 fw-medium px-2">InActive</span>' !!}</td>
+                                            <td class="text-center">
+                                                <div class="d-flex flex-wrap gap-1">
+                                                    <a href="{{ route('admin.trip.show',['id' => $trip->id]) }}" class="btn btn-success btn-sm"><i class="fas fa-eye"></i> View</a>
                                                     @can('trip-edit')
-                                                    <a href="{{ route('admin.trip.edit',['id' => $trip->id]) }}" class="btn btn-warning"><i class="fas fa-pencil-alt"></i> Edit</a>
+                                                    <a href="{{ route('admin.trip.edit',['id' => $trip->id]) }}" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i> Edit</a>
                                                     @endcan
                                                     @can('trip-delete')
                                                     <form action="{{ route('admin.trip.destroy',['id' => $trip->id]) }}" method="post">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</button>
+                                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Delete</button>
                                                     </form>
                                                     @endcan
                                                 </div>

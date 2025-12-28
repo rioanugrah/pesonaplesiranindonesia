@@ -98,11 +98,6 @@ class TestingController extends Controller
 
             $pdf->SetTextColor(0, 0, 0);
             $pdf->SetXY($x+11, $y+3);
-            $pdf->SetFont('Arial', '', 12);
-            $pdf->Write(0,'Destinasi');
-
-            $pdf->SetTextColor(0, 0, 0);
-            $pdf->SetXY($x+11, $y+3.5);
             $pdf->SetFont('Arial', 'B', 12);
             $pdf->Write(0,'Open Trip Bromo');
 
@@ -126,6 +121,27 @@ class TestingController extends Controller
             $pdf->SetFont('Arial', 'B', 18);
             $pdf->Write(0, '2025');
 
+            $noBarcode = $inv;
+            $fileName = $noBarcode.'.png';
+            $tempPath = public_path('backend/etiket/'.$fileName);
+            // $tempPath = public_path('backend/etiket/'.time().'.png');;
+
+            // Ensure the directory exists
+            if (!\File::exists(public_path('backend/etiket/'))) {
+                \File::makeDirectory(public_path('backend/etiket/'));
+            }
+
+            QrCode::format('png')
+                ->backgroundColor(255, 186, 2)
+                // ->color(255, 0, 0)
+                ->generate($noBarcode, $tempPath);
+
+            // response()->download($tempPath, $fileName, [
+            //     'Content-Type' => 'image/png',
+            // ]);
+
+            $pdf->Image($tempPath, $x+15.5, $y+3.3, 2);
+
             // lembar 2
             $pdf->SetTextColor(255, 186, 2);
             $pdf->SetXY($x+19, $y+0.8);
@@ -138,43 +154,44 @@ class TestingController extends Controller
             $pdf->Cell(0, 0, Carbon::now()->format('Y-m-d H:i'));
 
             $pdf->SetTextColor(255, 186, 2);
-            $pdf->SetXY($x+19, $y+3);
+            $pdf->SetXY($x+19, $y+2.5);
             $pdf->SetFont('Arial', '', 10);
             $pdf->Write(0,'Destinasi');
 
             $pdf->SetTextColor(255, 186, 2);
-            $pdf->SetXY($x+19, $y+3.5);
+            $pdf->SetXY($x+19, $y+3);
             $pdf->SetFont('Arial', 'B', 10);
             $pdf->Write(0,'Open Trip Bromo');
+
+            $pdf->Image($tempPath, $x+19.5, $y+3.7, 2);
+
         }
 
 
-        // $noBarcode = '44456456562';
-        // $barcode = base64_encode(\DNS1D::getBarcodePNG($noBarcode, 'C128', 2, 2));
-        // return $barcode;
-        // // Save barcode to a temporary file
-        // $tempPath = public_path('backend/etiket/'.$noBarcode.'.png');
-        // $tempPath = public_path('backend/etiket/testingbarcode.png');
-        // $tempPath = 'testingbarcode.png';
-        // // $tempPath->move();
-        // file_put_contents($tempPath, $barcode);
-
-        // $noBarcode = '44456456562';
-        // $image = \DNS1D::getBarcodePNG($noBarcode, 'C128', 2, 2);
-        // $path = 'barcodes/product-123.png';
-        // \Storage::disk('public')->put($path, $image);
-
-        $noBarcode = '44456456562';
-        $tempPath = public_path('backend/etiket/'.$noBarcode.'.png');
-        QrCode::size(300)
-            ->generate('A simple example of QR code', $tempPath);
-
-        // $pdf->Image($tempPath, 10, 10, 350, 450, 'PNG');
-
         // Output the PDF to the browser
         $pdf->Output('I', 'document.pdf'); // 'D' forces download
-        // unlink($tempPath);
+        unlink($tempPath);
         exit;
 
+    }
+
+    public function saveAndDownload()
+    {
+        $data = 'https://example.com';
+        $fileName = 'my-saved-qr-code-' . time() . '.png';
+        $path = public_path('backend/etiket/' . $fileName);
+
+        // Ensure the directory exists
+        if (!\File::exists(public_path('backend/etiket/'))) {
+            \File::makeDirectory(public_path('backend/etiket/'));
+        }
+
+        // Save the file to disk
+        QrCode::format('png')->generate($data, $path);
+
+        // Return a download response for the saved file
+        return response()->download($path, $fileName, [
+            'Content-Type' => 'image/png',
+        ]);
     }
 }

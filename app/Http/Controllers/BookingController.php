@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use setasign\Fpdi\Fpdi;
+
 use App\Models\Trip;
 use App\Models\Booking;
 
@@ -20,6 +23,8 @@ class BookingController extends Controller
     public function index()
     {
         $data['bookings'] = $this->booking->orderBy('created_at','desc')->paginate(10);
+        $data['status'] = $this->booking->select('status')->groupBy('status')->get();
+        // dd($data);
         return view('backend.bookings.index',$data);
     }
 
@@ -148,5 +153,108 @@ class BookingController extends Controller
                             ->get();
 
         return response()->json($bookings);
+    }
+
+    public function cetakTiket($id)
+    {
+        $booking = $this->booking->with('bookingDeparture')
+                                ->where('id',$id)
+                                ->where('status','Confirmed')
+                                ->first();
+
+        if (empty($booking)) {
+            return redirect()->back()->with('error', 'Pembayaran Belum Selesai');
+        }
+
+        // dd($booking);
+        $title = $booking->booking_code;
+        $totalTiket = $booking->bookingDeparture->num_of_adult+$booking->bookingDeparture->num_of_child;
+
+        $pdf = new Fpdi('L','cm',[22.5,8.01]);
+        $pdf->SetTitle($title);
+
+        $inv = Carbon::now()->format('Ymd').rand(1000,9999);
+        for ($i=1; $i<=$totalTiket; $i++) {
+            $pdf->AddPage();
+            $pdf->SetMargins(0, 0, 0, 0);
+
+            $x = 0; // Posisi X (mm)
+            $y = 0; // Posisi Y (mm)
+            $width = 22.5; // Lebar gambar (mm),
+            $imagePath = public_path('backend/etiket/etiketplesiran.jpg');
+            $pdf->Image($imagePath, $x, $y, $width);
+
+            // lembar 1
+            $pdf->SetTextColor(255, 186, 2);
+            // // $pdf->SetXY($x + 9.5, $y + 0.5);
+            $pdf->SetXY($x+11.5, $y+0.8);
+            $pdf->SetFont('Arial', 'B', 16);
+            $pdf->Cell(0, 0, $booking->booking_code.'-'.$i);
+
+            $pdf->SetTextColor(0, 0, 0);
+            $pdf->SetXY($x+11, $y+3);
+            $pdf->SetFont('Arial', 'B', 12);
+            $pdf->MultiCell(4, 0.5, $booking->booking_name, 0, 'L');
+
+            $pdf->SetTextColor(0, 0, 0);
+            $pdf->SetXY($x+11, $y+6);
+            $pdf->SetFont('Arial', 'B', 8);
+            $pdf->Write(0, 'Tanggal Pembelian : '.$booking->created_at->format('Y-m-d H:i'));
+
+            $pdf->SetTextColor(0, 0, 0);
+            $pdf->SetXY($x + 0.8, $y + 3.6);
+            $pdf->SetFont('Arial', 'B', 18);
+            $pdf->Write(0, 'E-TIKET');
+
+            $pdf->SetTextColor(0, 0, 0);
+            $pdf->SetXY($x + 0.8, $y + 4.4);
+            $pdf->SetFont('Arial', 'B', 18);
+            $pdf->Write(0, Carbon::now()->format('dm'));
+
+            $pdf->SetTextColor(0, 0, 0);
+            $pdf->SetXY($x + 0.8, $y + 5.1);
+            $pdf->SetFont('Arial', 'B', 18);
+            $pdf->Write(0, Carbon::now()->format('Y'));
+
+            $noBarcode = $booking->booking_code;
+            $fileName = $noBarcode.'.png';
+            $tempPath = public_path('backend/etiket/'.$fileName);
+
+            // Ensure the directory exists
+            if (!\File::exists(public_path('backend/etiket/'))) {
+                \File::makeDirectory(public_path('backend/etiket/'));
+            }
+
+            QrCode::format('png')
+                ->backgroundColor(255, 186, 2)
+                // ->color(255, 0, 0)
+                ->generate($noBarcode, $tempPath);
+
+            $pdf->Image($tempPath, $x+15.5, $y+3.3, 2);
+
+            // lembar 2
+            $pdf->SetTextColor(255, 186, 2);
+            $pdf->SetXY($x+19.1, $y+0.8);
+            $pdf->SetFont('Arial', '', 8);
+            $pdf->Write(0,$booking->booking_code.'-'.$i);
+
+            $pdf->SetTextColor(255, 186, 2);
+            $pdf->SetXY($x+19.35, $y+1.25);
+            $pdf->SetFont('Arial', 'B', 8);
+            $pdf->Cell(0, 0, $booking->created_at->format('Y-m-d H:i'));
+
+            $pdf->SetTextColor(255, 186, 2);
+            $pdf->SetXY($x+19, $y+2.2);
+            $pdf->SetFont('Arial', 'B', 10);
+            $pdf->MultiCell(3, 0.5, $booking->booking_name, 0, 'L');
+
+            $pdf->Image($tempPath, $x+19.6, $y+5, 2);
+
+        }
+
+        // Output the PDF to the browser
+        $pdf->Output('I', 'PPI - '.$title.'.pdf'); // 'D' forces download
+        unlink($tempPath);
+        exit;
     }
 }

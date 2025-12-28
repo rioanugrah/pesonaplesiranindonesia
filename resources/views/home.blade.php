@@ -20,7 +20,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-6">
                 <div class="row">
-                    <div class="col-md-12">
+                    {{-- <div class="col-md-12">
                         <div class="card bg-globe-img">
                             <div class="card-body">
                                 <div>
@@ -33,7 +33,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="col-md-12 col-lg-12">
                         <div class="card bg-corner-img">
                             <div class="card-body">
@@ -159,32 +159,32 @@
                             <table class="table mb-0">
                                 <thead class="table-light">
                                     <tr>
-                                        <th class="border-top-0">#</th>
-                                        <th class="border-top-0">Booking Code</th>
-                                        <th class="border-top-0">Booking User</th>
-                                        <th class="border-top-0">Booking Name</th>
-                                        <th class="border-top-0">Amount</th>
-                                        <th class="border-top-0">Status</th>
+                                        <th class="border-top-0 text-center">#</th>
+                                        <th class="border-top-0 text-center">Booking Code</th>
+                                        <th class="border-top-0 text-center">Booking User</th>
+                                        <th class="border-top-0 text-center">Booking Name</th>
+                                        <th class="border-top-0 text-center">Amount</th>
+                                        <th class="border-top-0 text-center">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse ($bookings as $key => $booking)
                                         <tr>
-                                            <td>{{ $key+1 }}</td>
-                                            <td>{{ $booking->booking_code }}</td>
-                                            <td>{{ $booking->user->name }}</td>
+                                            <td class="text-center">{{ $key+1 }}</td>
+                                            <td class="text-center">{{ $booking->booking_code }}</td>
+                                            <td class="text-center">{{ $booking->user->name }}</td>
                                             <td>{{ $booking->booking_name }}</td>
-                                            <td>{{ 'Rp. ' . number_format($booking->total_price, 2, ',', '.') }}</td>
-                                            <td>
+                                            <td class="text-end">{{ 'Rp. ' . number_format($booking->total_price, 2, ',', '.') }}</td>
+                                            <td class="text-center">
                                                 @switch($booking->status)
                                                     @case('Pending')
-                                                        <span class="badge bg-warning text-dark">Menunggu Konfirmasi</span>
+                                                        <span class="badge bg-warning-subtle text-warning fs-11 fw-medium px-2">Menunggu Konfirmasi</span>
                                                         @break
                                                     @case('Confirmed')
-                                                        <span class="badge bg-success">Success</span>
+                                                        <span class="badge bg-success-subtle text-success fs-11 fw-medium px-2">Success</span>
                                                         @break
                                                     @case('Cancelled')
-                                                        <span class="badge bg-danger">Batal</span>
+                                                        <span class="badge bg-danger-subtle text-danger fs-11 fw-medium px-2">Batal</span>
                                                         @break
                                                     @default
 
@@ -219,35 +219,35 @@
                             <table class="table mb-0">
                                 <thead class="table-light">
                                     <tr>
-                                        <th class="border-top-0">#</th>
-                                        <th class="border-top-0">Transaction</th>
-                                        <th class="border-top-0">Payment Date</th>
-                                        <th class="border-top-0">Payment Method</th>
-                                        <th class="border-top-0">Amount</th>
-                                        <th class="border-top-0">Status</th>
+                                        <th class="border-top-0 text-center">#</th>
+                                        <th class="border-top-0 text-center">Transaction</th>
+                                        <th class="border-top-0 text-center">Payment Date</th>
+                                        <th class="border-top-0 text-center">Payment Method</th>
+                                        <th class="border-top-0 text-center">Amount</th>
+                                        <th class="border-top-0 text-center">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse ($payments as $key => $payment)
                                         <tr>
-                                            <td>{{ $key+1 }}</td>
-                                            <td>{{ $payment->booking->booking_code }}</td>
-                                            <td>{{ $payment->payment_date }}</td>
-                                            <td>{{ $payment->payment_method }}</td>
-                                            <td>Rp. {{ number_format($payment->amount,2,',','.') }}</td>
-                                            <td>
+                                            <td class="text-center">{{ $key+1 }}</td>
+                                            <td class="text-center">{{ $payment->booking->booking_code }}</td>
+                                            <td class="text-center">{{ empty($payment->payment_date) ? '-' : $payment->payment_date }}</td>
+                                            <td class="text-center">{{ $payment->payment_method }}</td>
+                                            <td class="text-end">Rp. {{ number_format($payment->amount,2,',','.') }}</td>
+                                            <td class="text-center">
                                                 @switch($payment->status)
                                                     @case('Pending')
                                                     <span
-                                                        class="badge bg-warning text-dark fs-11 fw-medium px-2">Menunggu Pembayaran</span>
+                                                        class="badge bg-warning-subtle text-warning fs-11 fw-medium px-2">Menunggu Pembayaran</span>
                                                         @break
                                                     @case('Success')
                                                     <span
-                                                        class="badge bg-success text-success fs-11 fw-medium px-2">Success</span>
+                                                        class="badge bg-success-subtle text-success fs-11 fw-medium px-2">Success</span>
                                                         @break
                                                     @case('Failed')
                                                     <span
-                                                        class="badge bg-danger text-danger fs-11 fw-medium px-2">Gagal Pembayaran</span>
+                                                        class="badge bg-danger-subtle text-danger fs-11 fw-medium px-2">Gagal Pembayaran</span>
                                                         @break
                                                     @default
 

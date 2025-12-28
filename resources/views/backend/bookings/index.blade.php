@@ -20,6 +20,7 @@
             </div>
         </div>
         <div id="alert"></div>
+        @include('components.alert')
         <div class="row justify-content-center">
             <div class="col-12">
                 <div class="card">
@@ -36,6 +37,24 @@
                         </div>
                     </div>
                     <div class="card-body pt-0">
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label class="mb-2">No. Booking</label>
+                                <input type="text" name="" class="form-control" placeholder="No. Booking" id="">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="mb-2">Status</label>
+                                <select class="form-control">
+                                    <option value="">-- Pilih Status --</option>
+                                    @foreach ($status as $item)
+                                    <option value="{{ $item->status }}">{{ $item->status }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary">Search</button>
+                            </div>
+                        </div>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead class="table-light">
@@ -60,13 +79,13 @@
                                             <td class="text-center">
                                                 @switch($booking->status)
                                                     @case('Pending')
-                                                        <span class="badge bg-warning text-dark">Menunggu Konfirmasi</span>
+                                                        <span class="badge bg-warning-subtle text-warning fs-11 fw-medium px-2">Menunggu Konfirmasi</span>
                                                         @break
                                                     @case('Confirmed')
-                                                        <span class="badge bg-success">Success</span>
+                                                        <span class="badge bg-success-subtle text-success fs-11 fw-medium px-2">Success</span>
                                                         @break
                                                     @case('Cancelled')
-                                                        <span class="badge bg-danger">Batal</span>
+                                                        <span class="badge bg-danger-subtle text-danger fs-11 fw-medium px-2">Batal</span>
                                                         @break
                                                     @default
 
@@ -75,13 +94,15 @@
                                             <td class="text-center">
                                                 @switch($booking->status)
                                                     @case('Pending')
-                                                    <button onclick="modalConfirm(`{{ $booking->id }}`)" class="btn btn-info btn-sm text-dark">Konfirmasi</button>
+                                                    <button onclick="modalConfirm(`{{ $booking->id }}`)" class="btn btn-info btn-sm text-dark"><i class="fas fa-check ms-1 me-1"></i> Konfirmasi</button>
                                                         @break
                                                     @default
 
                                                 @endswitch
-                                                <a href="{{ route('admin.booking.detail',['id' => $booking->id]) }}"><i class="fas fa-eye text-success ms-1 me-1 fs-18"></i></a>
-                                                <a href="#"><i class="fas fa-file-pdf text-primary ms-1 me-1 fs-18"></i></a>
+                                                <a href="{{ route('admin.booking.detail',['id' => $booking->id]) }}" class="btn btn-success btn-sm"><i class="fas fa-eye ms-1 me-1"></i> Detail</a>
+                                                @if ($booking->status == 'Confirmed')
+                                                <a href="{{ route('admin.booking.cetakTiket',['id' => $booking->id]) }}" target="_blank" class="btn btn-primary btn-sm"><i class="fas fa-print ms-1 me-1"></i> Cetak Tiket</a>
+                                                @endif
                                             </td>
                                         </tr>
                                     @empty

@@ -123,6 +123,7 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
                 Route::controller(App\Http\Controllers\TestingController::class)->group(function () {
                     Route::prefix('testing')->group(function(){
                         Route::get('etiket', 'testingEtiket2')->middleware('verified');
+                        // Route::get('etiket', 'saveAndDownload')->middleware('verified');
                     });
                 });
                 Route::controller(App\Http\Controllers\TripController::class)->group(function () {
@@ -142,6 +143,7 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
                         Route::post('confirm/simpan', 'konfirmasi_simpan')->name('admin.booking.konfirmasi.simpan')->middleware('verified');
                         Route::get('{id}', 'konfirmasi')->name('admin.booking.konfirmasi')->middleware('verified');
                         Route::get('{id}/detail', 'detail')->name('admin.booking.detail')->middleware('verified');
+                        Route::get('{id}/cetak-tiket', 'cetakTiket')->name('admin.booking.cetakTiket')->middleware('verified');
                     });
                 });
                 Route::controller(App\Http\Controllers\TransactionController::class)->group(function () {
