@@ -155,6 +155,17 @@ class BookingController extends Controller
         return response()->json($bookings);
     }
 
+    public function searchBooking(Request $request)
+    {
+        // dd($request->all());
+        $data['bookings'] = $this->booking->where('booking_code','LIKE','%'.$request->no_booking.'%')
+                                            ->where('status',$request->status)
+                                            ->orderBy('created_at','desc')->paginate(10);
+        $data['status'] = $this->booking->select('status')->groupBy('status')->get();
+
+        return view('backend.bookings.index',$data);
+    }
+
     public function cetakTiket($id)
     {
         $booking = $this->booking->with('bookingDeparture')

@@ -59,7 +59,30 @@ class TripController extends Controller
 
     public function create()
     {
-        return view('backend.trips.create');
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_FRESH_CONNECT  => true,
+            CURLOPT_URL            => 'https://www.apicountries.com/countries',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HEADER         => false,
+            // CURLOPT_HTTPHEADER     => ['Authorization: Bearer '.$apiKey],
+            CURLOPT_FAILONERROR    => false,
+            CURLOPT_IPRESOLVE      => CURL_IPRESOLVE_V4
+        ));
+
+        $response = curl_exec($curl);
+        // dd($response);
+        $error = curl_error($curl);
+
+        curl_close($curl);
+
+        if (empty($response)) {
+            $data['countries'] = [];
+        }else{
+            $data['countries'] = json_decode($response);
+        }
+
+        return view('backend.trips.create',$data);
     }
 
     public function simpan(Request $request)
@@ -186,6 +209,31 @@ class TripController extends Controller
             return redirect()->back()->with('error','Trip Tidak Ditemukan');
         }
 
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_FRESH_CONNECT  => true,
+            CURLOPT_URL            => 'https://www.apicountries.com/countries',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HEADER         => false,
+            // CURLOPT_HTTPHEADER     => ['Authorization: Bearer '.$apiKey],
+            CURLOPT_FAILONERROR    => false,
+            CURLOPT_IPRESOLVE      => CURL_IPRESOLVE_V4
+        ));
+
+        $response = curl_exec($curl);
+        // dd($response);
+        $error = curl_error($curl);
+
+        curl_close($curl);
+
+        if (empty($response)) {
+            $data['countries'] = [];
+        }else{
+            $data['countries'] = json_decode($response);
+        }
+
+        // dd($data['countries']);
+
         return view('backend.trips.edit',$data);
 
     }
@@ -195,6 +243,7 @@ class TripController extends Controller
         $rules = [
             'trip_name'  => 'required',
             'trip_category'  => 'required',
+            'trip_country'  => 'required',
             'trip_description'  => 'required',
             'trip_price'  => 'required',
             'trip_images'  => 'image|mimes:jpeg,jpg,png,svg|max:1024',
@@ -202,7 +251,8 @@ class TripController extends Controller
 
         $messages = [
             'trip_name.required'   => 'Nama Trip wajib diisi.',
-            'trip_category.required'   => 'Kategori File wajib diisi.',
+            'trip_category.required'   => 'Kategori wajib diisi.',
+            'trip_country.required'   => 'Negara wajib diisi.',
             'trip_description.required'   => 'Deskripsi wajib diisi.',
             'trip_price.required'   => 'Price wajib diisi.',
             'trip_images.mimes'   => 'Upload Image harus extensi .jpeg/.jpg',
@@ -222,6 +272,7 @@ class TripController extends Controller
 
             $input['trip_name'] = $request->trip_name;
             $input['trip_category'] = $request->trip_category;
+            $input['trip_country'] = $request->trip_country;
             $input['trip_description'] = $request->trip_description;
             $input['trip_price'] = $request->trip_price;
             $input['trip_experience'] = json_encode($request->experience);

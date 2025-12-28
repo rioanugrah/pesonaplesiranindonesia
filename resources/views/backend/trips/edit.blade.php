@@ -75,6 +75,17 @@
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
+                                    <label for="" class="col-2 col-form-label">Negara</label>
+                                    <div class="col-10">
+                                        <select name="trip_country" class="form-control" id="edit_country">
+                                            <option value="">-- Pilih Negara --</option>
+                                            @foreach ($countries as $item)
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
                                     <label for="" class="col-2 col-form-label">Description</label>
                                     <div class="col-10">
                                         <textarea class="form-control" name="trip_description" placeholder="Trip Description" id="editor" rows="5">{{ $trip->trip_description }}</textarea>
@@ -262,7 +273,11 @@
     {{-- <script src="{{ asset('backend') }}/assets/libs/quill/quill.js"></script>
     <script src="{{ asset('backend') }}/assets/js/pages/form-editor.init.js"></script> --}}
     {{-- <script src="https://cdn.jsdelivr.net/npm/ckeditor4@4.22.1/ckeditor.js"></script> --}}
+
     <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+    {{-- <script src="{{ asset('backend/assets/js/ckeditor2/ckeditor.js') }}"></script> --}}
+    {{-- <script src="https://cdn.ckeditor.com/4.25.1-lts/basic/ckeditor.js"></script> --}}
+    {{-- <script src="https://cdn.ckeditor.com/4.25.1-lts/full/ckeditor.js"></script> --}}
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.25.1/ckeditor.js" integrity="sha512-ezOU3Fadltxh7pT43hqqMHK5eif2u61EVR95JUjTQnUfYomiCa8NO00Fs46JSEGzh27jyHlX8k+dEDIHh1DlFA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.25.1/ckeditor.min.js" integrity="sha512-jJXRE/u6z571DgYqZx5zGCQOQkGDRabQ5w6EX4sFebmMwp8ptn8Zdx/Xq74UJFVP/9x16UM2ta78BoNl22hDBw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js"

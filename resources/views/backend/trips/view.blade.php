@@ -63,10 +63,20 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="" class="col-form-label">Trip Description</label>
-                            <div>
-                                {!! $trip->trip_description !!}
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="mb-3">
+                                    <label for="" class="col-form-label">Trip Description</label>
+                                    <div>
+                                        {!! $trip->trip_description !!}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="mb-3">
+                                    <label for="" class="col-form-label">Country</label>
+                                    <div>{{ $trip->trip_country }}</div>
+                                </div>
                             </div>
                         </div>
                         <div class="row">

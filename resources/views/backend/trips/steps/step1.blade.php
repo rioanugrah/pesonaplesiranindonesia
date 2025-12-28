@@ -7,7 +7,8 @@
 <div class="mb-3 row">
     <label for="" class="col-2 col-form-label">Trip Name</label>
     <div class="col-10">
-        <input type="text" name="trip_name" class="form-control" placeholder="Trip Name" value="{{ old('trip_name') }}">
+        <input type="text" name="trip_name" class="form-control" placeholder="Trip Name"
+            value="{{ old('trip_name') }}">
     </div>
 </div>
 <div class="mb-3 row">
@@ -21,6 +22,17 @@
     </div>
 </div>
 <div class="mb-3 row">
+    <label for="" class="col-2 col-form-label">Negara</label>
+    <div class="col-10">
+        <select name="trip_country" class="form-control" id="edit_country">
+            <option value="">-- Pilih Negara --</option>
+            @foreach ($countries as $item)
+                <option value="{{ $item->name }}">{{ $item->name }}</option>
+            @endforeach
+        </select>
+    </div>
+</div>
+<div class="mb-3 row">
     <label for="" class="col-2 col-form-label">Description</label>
     <div class="col-10">
         <textarea class="form-control" name="trip_description" placeholder="Trip Description" id="editor">{{ old('trip_description') }}</textarea>
@@ -29,7 +41,8 @@
 <div class="mb-3 row">
     <label for="" class="col-2 col-form-label">Trip Price</label>
     <div class="col-10">
-        <input type="number" name="trip_price" min="0" placeholder="Trip Price" class="form-control" value="{{ old('trip_price') }}">
+        <input type="number" name="trip_price" min="0" placeholder="Trip Price" class="form-control"
+            value="{{ old('trip_price') }}">
     </div>
 </div>
 <div class="mb-3 row" id="repeater_experience">

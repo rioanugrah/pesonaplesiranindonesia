@@ -37,24 +37,25 @@
                         </div>
                     </div>
                     <div class="card-body pt-0">
-                        <div class="row mb-3">
+                        <form method="get" action="{{ route('admin.booking.searchBooking') }}" class="row mb-3">
+                            @csrf
                             <div class="col-md-4">
                                 <label class="mb-2">No. Booking</label>
-                                <input type="text" name="" class="form-control" placeholder="No. Booking" id="">
+                                <input type="text" name="no_booking" class="form-control" placeholder="No. Booking" value="{{ request('no_booking') }}" id="">
                             </div>
                             <div class="col-md-4">
                                 <label class="mb-2">Status</label>
-                                <select class="form-control">
+                                <select name="status" class="form-control">
                                     <option value="">-- Pilih Status --</option>
                                     @foreach ($status as $item)
-                                    <option value="{{ $item->status }}">{{ $item->status }}</option>
+                                    <option value="{{ $item->status }}" {{ request('status') == $item->status ? 'selected' : null }}>{{ $item->status }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-md-4">
                                 <button type="submit" class="btn btn-primary">Search</button>
                             </div>
-                        </div>
+                        </form>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead class="table-light">

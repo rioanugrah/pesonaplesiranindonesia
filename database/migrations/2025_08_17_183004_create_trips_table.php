@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('trip_tour_plan');
             $table->text('trip_images');
             $table->text('trip_gallery');
+            $table->string('trip_country');
             $table->decimal('trip_price', 16, 2);
             $table->enum('status',['Active','NonActive'])->default('Active');
             $table->timestamps();

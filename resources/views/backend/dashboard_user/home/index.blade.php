@@ -95,10 +95,11 @@
                     <table class="table">
                         <thead class="thead">
                             <tr class="tr">
-                                <th class="th" scope="col">Kode Booking</th>
-                                <th class="th" scope="col">Nama Booking</th>
-                                <th class="th" scope="col">Harga</th>
-                                <th class="th" scope="col">Status</th>
+                                <th class="th text-center" scope="col">Kode Booking</th>
+                                <th class="th text-center" scope="col">Nama Booking</th>
+                                <th class="th text-center" scope="col">Harga</th>
+                                <th class="th text-center" scope="col">Status</th>
+                                <th class="th text-center" scope="col">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -113,12 +114,12 @@
                                     $total_booking = $booking->total_price+$booking->payment->fee_admin;
                                 @endphp
                                 <tr>
-                                    <td><a
+                                    <td class="text-center"><a
                                             href="{{ route('user.booking.detail', ['id' => $booking->id, 'booking_code' => $booking->booking_code]) }}">{{ $booking->booking_code }}</a>
                                     </td>
                                     <td>{{ $booking->booking_name }}</td>
-                                    <td>{{ 'Rp. ' . number_format($total_booking, 2, ',', '.') }}</td>
-                                    <td>
+                                    <td class="text-end">{{ 'Rp. ' . number_format($total_booking, 2, ',', '.') }}</td>
+                                    <td class="text-center">
                                         @switch($booking->payment->status)
                                             @case('Pending')
                                                 <span class="badge bg-warning text-dark">Pending</span>
@@ -134,6 +135,11 @@
 
                                             @default
                                         @endswitch
+                                    </td>
+                                    <td class="text-center">
+                                        @if ($booking->status == 'Confirmed')
+                                        <a href="{{ route('user.booking.cetakTiket',['id' => $booking->id]) }}" class="btn btn-primary btn-sm" target="_blank">Print Tiket</a>
+                                        @endif
                                     </td>
                                 </tr>
                                 @empty

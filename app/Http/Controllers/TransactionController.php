@@ -20,19 +20,25 @@ class TransactionController extends Controller
     public function index()
     {
         $data['payments'] = $this->payment->orderBy('created_at','desc')->paginate(10);
-        $data['totalDay'] = $this->payment->where('payment_date','LIKE','%'.Carbon::today().'%')->where('status','Success')->sum('amount');
+        $data['totalDay'] = $this->payment->where('payment_date','LIKE','%'.Carbon::today()->format('Y-m-d').'%')->where('status','Success')->sum('amount');
 
         $now = Carbon::now();
-        $weekStartDate = $now->startOfWeek()->format('Y-m-d');
-        $weekEndtDate = $now->endOfWeek()->format('Y-m-d');
+        // $weekStartDate = $now->startOfWeek()->format('Y-m-d');
+        // $weekEndtDate = $now->endOfWeek()->format('Y-m-d');
 
-        $data['totalWeek'] = $this->payment->whereBetween('payment_date',[$weekStartDate,$weekEndtDate])->where('status','Success')->sum('amount');
+        // $data['totalWeek'] = $this->payment->whereYear('payment_date',$weekStartDate)
+        //                                     ->where('payment_date','>=',$weekStartDate)
+        //                                     ->where('payment_date','<=',$weekEndtDate)
+        //                                     ->where('status','Success')
+        //                                     ->sum('amount');
+        // $data['totalWeek'] = $this->payment->whereBetween('payment_date',[$weekStartDate,$weekEndtDate])->where('status','Success')->sum('amount');
 
         $monthStartDate = $now->startOfMonth()->format('Y-m-d');
         $monthEndtDate = $now->endOfMonth()->format('Y-m-d');
 
         $data['totalMonth'] = $this->payment->whereBetween('payment_date',[$monthStartDate,$monthEndtDate])->where('status','Success')->sum('amount');
 
+        // dd($data);
         return view('backend.transactions.index',$data);
     }
 

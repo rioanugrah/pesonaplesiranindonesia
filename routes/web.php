@@ -140,6 +140,7 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
                 Route::controller(App\Http\Controllers\BookingController::class)->group(function () {
                     Route::prefix('bookings')->group(function(){
                         Route::get('/', 'index')->name('admin.booking')->middleware('verified');
+                        Route::get('search', 'searchBooking')->name('admin.booking.searchBooking')->middleware('verified');
                         Route::post('confirm/simpan', 'konfirmasi_simpan')->name('admin.booking.konfirmasi.simpan')->middleware('verified');
                         Route::get('{id}', 'konfirmasi')->name('admin.booking.konfirmasi')->middleware('verified');
                         Route::get('{id}/detail', 'detail')->name('admin.booking.detail')->middleware('verified');
@@ -202,6 +203,11 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
                     Route::prefix('booking')->group(function(){
                         Route::get('{id}/{booking_code}', 'booking_detail_user')->name('user.booking.detail')->middleware('verified');
                         Route::get('{id}/{booking_code}/pdf', 'booking_pdf_user')->name('user.booking.pdf')->middleware('verified');
+                    });
+                });
+                Route::controller(App\Http\Controllers\BookingController::class)->group(function () {
+                    Route::prefix('bookings')->group(function(){
+                        Route::get('{id}/cetak-tiket', 'cetakTiket')->name('user.booking.cetakTiket')->middleware('verified');
                     });
                 });
             });

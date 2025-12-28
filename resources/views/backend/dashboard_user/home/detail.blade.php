@@ -137,9 +137,11 @@
                             <tr>
                                 <td>
                                     <p class="fw-bold mb-0">{{ $booking->booking_name }}</p>
-                                    <small class="text-muted">Dewasa : {{ $booking->bookingDeparture->num_of_people.' - Rp.'.number_format($booking->bookingDeparture->people_price,2,',','.') }}</small> <br>
-                                    @if ($booking->bookingDeparture->num_of_adult > 0)
-                                    <small class="text-muted">Anak-anak : {{ $booking->bookingDeparture->num_of_adult.' - Rp.'.number_format($booking->bookingDeparture->adult_price,2,',','.') }}</small>
+                                    {{-- <small class="text-muted">Dewasa : {{ $booking->bookingDeparture->num_of_adult' - Rp.'.number_format($booking->bookingDeparture->adult_price,2,',','.') }}</small> <br> --}}
+                                    <small class="text-muted">Dewasa : {{ $booking->bookingDeparture->num_of_adult.' - Rp.'.number_format($booking->bookingDeparture->adult_price,2,',','.') }}</small> <br>
+                                    @if ($booking->bookingDeparture->num_of_child > 0)
+                                    <small class="text-muted">Anak-anak : {{ $booking->bookingDeparture->num_of_child.' - Rp.'.number_format($booking->bookingDeparture->child_price,2,',','.') }}</small>
+                                    {{-- <small class="text-muted">Anak-anak : {{ $booking->bookingDeparture->num_of_child' - Rp.'.number_format($booking->bookingDeparture->child_price,2,',','.') }}</small> --}}
                                     @endif
                                 </td>
                                 <td class="text-center">{{ $booking->bookingDeparture->num_of_people + $booking->bookingDeparture->num_of_adult }}</td>

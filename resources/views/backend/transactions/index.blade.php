@@ -25,7 +25,7 @@
                         <div class="row d-flex justify-content-center">
                             <div class="col-12 col-lg-12">
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="card">
                                             <div class="card-body">
                                                 <div class="row d-flex justify-content-center">
@@ -39,7 +39,7 @@
                                                         <div
                                                             class="d-flex justify-content-center align-items-center thumb-md rounded mx-auto">
                                                             <i
-                                                                class="iconoir-dollar-circle fs-22 align-self-center mb-0 text-muted opacity-50"></i>
+                                                                class="iconoir-dollar-circle fs-28 align-self-center mb-0 text-muted opacity-50"></i>
                                                         </div>
                                                     </div>
 
@@ -49,7 +49,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    {{-- <div class="col-md-4">
                                         <div class="card">
                                             <div class="card-body">
                                                 <div class="row d-flex justify-content-center">
@@ -72,8 +72,8 @@
                                             </div>
 
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
+                                    </div> --}}
+                                    <div class="col-md-6">
                                         <div class="card">
                                             <div class="card-body">
                                                 <div class="row d-flex justify-content-center">
@@ -88,7 +88,7 @@
                                                         <div
                                                             class="d-flex justify-content-center align-items-center thumb-md  rounded mx-auto">
                                                             <i
-                                                                class="iconoir-stats-report fs-22 align-self-center mb-0 text-muted opacity-50"></i>
+                                                                class="iconoir-stats-report fs-28 align-self-center mb-0 text-muted opacity-50"></i>
                                                         </div>
                                                     </div>
 
