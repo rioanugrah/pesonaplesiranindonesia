@@ -26,10 +26,16 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
                 Route::get('/', 'trip')->name('frontend.trip');
                 Route::get('{id}/{trip_code}', 'trip_detail')->name('frontend.trip_detail');
             });
+            Route::get('cek-booking', 'cek_booking')->name('frontend.cek_booking');
             Route::get('team', 'team')->name('frontend.team');
             Route::get('kontak-kami', 'kontak_kami')->name('frontend.kontak_kami');
             Route::get('kebijakan-privasi', 'kebijakan_privasi')->name('frontend.kebijakanprivasi');
         });
+
+        Route::controller(App\Http\Controllers\BookingController::class)->group(function () {
+            Route::post('cari_booking', 'cekBooking')->name('frontend.cariBooking');
+        });
+
     });
 
     Route::controller(App\Http\Controllers\TelegramController::class)->group(function () {

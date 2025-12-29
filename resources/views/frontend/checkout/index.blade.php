@@ -97,6 +97,16 @@
                                         <h4 class="mb-3">Booking Detail :</h4>
                                         <hr>
                                         <div class="row">
+                                            <div class="col-md-12">
+                                                <ul class="ticket mb-3">
+                                                    <li class="mb-2 fw-bold">
+                                                        Nama Trip:
+                                                    </li>
+                                                    <li>
+                                                        {{ $trip->trip_name }}
+                                                    </li>
+                                                </ul>
+                                            </div>
                                             <div class="col-md-6">
                                                 <ul class="ticket mb-3">
                                                     <li class="mb-2 fw-bold">

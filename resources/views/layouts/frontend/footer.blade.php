@@ -32,27 +32,27 @@
                         </div>
                         <ul class="list-items">
                             <li>
-                                <a href="#">
+                                <a href="{{ route('frontend.index') }}">
                                     Beranda
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="{{ route('frontend.tentang_kami') }}">
                                     Tentang Kami
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="{{ route('frontend.trip') }}">
                                     Trip Wisata
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
-                                    Blog
+                                <a href="{{ route('frontend.cek_booking') }}">
+                                    Cek Booking
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="{{ route('frontend.kontak_kami') }}">
                                     Kontak Kami
                                 </a>
                             </li>

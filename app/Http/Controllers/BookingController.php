@@ -268,4 +268,31 @@ class BookingController extends Controller
         unlink($tempPath);
         exit;
     }
+
+    public function cekBooking(Request $request)
+    {
+        $booking = $this->booking->with('payment','bookingDeparture')
+                                // ->where('booking_code','LIKE','%'.$request->booking_code.'%')
+                                ->where('booking_code',$request->booking_code)
+                                ->first();
+
+        if(empty($booking)){
+            return response()->json([
+                'success' => false,
+                'message_title' => 'Gagal',
+                'message_content' => 'E-TIKET belum tersedia'
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'booking_code' => $booking->booking_code,
+                'payment_status' => $booking->payment->status,
+                'booking_status' => $booking->status,
+                'booking_date' => Carbon::create($booking->bookingDeparture->booking_date)->isoFormat('dddd, D MMMM YYYY'),
+                'booking_time' => $booking->bookingDeparture->booking_time,
+            ]
+        ]);
+    }
 }

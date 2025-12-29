@@ -7,7 +7,8 @@
             </span>
             <span class="">
                 <img src="{{ asset('backend') }}/assets/logo/logo_plesiran_new_white.png" class="logo-lg logo-light" width="150" style="height: 5%">
-                <img src="{{ asset('backend') }}/assets/logo/logo_plesiran_black.webp" class="logo-lg logo-dark" width="150" style="height: 5%">
+                <img src="{{ asset('backend') }}/assets/logo/logo_plesiran_black.webp" class="logo-lg logo-dark">
+                {{-- <img src="{{ asset('backend') }}/assets/logo/logo_plesiran_black.webp" class="logo-lg logo-dark" width="150" style="height: 5%"> --}}
             </span>
         </a>
     </div>

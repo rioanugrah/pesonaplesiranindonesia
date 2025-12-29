@@ -140,6 +140,11 @@ class FrontendController extends Controller
         return view('frontend.team');
     }
 
+    public function cek_booking()
+    {
+        return view('frontend.cekBooking');
+    }
+
     public function kebijakan_privasi()
     {
         return view('frontend.kebijakanprivasi');
