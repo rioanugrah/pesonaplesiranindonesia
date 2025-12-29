@@ -26,7 +26,7 @@
                         <div class="mb-3">
                             <label for="">Images</label>
                             <div>
-                                <img src="{{ Storage::disk('s3')->url('/plesiranindonesia/trip/'.$trip->trip_code.'/'.$trip->trip_images) }}" width="200">
+                                <img src="{{ Storage::disk('s3')->url('/plesiranindonesia/trip/'.$trip->trip_code.'/'.$trip->trip_images) }}" style="width: 70%">
                             </div>
                         </div>
                         <div class="row">

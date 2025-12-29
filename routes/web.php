@@ -123,6 +123,7 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
                 Route::controller(App\Http\Controllers\TestingController::class)->group(function () {
                     Route::prefix('testing')->group(function(){
                         Route::get('etiket', 'testingEtiket2')->middleware('verified');
+                        Route::get('image', 'uploadImageWatermark')->middleware('verified');
                         // Route::get('etiket', 'saveAndDownload')->middleware('verified');
                     });
                 });

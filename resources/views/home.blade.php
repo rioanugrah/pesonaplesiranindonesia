@@ -204,7 +204,9 @@
                                             <th class="border-top-0 text-center">Transaction</th>
                                             <th class="border-top-0 text-center">Payment Date</th>
                                             <th class="border-top-0 text-center">Payment Method</th>
-                                            <th class="border-top-0 text-center">Amount</th>
+                                            <th class="border-top-0 text-center">Fee Admin</th>
+                                            <th class="border-top-0 text-center">Sub Total</th>
+                                            <th class="border-top-0 text-center">Total</th>
                                             <th class="border-top-0 text-center">Status</th>
                                         </tr>
                                     </thead>
@@ -216,7 +218,9 @@
                                                 <td class="text-center">
                                                     {{ empty($payment->payment_date) ? '-' : $payment->payment_date }}</td>
                                                 <td class="text-center">{{ $payment->payment_method }}</td>
-                                                <td class="text-end">Rp. {{ number_format($payment->amount, 2, ',', '.') }}
+                                                <td class="text-end">Rp. {{ number_format($payment->fee_admin,2,',','.') }}</td>
+                                        <td class="text-end">Rp. {{ number_format($payment->amount,2,',','.') }}</td>
+                                        <td class="text-end">Rp. {{ number_format($payment->amount+$payment->fee_admin,2,',','.') }}</td>
                                                 </td>
                                                 <td class="text-center">
                                                     @switch($payment->status)

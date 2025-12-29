@@ -92,7 +92,7 @@ class TripController extends Controller
             'trip_category'  => 'required',
             'trip_description'  => 'required',
             'trip_price'  => 'required',
-            'trip_images'  => 'required|image|mimes:jpeg,jpg,png,svg|max:1024',
+            'trip_images'  => 'required|image|mimes:jpeg,jpg,png,svg|max:2048',
         ];
 
         $messages = [
@@ -102,7 +102,7 @@ class TripController extends Controller
             'trip_price.required'   => 'Price wajib diisi.',
             'trip_images.required'   => 'Upload Image wajib diisi.',
             'trip_images.mimes'   => 'Upload Image harus extensi .jpeg/.jpg',
-            'trip_images.max'   => 'Upload Image maksimal 1MB',
+            'trip_images.max'   => 'Upload Image maksimal 2MB',
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -127,16 +127,33 @@ class TripController extends Controller
                 // $fileName = 'trip_'.time().'.'.$file->getClientOriginalExtension();
                 $tujuanUpload = 'plesiranindonesia/trip/'.$input['trip_code'];
                 $img = Image::make($file->path());
+
+                $watermark =  Image::make(public_path('logo/logoppiwhite.png'));
+                $watermarkSize = $img->width() - 20; //size of the image minus 20 margins
+                $watermarkSize = $img->width() / 2; //half of the image size
+                $resizePercentage = 80;//70% less then an actual image (play with this value)
+                $watermarkSize = round($img->width() * ((100 - $resizePercentage) / 100), 2); //watermark will be $resizePercentage less then the actual width of the image
+
+                $watermark->resize($watermarkSize, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+
+                $img->insert($watermark, 'top-left', 50, 50);
                 $img = $img->encode('webp', 75);
+
                 $fileName = 'trip_wisata_'.Carbon::now()->format('dmY_His').'_'.rand(1000,9999).'.webp';
+                $filePath = 'plesiranindonesia/trip/'.$input['trip_code'].'/'.$fileName;
+
+                Storage::disk('s3')->put($filePath, $img->stream(),"public");
+                $resultTripImage = Storage::disk('s3')->url($filePath);
 
                 // Proses Upload File ke Object Storage
                 // $result = Storage::disk('s3')->putFileAs($tujuanUpload, $file, $file->getClientOriginalName());
-                Storage::disk('s3')->putFileAs($tujuanUpload, $file, $fileName);
+                // Storage::disk('s3')->putFileAs($tujuanUpload, $file, $fileName);
                 // Proses merubah visibility file agar bisa di akses secara public
-                Storage::disk('s3')->setVisibility($tujuanUpload."/".$fileName,"public");
+                // Storage::disk('s3')->setVisibility($tujuanUpload."/".$fileName,"public");
                 // Proses mengambil URL hasil upload
-                $resultTripImage = Storage::disk('s3')->url($tujuanUpload."/".$fileName);
+                // $resultTripImage = Storage::disk('s3')->url($tujuanUpload."/".$fileName);
                 // $path = Storage::disk('s3')->put('images', $request->trip_images);
                 // $path = Storage::disk('s3')->url($path);
                 // $input['trip_images'] = $resultTripImage;
@@ -246,7 +263,7 @@ class TripController extends Controller
             'trip_country'  => 'required',
             'trip_description'  => 'required',
             'trip_price'  => 'required',
-            'trip_images'  => 'image|mimes:jpeg,jpg,png,svg|max:1024',
+            'trip_images'  => 'image|mimes:jpeg,jpg,png,svg|max:2048',
         ];
 
         $messages = [
@@ -256,7 +273,7 @@ class TripController extends Controller
             'trip_description.required'   => 'Deskripsi wajib diisi.',
             'trip_price.required'   => 'Price wajib diisi.',
             'trip_images.mimes'   => 'Upload Image harus extensi .jpeg/.jpg',
-            'trip_images.max'   => 'Upload Image maksimal 1MB',
+            'trip_images.max'   => 'Upload Image maksimal 2MB',
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -287,12 +304,29 @@ class TripController extends Controller
                 // $fileName = 'trip_'.time().'.'.$file->getClientOriginalExtension();
                 $tujuanUpload = 'plesiranindonesia/trip/'.$trip->trip_code;
                 $img = Image::make($file->path());
-                $img = $img->encode('webp', 75);
-                $fileName = 'trip_wisata_'.Carbon::now()->format('dmY_His').'_'.rand(1000,9999).'.webp';
 
-                Storage::disk('s3')->putFileAs($tujuanUpload, $file, $fileName);
-                Storage::disk('s3')->setVisibility($tujuanUpload."/".$fileName,"public");
-                $resultTripImage = Storage::disk('s3')->url($tujuanUpload."/".$fileName);
+                $watermark =  Image::make(public_path('logo/logoppiwhite.png'));
+                $watermarkSize = $img->width() - 20; //size of the image minus 20 margins
+                $watermarkSize = $img->width() / 2; //half of the image size
+                $resizePercentage = 80;//70% less then an actual image (play with this value)
+                $watermarkSize = round($img->width() * ((100 - $resizePercentage) / 100), 2); //watermark will be $resizePercentage less then the actual width of the image
+
+                $watermark->resize($watermarkSize, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+
+                $img->insert($watermark, 'top-left', 50, 50);
+                $img = $img->encode('webp', 75);
+
+                $fileName = 'trip_wisata_'.Carbon::now()->format('dmY_His').'_'.rand(1000,9999).'.webp';
+                $filePath = 'plesiranindonesia/trip/'.$trip->trip_code.'/'.$fileName;
+                // dd($img->stream());
+                // Storage::disk('s3')->putFileAs($tujuanUpload, $file, $fileName);
+                // Storage::disk('s3')->setVisibility($tujuanUpload."/".$fileName,"public");
+                Storage::disk('s3')->put($filePath, $img->stream(),"public");
+                $resultTripImage = Storage::disk('s3')->url($filePath);
+                // Storage::disk('s3')->setVisibility($tujuanUpload."/".$img->stream()->detach(),"public");
+                // $resultTripImage = Storage::disk('s3')->url($tujuanUpload."/".$fileName);
                 // $input['trip_images'] = $resultTripImage;
                 $input['trip_images'] = $fileName;
             }
