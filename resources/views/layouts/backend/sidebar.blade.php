@@ -40,7 +40,7 @@
                             <span>Booking</span>
                         </a>
                     </li>
-                    <li class="menu-label mt-2">
+                    {{-- <li class="menu-label mt-2">
                         <span>Destinasi</span>
                     </li>
                     <li class="nav-item">
@@ -54,7 +54,7 @@
                             <i class="iconoir-report-columns menu-icon"></i>
                             <span>Destinasi</span>
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="menu-label mt-2">
                         <span>Transactions</span>
                     </li>
@@ -92,6 +92,15 @@
                         <a class="nav-link" href="#">
                             <i class="iconoir-minus-circle menu-icon"></i>
                             <span>Maintenance</span>
+                        </a>
+                    </li>
+                    <li class="menu-label mt-2">
+                        <span>Utilities</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="iconoir-minus-circle menu-icon"></i>
+                            <span>Tax</span>
                         </a>
                     </li>
                     <li class="menu-label mt-2">

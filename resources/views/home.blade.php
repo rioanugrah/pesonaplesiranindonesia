@@ -18,124 +18,98 @@
             </div>
         </div>
         <div class="row justify-content-center">
-            <div class="col-lg-6">
-                <div class="row">
-                    {{-- <div class="col-md-12">
-                        <div class="card bg-globe-img">
-                            <div class="card-body">
-                                <div>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span class="fs-16 fw-semibold">Balance</span>
-                                    </div>
-
-                                    <h4 class="my-2 fs-24 fw-semibold">Rp. {{ number_format($total_income,2,',','.') }}</h4>
-                                    <button type="button" class="btn btn-soft-primary">Transfer</button>
-                                </div>
+            <div class="col-md-3 col-lg-3">
+                <div class="card bg-corner-img">
+                    <div class="card-body">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-9">
+                                <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Total Omset</p>
+                                <h4 class="mt-1 mb-0 fw-medium">Rp. {{ number_format($total_omset, 2, ',', '.') }}</h4>
                             </div>
-                        </div>
-                    </div> --}}
-                    <div class="col-md-12 col-lg-12">
-                        <div class="card bg-corner-img">
-                            <div class="card-body">
-                                <div class="row d-flex justify-content-center">
-                                    <div class="col-9">
-                                        <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Total Omset</p>
-                                        <h4 class="mt-1 mb-0 fw-medium">Rp. {{ number_format($total_omset,2,',','.') }}</h4>
-                                    </div>
 
-                                    <div class="col-3 align-self-center">
-                                        <div
-                                            class="d-flex justify-content-center align-items-center thumb-md border-dashed border-success rounded mx-auto">
-                                            <i class="iconoir-dollar-circle fs-22 align-self-center mb-0 text-success"></i>
-                                        </div>
-                                    </div>
+                            <div class="col-3 align-self-center">
+                                <div
+                                    class="d-flex justify-content-center align-items-center thumb-md border-dashed border-success rounded mx-auto">
+                                    <i class="iconoir-dollar-circle fs-22 align-self-center mb-0 text-success"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="row">
-                    <div class="col-md-6 col-lg-6">
-                        <div class="card bg-corner-img">
-                            <div class="card-body">
-                                <div class="row d-flex justify-content-center">
-                                    <div class="col-9">
-                                        <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Total Order</p>
-                                        <h4 class="mt-1 mb-0 fw-medium">{{ $total_order }}</h4>
-                                    </div>
+            <div class="col-md-2 col-lg-2">
+                <div class="card bg-corner-img">
+                    <div class="card-body">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-9">
+                                <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Total Order</p>
+                                <h4 class="mt-1 mb-0 fw-medium">{{ $total_order }}</h4>
+                            </div>
 
-                                    <div class="col-3 align-self-center">
-                                        <div
-                                            class="d-flex justify-content-center align-items-center thumb-md border-dashed border-success rounded mx-auto">
-                                            <i class="iconoir-cart fs-22 align-self-center mb-0 text-success"></i>
-                                        </div>
-                                    </div>
+                            <div class="col-3 align-self-center">
+                                <div
+                                    class="d-flex justify-content-center align-items-center thumb-md border-dashed border-success rounded mx-auto">
+                                    <i class="iconoir-cart fs-22 align-self-center mb-0 text-success"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-6">
-                        <div class="card bg-corner-img">
-                            <div class="card-body">
-                                <div class="row d-flex justify-content-center">
-                                    <div class="col-9">
-                                        <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Total Pending</p>
-                                        <h4 class="mt-1 mb-0 fw-medium">{{ $total_pending }}</h4>
-                                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-lg-2">
+                <div class="card bg-corner-img">
+                    <div class="card-body">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-9">
+                                <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Total Pending</p>
+                                <h4 class="mt-1 mb-0 fw-medium">{{ $total_pending }}</h4>
+                            </div>
 
-                                    <div class="col-3 align-self-center">
-                                        <div
-                                            class="d-flex justify-content-center align-items-center thumb-md border-dashed border-success rounded mx-auto">
-                                            <i class="iconoir-cart fs-22 align-self-center mb-0 text-success"></i>
-                                        </div>
-                                    </div>
+                            <div class="col-3 align-self-center">
+                                <div
+                                    class="d-flex justify-content-center align-items-center thumb-md border-dashed border-success rounded mx-auto">
+                                    <i class="iconoir-cart fs-22 align-self-center mb-0 text-success"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-6">
-                        <div class="card bg-corner-img">
-                            <div class="card-body">
-                                <div class="row d-flex justify-content-center">
-                                    <div class="col-9">
-                                        <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Total Cancelled</p>
-                                        <h4 class="mt-1 mb-0 fw-medium">{{ $total_cancel }}</h4>
-                                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-lg-2">
+                <div class="card bg-corner-img">
+                    <div class="card-body">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-9">
+                                <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Total Cancelled</p>
+                                <h4 class="mt-1 mb-0 fw-medium">{{ $total_cancel }}</h4>
+                            </div>
 
-                                    <div class="col-3 align-self-center">
-                                        <div
-                                            class="d-flex justify-content-center align-items-center thumb-md border-dashed border-success rounded mx-auto">
-                                            <i class="iconoir-cart fs-22 align-self-center mb-0 text-success"></i>
-                                        </div>
-                                    </div>
+                            <div class="col-3 align-self-center">
+                                <div
+                                    class="d-flex justify-content-center align-items-center thumb-md border-dashed border-success rounded mx-auto">
+                                    <i class="iconoir-cart fs-22 align-self-center mb-0 text-success"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-6">
-                        <div class="card bg-corner-img">
-                            <div class="card-body">
-                                <div class="row d-flex justify-content-center">
-                                    <div class="col-9">
-                                        <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Rata-Rata Order</p>
-                                        <h4 class="mt-1 mb-0 fw-medium">Rp. {{ number_format($total_average,2,',','.') }}</h4>
-                                    </div>
-
-                                    <div class="col-3 align-self-center">
-                                        <div
-                                            class="d-flex justify-content-center align-items-center thumb-md border-dashed border-danger rounded mx-auto">
-                                            <i class="iconoir-hexagon-dice fs-22 align-self-center mb-0 text-danger"></i>
-                                        </div>
-                                    </div>
-
-                                </div>
-
+                </div>
+            </div>
+            <div class="col-md-3 col-lg-3">
+                <div class="card bg-corner-img">
+                    <div class="card-body">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-9">
+                                <p class="text-muted text-uppercase mb-0 fw-normal fs-13">Rata-Rata Omset</p>
+                                <h4 class="mt-1 mb-0 fw-medium">Rp. {{ number_format($total_average, 2, ',', '.') }}</h4>
                             </div>
 
+                            <div class="col-3 align-self-center">
+                                <div
+                                    class="d-flex justify-content-center align-items-center thumb-md border-dashed border-success rounded mx-auto">
+                                    <i class="iconoir-dollar-circle fs-22 align-self-center mb-0 text-success"></i>
+                                </div>
+                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -160,111 +134,123 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th class="border-top-0 text-center">#</th>
-                                        <th class="border-top-0 text-center">Booking Code</th>
-                                        <th class="border-top-0 text-center">Booking User</th>
-                                        <th class="border-top-0 text-center">Booking Name</th>
-                                        <th class="border-top-0 text-center">Amount</th>
+                                        <th class="border-top-0 text-center">Kode Booking</th>
+                                        <th class="border-top-0 text-center">User</th>
+                                        <th class="border-top-0 text-center">Item</th>
+                                        <th class="border-top-0 text-center">Total</th>
                                         <th class="border-top-0 text-center">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse ($bookings as $key => $booking)
                                         <tr>
-                                            <td class="text-center">{{ $key+1 }}</td>
+                                            <td class="text-center">{{ $key + 1 }}</td>
                                             <td class="text-center">{{ $booking->booking_code }}</td>
                                             <td class="text-center">{{ $booking->user->name }}</td>
                                             <td>{{ $booking->booking_name }}</td>
-                                            <td class="text-end">{{ 'Rp. ' . number_format($booking->total_price, 2, ',', '.') }}</td>
+                                            <td class="text-end">
+                                                {{ 'Rp. ' . number_format($booking->total_price, 2, ',', '.') }}</td>
                                             <td class="text-center">
                                                 @switch($booking->status)
                                                     @case('Pending')
-                                                        <span class="badge bg-warning-subtle text-warning fs-11 fw-medium px-2">Menunggu Konfirmasi</span>
-                                                        @break
+                                                        <span
+                                                            class="badge bg-warning-subtle text-warning fs-11 fw-medium px-2">Menunggu
+                                                            Konfirmasi</span>
+                                                    @break
+
                                                     @case('Confirmed')
-                                                        <span class="badge bg-success-subtle text-success fs-11 fw-medium px-2">Success</span>
-                                                        @break
+                                                        <span
+                                                            class="badge bg-success-subtle text-success fs-11 fw-medium px-2">Success</span>
+                                                    @break
+
                                                     @case('Cancelled')
-                                                        <span class="badge bg-danger-subtle text-danger fs-11 fw-medium px-2">Batal</span>
-                                                        @break
-                                                    @default
+                                                        <span
+                                                            class="badge bg-danger-subtle text-danger fs-11 fw-medium px-2">Batal</span>
+                                                    @break
 
+                                                    @default
                                                 @endswitch
                                             </td>
                                         </tr>
-                                    @empty
+                                        @empty
+                                            <tr>
+                                                <td colspan="7" class="text-center text-danger">No Booking</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-12 order-1 order-lg-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h4 class="card-title">Transaction History</h4>
+                                </div>
+                                <div class="col-auto">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0">
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <thead class="table-light">
                                         <tr>
-                                            <td colspan="7" class="text-center text-danger">No Booking</td>
+                                            <th class="border-top-0 text-center">#</th>
+                                            <th class="border-top-0 text-center">Transaction</th>
+                                            <th class="border-top-0 text-center">Payment Date</th>
+                                            <th class="border-top-0 text-center">Payment Method</th>
+                                            <th class="border-top-0 text-center">Amount</th>
+                                            <th class="border-top-0 text-center">Status</th>
                                         </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @forelse ($payments as $key => $payment)
+                                            <tr>
+                                                <td class="text-center">{{ $key + 1 }}</td>
+                                                <td class="text-center">{{ $payment->booking->booking_code }}</td>
+                                                <td class="text-center">
+                                                    {{ empty($payment->payment_date) ? '-' : $payment->payment_date }}</td>
+                                                <td class="text-center">{{ $payment->payment_method }}</td>
+                                                <td class="text-end">Rp. {{ number_format($payment->amount, 2, ',', '.') }}
+                                                </td>
+                                                <td class="text-center">
+                                                    @switch($payment->status)
+                                                        @case('Pending')
+                                                            <span
+                                                                class="badge bg-warning-subtle text-warning fs-11 fw-medium px-2">Menunggu
+                                                                Pembayaran</span>
+                                                        @break
+
+                                                        @case('Success')
+                                                            <span
+                                                                class="badge bg-success-subtle text-success fs-11 fw-medium px-2">Success</span>
+                                                        @break
+
+                                                        @case('Failed')
+                                                            <span class="badge bg-danger-subtle text-danger fs-11 fw-medium px-2">Gagal
+                                                                Pembayaran</span>
+                                                        @break
+
+                                                        @default
+                                                    @endswitch
+                                                </td>
+                                            </tr>
+                                            @empty
+                                                <tr>
+                                                    <td class="text-danger text-center" colspan="7">No Transactions</td>
+                                                </tr>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-12 col-lg-12 order-1 order-lg-2">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h4 class="card-title">Transaction History</h4>
-                            </div>
-                            <div class="col-auto">
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body pt-0">
-                        <div class="table-responsive">
-                            <table class="table mb-0">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th class="border-top-0 text-center">#</th>
-                                        <th class="border-top-0 text-center">Transaction</th>
-                                        <th class="border-top-0 text-center">Payment Date</th>
-                                        <th class="border-top-0 text-center">Payment Method</th>
-                                        <th class="border-top-0 text-center">Amount</th>
-                                        <th class="border-top-0 text-center">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse ($payments as $key => $payment)
-                                        <tr>
-                                            <td class="text-center">{{ $key+1 }}</td>
-                                            <td class="text-center">{{ $payment->booking->booking_code }}</td>
-                                            <td class="text-center">{{ empty($payment->payment_date) ? '-' : $payment->payment_date }}</td>
-                                            <td class="text-center">{{ $payment->payment_method }}</td>
-                                            <td class="text-end">Rp. {{ number_format($payment->amount,2,',','.') }}</td>
-                                            <td class="text-center">
-                                                @switch($payment->status)
-                                                    @case('Pending')
-                                                    <span
-                                                        class="badge bg-warning-subtle text-warning fs-11 fw-medium px-2">Menunggu Pembayaran</span>
-                                                        @break
-                                                    @case('Success')
-                                                    <span
-                                                        class="badge bg-success-subtle text-success fs-11 fw-medium px-2">Success</span>
-                                                        @break
-                                                    @case('Failed')
-                                                    <span
-                                                        class="badge bg-danger-subtle text-danger fs-11 fw-medium px-2">Gagal Pembayaran</span>
-                                                        @break
-                                                    @default
-
-                                                @endswitch
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td class="text-danger text-center" colspan="7">No Transactions</td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection
+        @endsection

@@ -61,10 +61,10 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th class="text-center">#</th>
-                                        <th class="text-center">Booking Code</th>
-                                        <th class="text-center">Booking User</th>
-                                        <th class="text-center">Booking Name</th>
-                                        <th class="text-center">Booking Amount</th>
+                                        <th class="text-center">Kode Booking</th>
+                                        <th class="text-center">User</th>
+                                        <th class="text-center">Item</th>
+                                        <th class="text-center">Total</th>
                                         <th class="text-center">Status</th>
                                         <th class="text-center">Actions</th>
                                     </tr>

@@ -139,6 +139,8 @@
                                         <th class="border-top-0 text-center">#</th>
                                         <th class="border-top-0 text-center">Tanggal</th>
                                         <th class="border-top-0 text-center">Metode Pembayaran</th>
+                                        <th class="border-top-0 text-center">Fee Admin</th>
+                                        <th class="border-top-0 text-center">Sub Total</th>
                                         <th class="border-top-0 text-center">Total</th>
                                         <th class="border-top-0 text-center">Status</th>
                                         <th class="border-top-0 text-center">Tanggal Pembayaran</th>
@@ -149,9 +151,11 @@
                                     @forelse ($payments as $key => $payment)
                                     <tr>
                                         <td class="text-center">{{ $key+1 }}</td>
-                                        <td class="text-center">{{ \Carbon\Carbon::create($payment->created_at)->isoFormat('LLLL') }}</td>
+                                        <td class="text-center">{{ \Carbon\Carbon::create($payment->created_at)->format('d-m-Y H:i:s') }}</td>
                                         <td class="text-center">{{ $payment->payment_method }}</td>
+                                        <td class="text-end">Rp. {{ number_format($payment->fee_admin,2,',','.') }}</td>
                                         <td class="text-end">Rp. {{ number_format($payment->amount,2,',','.') }}</td>
+                                        <td class="text-end">Rp. {{ number_format($payment->amount+$payment->fee_admin,2,',','.') }}</td>
                                         <td class="text-center">
                                             @switch($payment->status)
                                                 @case('Pending')
@@ -174,7 +178,7 @@
                                             @if (empty($payment->payment_date))
                                                 <span class="text-danger">Belum Terbayar</span>
                                             @else
-                                            {{ \Carbon\Carbon::create($payment->payment_date)->isoFormat('LLLL') }}
+                                            {{ \Carbon\Carbon::create($payment->payment_date)->format('d-m-Y H:i:s') }}
                                             @endif
                                         </td>
                                         <td class="text-center">

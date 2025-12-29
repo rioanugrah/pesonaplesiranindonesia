@@ -220,12 +220,12 @@ class BookingController extends Controller
             $pdf->SetTextColor(0, 0, 0);
             $pdf->SetXY($x + 0.8, $y + 4.4);
             $pdf->SetFont('Arial', 'B', 18);
-            $pdf->Write(0, Carbon::now()->format('dm'));
+            $pdf->Write(0, Carbon::create($booking->bookingDeparture->booking_date)->format('dm'));
 
             $pdf->SetTextColor(0, 0, 0);
             $pdf->SetXY($x + 0.8, $y + 5.1);
             $pdf->SetFont('Arial', 'B', 18);
-            $pdf->Write(0, Carbon::now()->format('Y'));
+            $pdf->Write(0, Carbon::create($booking->bookingDeparture->booking_date)->format('Y'));
 
             $noBarcode = $booking->booking_code;
             $fileName = $noBarcode.'.png';
