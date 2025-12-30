@@ -80,7 +80,7 @@
                                         <select name="trip_country" class="form-control" id="edit_country">
                                             <option value="">-- Pilih Negara --</option>
                                             @foreach ($countries as $item)
-                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            <option value="{{ $item->name }}" {{ $trip->trip_country == $item->name ? 'selected' : null }}>{{ $item->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -217,6 +217,16 @@
                                             <button type="button" class="btn btn-success" data-repeater-create>Tambah
                                                 Baru</button>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="" class="col-2 col-form-label">Status</label>
+                                    <div class="col-10">
+                                        <select name="trip_country" class="form-control" id="edit_country">
+                                            <option value="">-- Pilih Status --</option>
+                                            <option value="Active" {{ $trip->status == 'Active' ? 'selected' : null }}>Aktif</option>
+                                            <option value="NonActive" {{ $trip->status == 'NonActive' ? 'selected' : null }}>Tidak Aktif</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>

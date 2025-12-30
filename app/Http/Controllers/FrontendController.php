@@ -110,6 +110,8 @@ class FrontendController extends Controller
         //     ],
         // ];
 
+        $data['trips'] = $this->trip->where('status','Active')->orderBy('created_at','desc')->paginate(8);
+
         return view('frontend.index',$data);
     }
 

@@ -51,7 +51,7 @@
                             <ul class="meta">
                                 <li>
                                     <i class="fa-thin fa-location-dot"></i>
-                                    Indonesia
+                                    {{ $trip->trip_country }}
                                 </li>
                                 <li class="rating">
                                     <div class="star">

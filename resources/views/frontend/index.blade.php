@@ -101,20 +101,20 @@
                 <div class="row g-4">
                     <div class="col-lg-6">
                         <div class="about-image">
-                            <img src="{{ asset('frontend/') }}/assets/img/about/01.png"
-                                class="wow img-custom-anim-left">
+                            <img src="{{ asset('frontend/') }}/assets/img/about/01.png" class="wow img-custom-anim-left">
                             <div class="border-image">
                                 <img src="{{ asset('frontend/') }}/assets/img/about/border.png" alt="">
                             </div>
                             <div class="vdeo-item">
-                                <a href="https://www.tiktok.com/@pesonaplesiranindonesia/video/7477341065142553911?lang=en" class="video-btn video-popup">
+                                <a href="https://www.tiktok.com/@pesonaplesiranindonesia/video/7477341065142553911?lang=en"
+                                    class="video-btn video-popup">
                                     <i class="fa-duotone fa-play"></i>
                                 </a>
                                 <h5>WACTH VIDEO </h5>
                             </div>
                             <div class="about-image-2">
-                                <img src="{{ asset('frontend/') }}/assets/img/about/02.png"
-                                    class="wow img-custom-anim-top" data-wow-duration="1.5s" data-wow-delay="0.3s">
+                                <img src="{{ asset('frontend/') }}/assets/img/about/02.png" class="wow img-custom-anim-top"
+                                    data-wow-duration="1.5s" data-wow-delay="0.3s">
                                 <div class="plane-shape float-bob-y">
                                     <img src="{{ asset('frontend/') }}/assets/img/about/plane-shape.png" alt="">
                                 </div>
@@ -137,7 +137,9 @@
                                     Peluang besar untuk <br>
                                     petualangan & perjalanan
                                 </h2>
-                                <p class="wow fadeInUp wow" data-wow-delay=".3s">Mulailah petualangan impian Anda di sini! Alat perencanaan perjalanan yang intuitif ini dirancang untuk menyederhanakan setiap langkah perjalanan Anda.</p>
+                                <p class="wow fadeInUp wow" data-wow-delay=".3s">Mulailah petualangan impian Anda di sini!
+                                    Alat perencanaan perjalanan yang intuitif ini dirancang untuk menyederhanakan setiap
+                                    langkah perjalanan Anda.</p>
                             </div>
                             <div class="about-area mt-4 mt-md-0">
                                 <div class="line-image">
@@ -181,6 +183,76 @@
         </div>
     </section>
 
+    <section class="popular-destination-section section-padding mt-4 pt-0">
+        <div class="car-shape float-bob-x">
+            <img src="{{ asset('frontend/assets/img/destination/car.png') }}" alt="img">
+        </div>
+        <div class="container">
+            <div class="section-title-area justify-content-between">
+                <div class="section-title">
+                    <span class="sub-title wow fadeInUp">
+                        Trip
+                    </span>
+                    <h2 class="wow fadeInUp wow" data-wow-delay=".3s">
+                        Trip Wisata
+                    </h2>
+                </div>
+                <a href="{{ route('frontend.trip') }}" class="theme-btn wow fadeInUp wow" data-wow-delay=".5s">View All Tour<i
+                        class="fa-sharp fa-regular fa-arrow-right"></i></a>
+            </div>
+            <div class="row">
+                @forelse ($trips as $trip)
+                <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp wow" data-wow-delay=".2s">
+                    <div class="destination-card-items">
+                        <div class="destination-image">
+                            <img src="{{ Storage::disk('s3')->url('plesiranindonesia/trip/' . $trip->trip_code . '/' . $trip->trip_images) }}" alt="img">
+                            <div class="heart-icon">
+                                <i class="fa-regular fa-heart"></i>
+                            </div>
+                        </div>
+                        <div class="destination-content">
+                            <ul class="meta">
+                                <li>
+                                    <i class="fa-thin fa-location-dot"></i>
+                                    {{ $trip->trip_country }}
+                                </li>
+                                <li class="rating">
+                                    <div class="star">
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                    {{-- <p>4.7</p> --}}
+                                </li>
+                            </ul>
+                            <h5>
+                                <a href="{{ route('frontend.trip_detail', ['id' => $trip->id, 'trip_code' => $trip->trip_code]) }}">
+                                    {{ $trip->trip_name }}
+                                </a>
+                            </h5>
+                            <ul class="info">
+                                <li>
+                                    <i class="fa-regular fa-clock"></i>
+                                    {{ $trip->created_at->diffForHumans() }}
+                                </li>
+                                {{-- <li>
+                                    <i class="fa-thin fa-users"></i>
+                                    50+
+                                </li> --}}
+                            </ul>
+                            <div class="price">
+                                <h6>IDR {{ number_format($trip->trip_price, 2, ',', '.') }}<span>/Per
+                                                        {{ $trip->trip_category == 'O' ? 'Pax' : '5 Pax' }} </span></h6>
+                                <a href="{{ route('frontend.trip_detail', ['id' => $trip->id, 'trip_code' => $trip->trip_code]) }}" class="theme-btn style-2">Book Now<i
+                                        class="fa-sharp fa-regular fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @empty
+                @endforelse
+            </div>
+        </div>
+    </section>
+
     <section class="testimonial-section section-padding fix bg-cover">
         <div class="bag-shape float-bob-x">
             <img src="{{ asset('frontend/') }}/assets/img/testimonial/bag-shape.png" alt="img">
@@ -198,40 +270,41 @@
                 <div class="swiper testimonial-slider">
                     <div class="swiper-wrapper">
                         @foreach ($testimonis as $testimoni)
-                        <div class="swiper-slide">
-                            <div class="testimonial-card-items">
-                                <div class="star">
-                                    @for ($i = 1; $i <= $testimoni['rating']; $i++)
-                                    <i class="fas fa-star"></i>
-                                    @endfor
-                                    {{-- <i class="fa-regular fa-star"></i> --}}
-                                </div>
-                                <p>
-                                    {{ $testimoni['description'] }}
-                                </p>
-                                <div class="client-info-items">
-                                    <div class="client-info">
-                                        <div class="client-image">
-                                            <img src="{{ asset('frontend/assets/img/testimonial/boy.png') }}" width="50">
-                                        </div>
-                                        <div class="text">
-                                            <h4>{{ $testimoni['name'] }}</h4>
-                                        </div>
+                            <div class="swiper-slide">
+                                <div class="testimonial-card-items">
+                                    <div class="star">
+                                        @for ($i = 1; $i <= $testimoni['rating']; $i++)
+                                            <i class="fas fa-star"></i>
+                                        @endfor
+                                        {{-- <i class="fa-regular fa-star"></i> --}}
                                     </div>
-                                    <div class="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45"
-                                            viewBox="0 0 45 45" fill="none">
-                                            <path
-                                                d="M21.5998 15.1662C21.4359 21.2706 20.2326 27.1028 17.1618 32.4687C15.0391 36.1766 11.8636 38.7708 8.31789 40.9881C8.09312 41.1284 7.80413 41.3886 7.55907 41.1588C7.2836 40.9002 7.52189 40.5673 7.66216 40.3087C8.9449 37.9646 10.3121 35.6645 11.4292 33.2309C12.6528 30.564 13.6212 27.811 14.2567 24.9396C14.4257 24.1774 14.255 24.0929 13.535 24.2484C7.64188 25.526 2.16112 21.8976 1.00852 15.9858C-0.0849304 10.38 3.84608 4.78603 9.51275 3.88694C15.9196 2.86954 21.5491 7.65063 21.5998 14.1522C21.6015 14.4902 21.5998 14.8282 21.5998 15.1662Z"
-                                                fill="#FFA31A" />
-                                            <path
-                                                d="M44.25 15.2202C44.0793 21.5916 42.7949 27.6571 39.3912 33.1581C37.3175 36.5077 34.3228 38.8501 31.0746 40.9288C30.816 41.0945 30.4729 41.4375 30.1856 41.1198C29.9253 40.8325 30.2346 40.4877 30.3884 40.1987C31.6559 37.8462 33.0401 35.5562 34.1403 33.1142C35.3351 30.4642 36.2917 27.7382 36.9153 24.8939C37.0775 24.1536 36.8967 24.0827 36.2224 24.2415C30.2836 25.6358 24.4277 21.6338 23.5556 15.4348C22.7985 10.0537 26.7751 4.68115 32.1359 3.89022C38.7118 2.92353 44.2162 7.65053 44.25 14.2923C44.25 14.6016 44.25 14.9109 44.25 15.2202Z"
-                                                fill="#FFA31A" />
-                                        </svg>
+                                    <p>
+                                        {{ $testimoni['description'] }}
+                                    </p>
+                                    <div class="client-info-items">
+                                        <div class="client-info">
+                                            <div class="client-image">
+                                                <img src="{{ asset('frontend/assets/img/testimonial/boy.png') }}"
+                                                    width="50">
+                                            </div>
+                                            <div class="text">
+                                                <h4>{{ $testimoni['name'] }}</h4>
+                                            </div>
+                                        </div>
+                                        <div class="icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45"
+                                                viewBox="0 0 45 45" fill="none">
+                                                <path
+                                                    d="M21.5998 15.1662C21.4359 21.2706 20.2326 27.1028 17.1618 32.4687C15.0391 36.1766 11.8636 38.7708 8.31789 40.9881C8.09312 41.1284 7.80413 41.3886 7.55907 41.1588C7.2836 40.9002 7.52189 40.5673 7.66216 40.3087C8.9449 37.9646 10.3121 35.6645 11.4292 33.2309C12.6528 30.564 13.6212 27.811 14.2567 24.9396C14.4257 24.1774 14.255 24.0929 13.535 24.2484C7.64188 25.526 2.16112 21.8976 1.00852 15.9858C-0.0849304 10.38 3.84608 4.78603 9.51275 3.88694C15.9196 2.86954 21.5491 7.65063 21.5998 14.1522C21.6015 14.4902 21.5998 14.8282 21.5998 15.1662Z"
+                                                    fill="#FFA31A" />
+                                                <path
+                                                    d="M44.25 15.2202C44.0793 21.5916 42.7949 27.6571 39.3912 33.1581C37.3175 36.5077 34.3228 38.8501 31.0746 40.9288C30.816 41.0945 30.4729 41.4375 30.1856 41.1198C29.9253 40.8325 30.2346 40.4877 30.3884 40.1987C31.6559 37.8462 33.0401 35.5562 34.1403 33.1142C35.3351 30.4642 36.2917 27.7382 36.9153 24.8939C37.0775 24.1536 36.8967 24.0827 36.2224 24.2415C30.2836 25.6358 24.4277 21.6338 23.5556 15.4348C22.7985 10.0537 26.7751 4.68115 32.1359 3.89022C38.7118 2.92353 44.2162 7.65053 44.25 14.2923C44.25 14.6016 44.25 14.9109 44.25 15.2202Z"
+                                                    fill="#FFA31A" />
+                                            </svg>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         @endforeach
                     </div>
                     <div class="array-button">
@@ -360,7 +433,8 @@
                                     </ul>
                                 </div>
                             </div>
-                            <a href="#" class="theme-btn wow fadeInUp wow" data-wow-delay=".9s">Kontak Kami<i class="fa-sharp fa-regular fa-arrow-right"></i></a>
+                            <a href="#" class="theme-btn wow fadeInUp wow" data-wow-delay=".9s">Kontak Kami<i
+                                    class="fa-sharp fa-regular fa-arrow-right"></i></a>
                         </div>
                     </div>
                     <div class="col-lg-6">
