@@ -48,8 +48,21 @@ class LoginController extends Controller
         // return redirect()->intended('');
         if (\Auth::user()->hasRole('Administrator')) {
             return redirect(route('admin.home'));
-        }else{
+        }elseif(\Auth::user()->hasRole('Partnership')) {
+            return redirect(route('member.dashboard'));
+        }
+        else{
             return redirect(route('user.home'));
         }
+    }
+
+    public function logout(Request $request)
+    {
+        \Auth::logout(); // Use the Auth facade to log out the user
+
+        $request->session()->invalidate(); // Invalidate the session
+        $request->session()->regenerateToken(); // Regenerate the CSRF token for security
+
+        return redirect(route('frontend.index')); // Redirect to your desired URL (e.g., '/login')
     }
 }

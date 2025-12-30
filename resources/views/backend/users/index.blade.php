@@ -66,6 +66,10 @@
                                                             <span class="badge bg-primary">{{ $v }}</span>
                                                         @break
 
+                                                        @case('Partnership')
+                                                            <span class="badge bg-info">{{ $v }}</span>
+                                                        @break
+
                                                         @case('Users')
                                                             <span class="badge bg-success">{{ $v }}</span>
                                                         @break

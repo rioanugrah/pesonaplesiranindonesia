@@ -134,14 +134,14 @@
                                 <div class="text-center  mb-2">
                                     <p class="text-muted">Belum mempunyai akun ? <a href="{{ route('register') }}"
                                             class="text-primary ms-2">Daftar Sekarang</a></p>
-                                    <h6 class="px-3 d-inline-block">Atau login dengan</h6>
+                                    {{-- <h6 class="px-3 d-inline-block">Atau login dengan</h6> --}}
                                 </div>
-                                <div class="d-flex justify-content-center">
+                                {{-- <div class="d-flex justify-content-center">
                                     <a href=""
                                         class="d-flex justify-content-center align-items-center thumb-md bg-danger-subtle text-danger rounded-circle">
                                         <i class="fab fa-google align-self-center"></i>
                                     </a>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>

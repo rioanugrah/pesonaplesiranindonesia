@@ -217,17 +217,28 @@ class BookingController extends Controller
             $pdf->SetFont('Arial', 'B', 18);
             $pdf->Write(0, 'E-TIKET');
 
-            $pdf->SetTextColor(0, 0, 0);
-            $pdf->SetXY($x + 0.8, $y + 4.4);
-            $pdf->SetFont('Arial', 'B', 18);
-            $pdf->Write(0, Carbon::create($booking->bookingDeparture->booking_date)->format('dm'));
+            if ($booking->bookingDeparture->booking_date >= Carbon::today()->format('Y-m-d')) {
+                $pdf->SetTextColor(0, 0, 0);
+                $pdf->SetXY($x + 0.8, $y + 4.4);
+                $pdf->SetFont('Arial', 'B', 18);
+                $pdf->Write(0, Carbon::create($booking->bookingDeparture->booking_date)->format('dm'));
 
-            $pdf->SetTextColor(0, 0, 0);
-            $pdf->SetXY($x + 0.8, $y + 5.1);
-            $pdf->SetFont('Arial', 'B', 18);
-            $pdf->Write(0, Carbon::create($booking->bookingDeparture->booking_date)->format('Y'));
+                $pdf->SetTextColor(0, 0, 0);
+                $pdf->SetXY($x + 0.8, $y + 5.1);
+                $pdf->SetFont('Arial', 'B', 18);
+                $pdf->Write(0, Carbon::create($booking->bookingDeparture->booking_date)->format('Y'));
 
-            $noBarcode = $booking->booking_code;
+                $noBarcode = $booking->booking_code;
+            }else{
+                $pdf->SetTextColor(0, 0, 0);
+                $pdf->SetXY($x + 0.8, $y + 4.4);
+                $pdf->SetFont('Arial', 'B', 18);
+                $pdf->Write(0, 'Expired');
+
+                $noBarcode = 'Expired';
+
+            }
+
             $fileName = $noBarcode.'.png';
             $tempPath = public_path('backend/etiket/'.$fileName);
 

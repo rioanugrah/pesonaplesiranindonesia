@@ -92,7 +92,7 @@
                     <div class="col-12 col-lg-4">
                         <div class="main-bar">
                             <div class="activities-card">
-                                <form action="{{ route('frontend.checkout',['id' => $trip_detail->id, 'trip_code' => $trip_detail->trip_code]) }}" method="post" enctype="multipart/form-data">
+                                <form action="{{ route('frontend.checkout',['id' => $trip_detail->id, 'trip_code' => $trip_detail->trip_code]) }}" method="get" enctype="multipart/form-data">
                                 @csrf
                                 <h3>
                                     Booking List :

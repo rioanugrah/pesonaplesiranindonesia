@@ -57,7 +57,7 @@
                         </a>
                     </li> --}}
                     <li class="menu-label mt-2">
-                        <span>Transactions</span>
+                        <span>Payments</span>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.transaction') }}">

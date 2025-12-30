@@ -45,32 +45,6 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
         });
     });
 
-    // Route::controller(App\Http\Controllers\TestingController::class)->group(function () {
-    //     Route::prefix('testing')->group(function(){
-    //         Route::get('/', 'testing1');
-    //     });
-    // });
-
-
-    // Route::get('test-email', function() {
-    //     $data['billing'] = [
-    //         'first_name' => 'Rio',
-    //         'last_name' => 'Anugrah',
-    //         'email' => 'rioanugrah999@gmail.com',
-    //         'phone' => '08',
-    //     ];
-    //     return view('emails.payment',$data);
-    //     \Mail::to('rioanugrah999@gmail.com')->send(new \App\Mail\Payment());
-    //     dd("Email is sent successfully.");
-    // });
-
-    // Route::controller(App\Http\Controllers\HomeController::class)->group(function () {
-    //     Route::get('coba-email/{id}', 'email')->name('backend.emailTest');
-    // });
-
-    // Route::get('trips', [App\Http\Controllers\TripController::class, 'index']);
-    // Route::get('trips/{trip}', [App\Http\Controllers\TripController::class, 'show']);
-
     Route::get('sitemap.xml', function () {
         $data['posts'] = [
             [
@@ -103,16 +77,10 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
         return response()->view('frontend.sitemap',$data)->header('Content-Type', 'text/xml');
     });
 
-    // Route::controller(App\Http\Controllers\Payment\TripayController::class)->group(function () {
-    //     Route::prefix('payment')->group(function () {
-    //         Route::get('/', 'getPayment');
-    //     });
-    // });
-
     Route::group(['middleware' => 'auth'], function () {
         Route::controller(App\Http\Controllers\FrontendController::class)->group(function () {
             Route::prefix('checkout')->group(function(){
-                Route::post('{id}/{trip_code}', 'checkout')->name('frontend.checkout')->middleware('verified');
+                Route::get('{id}/{trip_code}', 'checkout')->name('frontend.checkout')->middleware('verified');
                 Route::post('{id}/{trip_code}/simpan', 'checkout_simpan')->name('frontend.checkout.simpan')->middleware('verified');
             });
         });
@@ -224,3 +192,17 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
 
 });
 
+Route::domain('partner.'.parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
+    Route::group(['middleware' => 'auth'], function () {
+        Route::group(['middleware' => ['role:Partnership','LogVisits']], function(){
+            Route::controller(App\Http\Controllers\Member\HomeController::class)->group(function () {
+                Route::get('dashboard', 'dashboard')->name('member.dashboard')->middleware('verified');
+            });
+            Route::controller(App\Http\Controllers\Member\TripController::class)->group(function () {
+                Route::prefix('trips')->group(function(){
+                    Route::get('/', 'index')->name('member.trip')->middleware('verified');
+                });
+            });
+        });
+    });
+});
