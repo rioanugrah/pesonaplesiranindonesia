@@ -222,7 +222,7 @@
                                 <div class="mb-3 row">
                                     <label for="" class="col-2 col-form-label">Status</label>
                                     <div class="col-10">
-                                        <select name="trip_country" class="form-control" id="edit_country">
+                                        <select name="status" class="form-control" id="edit_country">
                                             <option value="">-- Pilih Status --</option>
                                             <option value="Active" {{ $trip->status == 'Active' ? 'selected' : null }}>Aktif</option>
                                             <option value="NonActive" {{ $trip->status == 'NonActive' ? 'selected' : null }}>Tidak Aktif</option>
