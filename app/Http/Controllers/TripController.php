@@ -90,6 +90,7 @@ class TripController extends Controller
         $rules = [
             'trip_name'  => 'required',
             'trip_category'  => 'required',
+            'trip_country'  => 'required',
             'trip_description'  => 'required',
             'trip_price'  => 'required',
             'trip_images'  => 'required|image|mimes:jpeg,jpg,png,svg|max:2048',
@@ -98,6 +99,7 @@ class TripController extends Controller
         $messages = [
             'trip_name.required'   => 'Nama Trip wajib diisi.',
             'trip_category.required'   => 'Kategori File wajib diisi.',
+            'trip_country.required'   => 'Negara wajib diisi.',
             'trip_description.required'   => 'Deskripsi wajib diisi.',
             'trip_price.required'   => 'Price wajib diisi.',
             'trip_images.required'   => 'Upload Image wajib diisi.',
@@ -115,6 +117,7 @@ class TripController extends Controller
             $input['trip_code'] = 'TRIP'.rand(10000,99999);
             $input['trip_name'] = $request->trip_name;
             $input['trip_category'] = $request->trip_category;
+            $input['trip_country'] = $request->trip_country;
             $input['trip_description'] = $request->trip_description;
             $input['trip_price'] = $request->trip_price;
             $input['trip_experience'] = json_encode($request->experience);
