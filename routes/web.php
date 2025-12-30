@@ -80,7 +80,7 @@ Route::domain(parse_url(env('APP_URL'), PHP_URL_HOST))->group(function () {
     Route::group(['middleware' => 'auth'], function () {
         Route::controller(App\Http\Controllers\FrontendController::class)->group(function () {
             Route::prefix('checkout')->group(function(){
-                Route::get('{id}/{trip_code}', 'checkout')->name('frontend.checkout')->middleware('verified');
+                Route::post('{id}/{trip_code}', 'checkout')->name('frontend.checkout')->middleware('verified');
                 Route::post('{id}/{trip_code}/simpan', 'checkout_simpan')->name('frontend.checkout.simpan')->middleware('verified');
             });
         });
