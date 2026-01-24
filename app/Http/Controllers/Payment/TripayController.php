@@ -354,7 +354,7 @@ class TripayController extends Controller
         $merchantRef  = rand(100000,999999);
         $amount       = 50000;
         $url_tripay   = $this->tripay_url;
-        $return_url   = '-';
+        $return_url   = 'https://tripay.co.id/';
 
         $data = [
             'method'         => 'BCAVA',
