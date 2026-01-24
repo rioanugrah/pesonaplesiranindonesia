@@ -175,6 +175,10 @@ class TripayController extends Controller
                         'payment_date' => Carbon::now(),
                         'status' => 'Success'
                     ]);
+
+                    $datas['transaction']['booking']->update([
+                        'status' => 'Confirmed'
+                    ]);
                     // $notifMail = $this->sendMail;
                     // $notifMail->sendMail(
                     //     $transaction->status,$transaction->transaction_code,$transaction->transaction_price,
@@ -182,10 +186,11 @@ class TripayController extends Controller
                     //     json_decode($transaction->transaction_order)->email,json_decode($transaction->transaction_order)->phone,json_decode($transaction->transaction_order)->address,
                     //     $transaction->transaction_qty,$transaction->transaction_reference,$transaction->verifikasi_tiket->kode_tiket
                     // );
-                    \Mail::to(json_decode($datas['transaction']->payment_billing)->email)
-                            ->cc('rioanugrah999@gmail.com')
-                            ->send(new \App\Mail\Payment($datas['transaction']));
                     try {
+                        \Mail::to(json_decode($datas['transaction']->payment_billing)->email)
+                                ->cc('rioanugrah999@gmail.com')
+                                ->send(new \App\Mail\Payment($datas['transaction']));
+
                         Telegram::sendMessage([
                             'chat_id' => env('TELEGRAM_CHAT_ID'),
                             'text' => 'Booking Code : '.$datas['transaction']['booking']['booking_code']."\n".
@@ -207,6 +212,11 @@ class TripayController extends Controller
                         // 'transaction_reference' => $data->reference,
                         'status' => 'Failed'
                     ]);
+
+                    $datas['transaction']['booking']->update([
+                        'status' => 'Cancelled'
+                    ]);
+
                     break;
 
                 case 'FAILED':
@@ -214,6 +224,11 @@ class TripayController extends Controller
                         // 'transaction_reference' => $data->reference,
                         'status' => 'Failed'
                     ]);
+
+                    $datas['transaction']['booking']->update([
+                        'status' => 'Cancelled'
+                    ]);
+
                     break;
 
                 default:
@@ -329,6 +344,62 @@ class TripayController extends Controller
         // echo empty($error) ? $response : $error;
         return empty($error) ? $response : $error;
 
+    }
+
+    public function handle_open_payment_new()
+    {
+        $apiKey       = $this->tripay_api_key;
+        $privateKey   = $this->tripay_private_key;
+        $merchantCode = $this->tripay_merchant;
+        $merchantRef  = rand(100000,999999);
+        $amount       = 50000;
+        $url_tripay   = $this->tripay_url;
+        $return_url   = '-';
+
+        $data = [
+            'method'         => 'VABCA',
+            'merchant_ref'   => $merchantRef,
+            'amount'         => $amount,
+            'customer_name'  => 'Rio Anugrah',
+            'customer_email' => 'rioanugrah999@gmail.com',
+            'customer_phone' => '082233684670',
+            'order_items'    => [
+                [
+                    'name'        => 'Trip Lagi',
+                    'price'       => $amount,
+                    'quantity'    => 1,
+                    // 'product_url' => 'https://tokokamu.com/product/nama-produk-1',
+                    // 'image_url'   => 'https://tokokamu.com/product/nama-produk-1.jpg',
+                    ]
+                ],
+                // 'return_url'   => 'https://domainanda.com/redirect',
+                'callback_url'   => env('APP_URL').'/api/callback',
+                'return_url'   => $return_url,
+                'expired_time' => (time() + (24 * 60 * 60)), // 24 jam
+                'signature'    => hash_hmac('sha256', $merchantCode.$merchantRef.$amount, $privateKey)
+            ];
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+                CURLOPT_FRESH_CONNECT  => true,
+                CURLOPT_URL            => $url_tripay.'/transaction/create',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_HEADER         => false,
+                CURLOPT_HTTPHEADER     => ['Authorization: Bearer '.$apiKey],
+                CURLOPT_FAILONERROR    => false,
+                CURLOPT_POST           => true,
+                CURLOPT_POSTFIELDS     => http_build_query($data),
+                CURLOPT_IPRESOLVE      => CURL_IPRESOLVE_V4
+            ]);
+
+            $response = curl_exec($curl);
+            $error = curl_error($curl);
+
+            curl_close($curl);
+            // dd(json_decode($response)->data);
+            // echo empty($error) ? $response : $error;
+            return $response ? $response : $error;
     }
 
 }
