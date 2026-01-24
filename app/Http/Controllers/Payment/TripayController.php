@@ -357,7 +357,7 @@ class TripayController extends Controller
         $return_url   = '-';
 
         $data = [
-            'method'         => 'VABCA',
+            'method'         => 'BCAVA',
             'merchant_ref'   => $merchantRef,
             'amount'         => $amount,
             'customer_name'  => 'Rio Anugrah',
