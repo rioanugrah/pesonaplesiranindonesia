@@ -37,19 +37,48 @@
                         <nav>
                             <div class="nav nav-tabs mb-3" id="nav-tab">
                                 <a class="nav-link py-2 active" id="step1-tab" data-bs-toggle="tab" href="#step1">Make Trip</a>
+                                <a class="nav-link py-2" id="experience-tab" data-bs-toggle="tab" href="#experience">Experience</a>
+                                <a class="nav-link py-2" id="facilities-tab" data-bs-toggle="tab" href="#facilities">Facilities</a>
+                                <a class="nav-link py-2" id="tour-plan-tab" data-bs-toggle="tab" href="#tour-plan">Tour Plan</a>
+                                <a class="nav-link py-2" id="include-tab" data-bs-toggle="tab" href="#include">Include</a>
+                                <a class="nav-link py-2" id="exclude-tab" data-bs-toggle="tab" href="#exclude">Exclude</a>
                                 <a class="nav-link py-2" id="step2-tab" data-bs-toggle="tab" href="#step2">Extra</a>
+                                <a class="nav-link py-2" id="language-tab" data-bs-toggle="tab" href="#language">Language</a>
+                                <a class="nav-link py-2" id="upload-gallery-tab" data-bs-toggle="tab" href="#upload-gallery">Upload Gallery</a>
+                                <a class="nav-link py-2" id="step3-tab" data-bs-toggle="tab" href="#step3">Faq</a>
                             </div>
                         </nav>
                         <div class="tab-content" id="nav-tabContent">
                             <div class="tab-pane active" id="step1">
                                 @include('backend.trips.steps.step1')
                             </div>
+                            <div class="tab-pane" id="experience">
+                                @include('backend.trips.steps.experience')
+                            </div>
+                            <div class="tab-pane" id="facilities">
+                                @include('backend.trips.steps.facilities')
+                            </div>
+                            <div class="tab-pane" id="tour-plan">
+                                @include('backend.trips.steps.tourplan')
+                            </div>
+                            <div class="tab-pane" id="include">
+                                @include('backend.trips.steps.include')
+                            </div>
+                            <div class="tab-pane" id="exclude">
+                                @include('backend.trips.steps.exclude')
+                            </div>
+                            <div class="tab-pane" id="language">
+                                @include('backend.trips.steps.language')
+                            </div>
+                            <div class="tab-pane" id="upload-gallery">
+                                @include('backend.trips.steps.uploadGallery')
+                            </div>
                             <div class="tab-pane" id="step2">
                                 @include('backend.trips.steps.step2')
                             </div>
-                            {{-- <div class="tab-pane" id="step3">
+                            <div class="tab-pane" id="step3">
                                 @include('backend.trips.steps.step3')
-                            </div> --}}
+                            </div>
                         </div>
                         </form>
                     </div>
@@ -59,14 +88,23 @@
     </div>
 @endsection
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/ckeditor4@4.22.1/ckeditor.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/ckeditor4@4.22.1/ckeditor.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js" integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.js" integrity="sha512-bZAXvpVfp1+9AUHQzekEZaXclsgSlAeEnMJ6LfFAvjqYUVZfcuVXeQoN5LhD7Uw0Jy4NCY9q3kbdEXbwhZUmUQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="{{ asset('backend') }}/assets/js/pages/form-wizard.js"></script>
+    <script src="{{ asset('backend/assets/js/ckeditor.js') }}"></script>
 
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js" integrity="sha512-foIijUdV0fR0Zew7vmw98E6mOWd9gkGWQBWaoA1EOFAx+pY+N8FmmtIYAVj64R98KeD2wzZh1aHK0JSpKmRH8w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
     <script>
-        CKEDITOR.replace('editor');
+        // CKEDITOR.replace('editor');
+        ClassicEditor
+        .create( document.querySelector( '#editor' ), {
+            removePlugins: [ 'Link', 'CKFinder' ],
+            toolbar: [ 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote' , 'link' ]
+        } )
+        .catch( error => {
+            console.log( error );
+        } );
 
         $('#repeater_experience').repeater({
             initEmpty: false,
@@ -133,6 +171,70 @@
         });
 
         $('#repeater_trip_extra').repeater({
+            initEmpty: false,
+
+            defaultValues: {
+                'text-input': 'foo'
+            },
+
+            show: function () {
+                $(this).slideDown();
+            },
+
+            hide: function (deleteElement) {
+                $(this).slideUp(deleteElement);
+            }
+        });
+
+        $('#repeater_trip_faq').repeater({
+            initEmpty: false,
+
+            defaultValues: {
+                'text-input': 'foo'
+            },
+
+            show: function () {
+                $(this).slideDown();
+            },
+
+            hide: function (deleteElement) {
+                $(this).slideUp(deleteElement);
+            }
+        });
+
+        $('#repeater_include').repeater({
+            initEmpty: false,
+
+            defaultValues: {
+                'text-input': 'foo'
+            },
+
+            show: function () {
+                $(this).slideDown();
+            },
+
+            hide: function (deleteElement) {
+                $(this).slideUp(deleteElement);
+            }
+        });
+
+        $('#repeater_exclude').repeater({
+            initEmpty: false,
+
+            defaultValues: {
+                'text-input': 'foo'
+            },
+
+            show: function () {
+                $(this).slideDown();
+            },
+
+            hide: function (deleteElement) {
+                $(this).slideUp(deleteElement);
+            }
+        });
+
+        $('#repeater_language').repeater({
             initEmpty: false,
 
             defaultValues: {

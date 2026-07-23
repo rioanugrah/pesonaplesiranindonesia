@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Trip;
 use App\Models\TripExtra;
+use App\Models\TripSchedule;
 use App\Models\Booking;
 
 use \Carbon\Carbon;
@@ -22,6 +23,7 @@ class TripController extends Controller
     function __construct(
         Trip $trip,
         TripExtra $tripExtra,
+        TripSchedule $tripSchedule,
         Booking $booking
     ){
         $this->middleware('permission:trip-list', ['only' => ['index','show']]);
@@ -32,6 +34,7 @@ class TripController extends Controller
 
         $this->trip = $trip;
         $this->trip_extra = $tripExtra;
+        $this->tripSchedule = $tripSchedule;
         $this->booking = $booking;
     }
     // Menampilkan semua trip yang tersedia
@@ -59,28 +62,41 @@ class TripController extends Controller
 
     public function create()
     {
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_FRESH_CONNECT  => true,
-            CURLOPT_URL            => 'https://www.apicountries.com/countries',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_HEADER         => false,
-            // CURLOPT_HTTPHEADER     => ['Authorization: Bearer '.$apiKey],
-            CURLOPT_FAILONERROR    => false,
-            CURLOPT_IPRESOLVE      => CURL_IPRESOLVE_V4
-        ));
+        // $curl = curl_init();
+        // curl_setopt_array($curl, array(
+        //     CURLOPT_FRESH_CONNECT  => true,
+        //     CURLOPT_URL            => 'https://www.apicountries.com/countries',
+        //     CURLOPT_RETURNTRANSFER => true,
+        //     CURLOPT_HEADER         => false,
+        //     // CURLOPT_HTTPHEADER     => ['Authorization: Bearer '.$apiKey],
+        //     CURLOPT_FAILONERROR    => false,
+        //     CURLOPT_IPRESOLVE      => CURL_IPRESOLVE_V4
+        // ));
 
-        $response = curl_exec($curl);
-        // dd($response);
-        $error = curl_error($curl);
+        // $response = curl_exec($curl);
+        // // dd($response);
+        // $error = curl_error($curl);
 
-        curl_close($curl);
+        // curl_close($curl);
 
-        if (empty($response)) {
-            $data['countries'] = [];
-        }else{
-            $data['countries'] = json_decode($response);
-        }
+        // // dd($response);
+
+        // if (empty($response)) {
+        //     $data['countries'] = [];
+        // }else{
+        //     $data['countries'] = json_decode($response);
+        // }
+
+        // return view('backend.trips.create',$data);
+
+        $data['countries'] = [
+            [
+                'name' => 'Indonesia',
+            ],
+            [
+                'name' => 'English',
+            ],
+        ];
 
         return view('backend.trips.create',$data);
     }
@@ -88,41 +104,52 @@ class TripController extends Controller
     public function simpan(Request $request)
     {
         $rules = [
-            'trip_name'  => 'required',
-            'trip_category'  => 'required',
-            'trip_country'  => 'required',
-            'trip_description'  => 'required',
-            'trip_price'  => 'required',
-            'trip_images'  => 'required|image|mimes:jpeg,jpg,png,svg|max:2048',
+            // 'trip_name'  => 'required',
+            // 'trip_category'  => 'required',
+            // 'trip_country'  => 'required',
+            // 'trip_description'  => 'required',
+            // 'trip_price'  => 'required',
+            // 'trip_images'  => 'required|image|mimes:jpeg,jpg,png,svg|max:5120',
         ];
 
         $messages = [
-            'trip_name.required'   => 'Nama Trip wajib diisi.',
-            'trip_category.required'   => 'Kategori File wajib diisi.',
-            'trip_country.required'   => 'Negara wajib diisi.',
-            'trip_description.required'   => 'Deskripsi wajib diisi.',
-            'trip_price.required'   => 'Price wajib diisi.',
-            'trip_images.required'   => 'Upload Image wajib diisi.',
-            'trip_images.mimes'   => 'Upload Image harus extensi .jpeg/.jpg',
-            'trip_images.max'   => 'Upload Image maksimal 2MB',
+            // 'trip_name.required'   => 'Nama Trip wajib diisi.',
+            // 'trip_category.required'   => 'Kategori File wajib diisi.',
+            // 'trip_country.required'   => 'Negara wajib diisi.',
+            // 'trip_description.required'   => 'Deskripsi wajib diisi.',
+            // 'trip_price.required'   => 'Price wajib diisi.',
+            // 'trip_images.required'   => 'Upload Image wajib diisi.',
+            // 'trip_images.mimes'   => 'Upload Image harus extensi .jpeg/.jpg',
+            // 'trip_images.max'   => 'Upload Image maksimal 5MB',
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
         // dd($validator);
         if ($validator->passes()){
-
+            // dd($request->all());
             // $input = $request->all();
+
             $input['id'] = Str::uuid()->toString();
             $input['trip_code'] = 'TRIP'.rand(10000,99999);
-            $input['trip_name'] = $request->trip_name;
             $input['trip_category'] = $request->trip_category;
-            $input['trip_country'] = $request->trip_country;
+            $input['trip_name'] = $request->trip_name;
+            $input['trip_meeting_poin'] = $request->trip_meeting_poin;
             $input['trip_description'] = $request->trip_description;
+            $input['trip_country'] = $request->trip_country;
+            $input['trip_type'] = $request->trip_type;
+            $input['trip_maxGuest'] = $request->trip_maxGuest;
+            $input['trip_minAge'] = $request->trip_minAge;
+            $input['trip_duration'] = $request->trip_duration;
             $input['trip_price'] = $request->trip_price;
-            $input['trip_experience'] = json_encode($request->experience);
-            $input['trip_facilities'] = json_encode($request->facilities);
-            $input['trip_tour_plan'] = json_encode($request->tour_plants);
+            $input['trip_location'] = $request->trip_location;
+            $input['trip_experience'] = json_encode($request->trip_experience);
+            $input['trip_facilities'] = json_encode($request->trip_facilities);
+            $input['trip_tour_plan'] = json_encode($request->trip_tour_plan);
+            $input['trip_include'] = json_encode($request->trip_include);
+            $input['trip_exclude'] = json_encode($request->trip_exclude);
+            $input['trip_faq'] = json_encode($request->trip_faq);
+            $input['trip_language'] = json_encode($request->trip_language);
             // dd($input);
 
             if ($request->file('trip_images')) {
@@ -217,6 +244,14 @@ class TripController extends Controller
         if (empty($data['trip'])) {
             return redirect()->back()->with('error','Trip Tidak Ditemukan');
         }
+
+        $data['trip_schedules'] = $this->tripSchedule->where('trip_id',$id)
+                                                    ->whereDate('trip_date','>=',Carbon::now())
+                                                    ->whereMonth('trip_date','>=',Carbon::now())
+                                                    ->whereYear('trip_date','>=',Carbon::now())
+                                                    ->get();
+
+                                                    // dd($data);
 
         return view('backend.trips.view',$data);
     }
@@ -388,6 +423,71 @@ class TripController extends Controller
 
         return redirect()->back()->with('errors',$validator->errors())->withInput();
 
+    }
+
+    public function schedule($id)
+    {
+        $data['id'] = $id;
+        return view('backend.trips.schedule',$data);
+    }
+
+    public function schedule_simpan(Request $request, $id)
+    {
+        // dd($request->all());
+        $dates = [];
+
+        foreach ($request->dates as $key => $value) {
+            $explode = explode('/',$value);
+
+            $year = $explode[2];
+            $date = $explode[0];
+            // $dates[] = [
+            //     $value => Carbon::create($value)
+            // ];
+            if ($explode[1] < 10) {
+                $month = '0'.$explode[1];
+            }else{
+                $month = $explode[1];
+            }
+
+            $dates[] = [
+                Carbon::create($year,$month,$date)->format('Y-m-d') => [
+                    'times' => json_encode([
+                        empty($request['times_one'][$key]) ? '22:00' : $request['times_one'][$key],
+                        empty($request['times_two'][$key]) ? '23:00' : $request['times_two'][$key],
+                        empty($request['times_three'][$key]) ? '23:30' : $request['times_three'][$key]
+                    ]),
+                    'prices' => [
+                        'adult' => $request['price_adult'][$key],
+                        'children' => $request['price_child'][$key]
+                    ]
+                ]
+            ];
+
+            $this->tripSchedule->create([
+                'trip_id' => $id,
+                'trip_date' => Carbon::create($year,$month,$date)->format('Y-m-d'),
+                'trip_time' => json_encode([
+                                    empty($request['times_one'][$key]) ? '22:00' : $request['times_one'][$key],
+                                    empty($request['times_two'][$key]) ? '23:00' : $request['times_two'][$key],
+                                    empty($request['times_three'][$key]) ? '23:30' : $request['times_three'][$key]
+                                ]),
+                'trip_prices' => json_encode(
+                    [
+                        'prices' => [
+                            'adult' => $request['price_adult'][$key],
+                            'children' => $request['price_child'][$key]
+                        ]
+                    ]
+                ),
+                'is_active' => 'Y'
+            ]);
+            // $dates = json_encode([
+            //     Carbon::create($year,$month,$date)->format('Y-m-d')
+            // ]);
+        }
+
+        dd($dates);
     }
 
     public function destroy(Request $request, $id)

@@ -147,5 +147,44 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="fs-5 fw-bold">Jadwal Pemberangkatan</div>
+                    </div>
+                </div>
+            </div>
+            @foreach ($trip_schedules as $trip_schedule)
+                @php
+                    if ($trip_schedule->trip_date == date('Y-m-d')) {
+                        $color = '#EEF8CD';
+                    }else{
+                        $color = '#CFEBFF';
+                    }
+                @endphp
+                <div class="col-md-2">
+                    <div class="card">
+                        <div class="card-body" style="background-color: {{ $color }}">
+                            <div class="mb-1">
+                                <label for="" class="text-dark fw-bold">Tanggal Berangkat</label>
+                                <div>{{ $trip_schedule->trip_date }}</div>
+                            </div>
+                            <div class="mb-1">
+                                <label for="" class="text-dark fw-bold">Jam Berangkat</label>
+                                <div>{{ $trip_schedule->trip_time }}</div>
+                            </div>
+                            <div class="mb-1">
+                                <label for="" class="text-dark fw-bold">Harga Tiket</label>
+                                @foreach (json_decode($trip_schedule->trip_prices) as $trip_price)
+                                    <div>Dewasa : {{ 'Rp. '.number_format($trip_price->adult,0,',','.') }}</div>
+                                    <div>Anak" : {{ 'Rp. '.number_format($trip_price->children,0,',','.') }}</div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
     </div>
 @endsection

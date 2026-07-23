@@ -35,4 +35,9 @@ class Trip extends Model
         return $this->hasMany(\App\Models\TripExtra::class, 'trip_id','id');
     }
 
+    public function trip_schedules()
+    {
+        return $this->hasMany(\App\Models\TripSchedule::class, 'trip_id','id');
+    }
+
 }

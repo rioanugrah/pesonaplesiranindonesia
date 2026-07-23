@@ -61,6 +61,7 @@
                                             <td class="text-center">
                                                 <div class="d-flex flex-wrap gap-1">
                                                     <a href="{{ route('admin.trip.show',['id' => $trip->id]) }}" class="btn btn-success btn-sm"><i class="fas fa-eye"></i> View</a>
+                                                    <a href="{{ route('admin.trip.schedule',['id' => $trip->id]) }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Make Schedules</a>
                                                     @can('trip-edit')
                                                     <a href="{{ route('admin.trip.edit',['id' => $trip->id]) }}" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i> Edit</a>
                                                     @endcan
